@@ -1,0 +1,61 @@
+{
+  "metodo": "Luminancia relativa sRGB, pares opacos de tokens contrastados con CSS cargado",
+  "pares": [
+    {
+      "uso": "Texto",
+      "primer_plano": "#334852",
+      "fondo": "#ffffff",
+      "ratio": 9.59,
+      "minimo": 4.5
+    },
+    {
+      "uso": "Ayuda",
+      "primer_plano": "#536670",
+      "fondo": "#ffffff",
+      "ratio": 6.0,
+      "minimo": 4.5
+    },
+    {
+      "uso": "Ayuda sobre fondo",
+      "primer_plano": "#536670",
+      "fondo": "#f3f5f6",
+      "ratio": 5.48,
+      "minimo": 4.5
+    },
+    {
+      "uso": "Acción",
+      "primer_plano": "#ffffff",
+      "fondo": "#245c59",
+      "ratio": 7.64,
+      "minimo": 4.5
+    },
+    {
+      "uso": "Error y rechazo",
+      "primer_plano": "#a52a36",
+      "fondo": "#fbefef",
+      "ratio": 6.26,
+      "minimo": 4.5
+    },
+    {
+      "uso": "Éxito",
+      "primer_plano": "#235b44",
+      "fondo": "#eaf3ee",
+      "ratio": 7.0,
+      "minimo": 4.5
+    },
+    {
+      "uso": "Foco",
+      "primer_plano": "#165e91",
+      "fondo": "#ffffff",
+      "ratio": 6.9,
+      "minimo": 3
+    },
+    {
+      "uso": "Borde de control",
+      "primer_plano": "#7b8d96",
+      "fondo": "#ffffff",
+      "ratio": 3.45,
+      "minimo": 3
+    }
+  ]
+}

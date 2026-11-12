@@ -1,0 +1,58 @@
+{
+  "fecha_utc": "2026-11-12T03:40:56.471Z",
+  "navegador": "157.0.8103.50",
+  "envio_lectura": {
+    "texto": "Registrando lectura…",
+    "disabled": true,
+    "busy": "true"
+  },
+  "reflujo_asignaciones_320": {
+    "viewport": 320,
+    "scroll": 320,
+    "idsDuplicados": [],
+    "sinEtiqueta": 0,
+    "controlesPequenos": []
+  },
+  "teclado": {
+    "primer_foco": "Saltar al contenido",
+    "tras_enter": "MAIN"
+  },
+  "movimiento_reducido": {
+    "media": true,
+    "transicion": "0s",
+    "animaciones": 0
+  },
+  "sin_javascript": {
+    "lectura": "confirmada",
+    "reporte_filtrado": {
+      "registros": 19,
+      "alumnos_vigentes": 2,
+      "directores_vigentes": 2
+    }
+  },
+  "privacidad": {
+    "reportes_alumno": 403,
+    "aviso_ajeno": 403
+  },
+  "lectura": {
+    "primera_fecha_visible": "11/11/2026 21:38",
+    "doble_post": "conservada",
+    "contador_antes": 27,
+    "contador_despues": 26
+  },
+  "reportes": {
+    "proyectos_filtrados_WEB07": {
+      "registros": 26,
+      "alumnos_vigentes": 5,
+      "directores_vigentes": 3,
+      "pagina_2": "mismos totales, buscar preservado"
+    },
+    "carga_filtrada_WEB07": {
+      "profesores": 4,
+      "proyectos_vigentes": 3,
+      "profesores_con_carga": 2,
+      "inactivo_con_carga": 1
+    }
+  },
+  "limite": "Datos ficticios y verificación local; no lector de pantalla ni Lighthouse."
+}

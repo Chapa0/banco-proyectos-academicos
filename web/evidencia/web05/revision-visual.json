@@ -1,0 +1,149 @@
+{
+  "fecha_utc": "2026-11-10T17:30:33.278008+00:00",
+  "bloque": "WEB-05",
+  "resultado": "correcto",
+  "contract": "../../DESIGN.md#perfiles-y-catálogo-de-web-05; guía existente, perfiles propios y catálogo académico.",
+  "targetViewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "entorno": "Chromium real, servidor PHP y PostgreSQL temporal propios; destino HTTP comprobado antes de escribir. Cuentas y datos ficticios.",
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Un h1 por pantalla; campos con etiqueta, ayudas y errores asociados; resumen de error recibe foco. Tab y Enter activan salto al MAIN. Controles principales >=44 px, checkbox24 px con etiqueta44 px, summary45.6 px. Nueve pares de contraste calculados. Lighthouse móvil: perfil y catálogo100,31 comprobaciones aprobadas/0fallidas en cada uno."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Inspección de capturas1440x900 y390x844, y reflujo320px. Catálogo, detalle y perfil no desbordan; scrollWidth390/320 coincide conviewport, campos y navegación se apilan. Nombre largo de habilidad, experiencia611caracteres y contacto empresarial parten línea."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "Al guardar perfil, MutationObserver registró Guardando perfil…, botón disabled y aria-busy=true; región externa anunció Enviando. Espera la respuesta antes de continuar. Tras redirección el botón volvió a estar disponible."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "SinCoincidenciasQA conserva búsqueda y ofrece Ver todos los proyectos."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Se envió semestre0 evitando validación nativa para comprobar servidor: resumen con foco, aria-invalid y mensaje asociado; matrícula, carrera y habilidades conservadas. Corrección posterior guardada."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Perfil docente inexistente muestra campos vacíos y contacto sin inventar; creación con datos propios comprobada. Proyecto con opcionales vacíos omite esas secciones, y sin habilidades explica No se indicaron habilidades."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Alumno guardó matrícula, carrera y dos habilidades; nivel, descripción y evidencia reaparecieron. Aviso Perfil actualizado tras guardar; profesor guardó identificador, especialidad, experiencia y contacto."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "Profesor en cuentas recibe403; consultas a borrador,corrección,rechazo y publicación histórica sin cupo reciben404. No se muestran contenido privado ni observaciones administrativas. Otros roles y sesión ausente se verifican también en HTTP."
+    }
+  },
+  "comprobaciones_adicionales": {
+    "contenido_publicado": "Nombre Programación WEB05 aprobado permanece en catálogo/detalle aunque la habilidad actual fue renombrada en la fixture; motivo administrativo y correo de acceso no se exponen.",
+    "correcciones_finales": "Revisión final corrigió selección vacía tras error y wrapping de empresa. Se repitió recorrido real en nueva temporal: cero casillas marcadas tras semestre0, foco en resumen, summary operable por Enter y empresa larga sin desbordamiento320px. HTTP61casos incluye eliminación posterior del conjunto.",
+    "disponibilidad": "0 de1plazas visible y Ya asignada para dirección ocupada. Solo consulta; sin reserva ni solicitud.",
+    "movimiento": "0 animaciones activas y regla prefers-reduced-motion presente en CSS cargado. No se emuló la preferencia del sistema.",
+    "limpieza": "Sesión ficticia cerrada, navegador devuelto al login local8000; servidor QA8765 y base propia eliminados. Sonda pública eliminada."
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "1440x900",
+      "artifact": "panel-escritorio.jpg",
+      "observation": "Panel de alumno con accesos al catálogo y perfil; navegación y cuenta conservadas."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "profesor-inicial.jpg",
+      "observation": "Profesor sin perfil previo: identificador obligatorio, especialidad y experiencia opcionales, contacto vacío sin copiar correo de acceso."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "catalogo-escritorio.jpg",
+      "observation": "Filtros en tres columnas y primeras publicaciones con plazas; sin controles de participación."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "detalle-escritorio.jpg",
+      "observation": "Detalle académico aprobado con cupo validado, disponibilidad y contacto de empresa en columna lateral."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "catalogo-vacio.jpg",
+      "observation": "Búsqueda conservada, cero coincidencias y enlace para recuperar todas las publicaciones."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "catalogo-movil.jpg",
+      "observation": "Cinco filtros apilados, navegación visible y controles de 44 px."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "detalle-movil.jpg",
+      "observation": "Detalle y secciones apilados, textos y contacto sin desbordamiento."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "perfil-movil.jpg",
+      "observation": "Perfil de alumno guardado con habilidad dura y blanda; detalles seleccionados abiertos y habilidad no seleccionada contraída."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "perfil-error.jpg",
+      "observation": "Semestre cero rechazado por servidor, resumen enfocado y campo identificado; resto del formulario conservado."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "perfil-exito.jpg",
+      "observation": "Confirmación persistente tras corregir el semestre y guardar."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "proyecto-privado.jpg",
+      "observation": "Borrador consultado por dirección directa devuelve página 404 sin contenido privado."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "permiso.jpg",
+      "observation": "Profesor en sección administrativa recibe 403 con regreso a su espacio."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "profesor-320.jpg",
+      "observation": "Perfil docente con experiencia larga, etiquetas y acciones apiladas sin desplazamiento horizontal."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "cupo-direccion-320.jpg",
+      "observation": "Publicación sin plazas permanece consultable; director aún disponible, sin botón de solicitud."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "direccion-ocupada-320.jpg",
+      "observation": "Dirección ya asignada y salto al contenido mediante Tab/Enter; contacto largo parte línea."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "alumno-inicial.jpg",
+      "observation": "Perfil alumno inicial con habilidades sin seleccionar y detalles contraídos; apertura/cierre de summary mediante Enter con foco visible."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "seleccion-vacia-error.jpg",
+      "observation": "Tras desmarcar todas las habilidades y fallar semestre, las tres casillas permanecen desmarcadas; matrícula y valor inválido conservados."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "empresa-larga-320.jpg",
+      "observation": "Razón social210 y sector220caracteres sin espacios parten línea; scrollWidth320 coincide con viewport320."
+    }
+  ],
+  "limites": [
+    "No se ejecutó lector de pantalla ni se emuló la preferencia de movimiento reducido.",
+    "Reflujo320px no cubre todas las variantes de zoom.",
+    "Lighthouse snapshot y cálculo de contraste no certifican accesibilidad completa o rendimiento."
+  ]
+}

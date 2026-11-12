@@ -1,0 +1,660 @@
+{
+  "fecha_utc": "2026-11-12T09:26:33.599009+00:00",
+  "postgres": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+  "resultado": "correcto",
+  "tablas_negocio": 21,
+  "restricciones": 263,
+  "indices": 86,
+  "triggers": 75,
+  "funciones": 154,
+  "secuencias": 15,
+  "protecciones_ejecutor": "unittest correcto",
+  "integridad": [
+    "BD-01: integridad correcta; cambios de prueba revertidos",
+    "Publicación inicial, versión aprobada e integridad al asignar: correcto",
+    "Cupo propuesto, validación de publicación, historial y rollback D-02: correcto",
+    "Envíos de candidatura y dirección, límites y auditoría atómica: correcto",
+    "Altas administrativas de cuentas y empresa/representante, historial y rollback: correcto",
+    "Textos obligatorios RF-08/RF-40, snapshot exacto y rollback: correcto",
+    "OK:9 negativos cancelación de dirección y conservación de historial",
+    "OK:9 negativos de avisos, destinos, privacidad y rollback",
+    "WEB-01: directorio mínimo y 19 rechazos de acceso SQL correctos",
+    "WEB-02: acceso, cuentas, versión de sesión, CAS y rollback correctos",
+    "WEB-04: publicación, permisos, versiones, historial, auditoría, avisos y rollback correctos",
+    "WEB-05: perfiles propios, habilidades, CAS, rollback, catálogo, filtros, disponibilidad y privacidad correctos",
+    "32423abe49583b13afe5842af0de908685e16feead9a039a889fef3600af5e9c",
+    "WEB-06: participación, evaluación, asignación, pausa/reposición/cierre, privacidad y rollback correctos",
+    "WEB-07: avisos propios, lectura idempotente, reportes administrativos, filtros, totales y privacidad correctos"
+  ],
+  "casos_negativos_sql": 411,
+  "concurrencia": {
+    "correo_unico": {
+      "espera_de_bloqueo_observada": true,
+      "segunda_operacion_rechazada": "23505"
+    },
+    "representante_unico": {
+      "espera_de_bloqueo_observada": true,
+      "segunda_operacion_rechazada": "23505"
+    },
+    "perfil_y_cambio_de_rol": {
+      "espera_de_bloqueo_observada": true,
+      "segunda_operacion_rechazada": "23514"
+    },
+    "acompanamiento_y_cierre_de_padre": {
+      "espera_de_bloqueo_observada": true,
+      "segunda_operacion_rechazada": "23514"
+    },
+    "envio_publicacion": {
+      "espera_de_bloqueo_observada": true,
+      "segunda_operacion_rechazada": "55000"
+    },
+    "resolucion_publicacion": {
+      "espera_de_bloqueo_observada": true,
+      "segunda_operacion_rechazada": "55000"
+    }
+  },
+  "respaldo_restauracion": {
+    "resultado": "correcto",
+    "tablas": 21,
+    "filas_por_tabla": {
+      "acompanamiento": 32,
+      "alumno": 306,
+      "alumno_habilidad": 3,
+      "asignacion_alumno": 64,
+      "asignacion_direccion": 58,
+      "candidatura": 183,
+      "criterio_evaluacion": 3,
+      "decision_administrativa": 264,
+      "detalle_evaluacion": 72,
+      "empresa": 19,
+      "evaluacion_candidato": 24,
+      "evento_auditoria": 492,
+      "habilidad": 3,
+      "notificacion": 2366,
+      "profesor": 97,
+      "proyecto": 147,
+      "proyecto_habilidad": 1,
+      "representacion_empresa": 27,
+      "revision_proyecto": 142,
+      "solicitud_direccion": 96,
+      "usuario": 460
+    },
+    "sha256_respaldo": "81e91cabd5c57ee7d36256e6ec2b2de7f1b1390e6fb401bba611af5147aa27d4",
+    "sha256_contenido_por_tabla": {
+      "acompanamiento": "4b3d9ed739f837fa9e3112235056ea9271a406b98b5084bf79a73fdee41dce85",
+      "alumno": "499b9a8ee00c923733f0f62aeca7cae4238a5caf6368b2aed8d73ef4ecfb61c6",
+      "alumno_habilidad": "5a8027cb0fd2458bef41e96d17ce27f458fc3e9dc168f2d00221904b34055734",
+      "asignacion_alumno": "7cc12a9629b9d2a59e0a7f832d118b87a486c33fff430e5458169e99836faebf",
+      "asignacion_direccion": "463b2d19e1c15d69f39b870a797b04f5968de768ff42782e7520f7b9fcbcc677",
+      "candidatura": "331518e84649a59cd95d389fbe21df44f811a19e528d4a6ddb85bca7d9dd9a73",
+      "criterio_evaluacion": "82fafc4590582d47007523d2952998309df853eb1c7b5916432ca170b912dbc9",
+      "decision_administrativa": "55eddebb608ee3c933a29084471951d258627b9e32d2c93f04ce2341b909bd73",
+      "detalle_evaluacion": "b3a0b3bf190ac6d536ab9746e834488a2e9c859c6b91e136258e7da09f06dad5",
+      "empresa": "36863cf07a7a91124cedf6f797c66dfe863b04c72cc229f995a18ca25e9275fe",
+      "evaluacion_candidato": "cec223e045ff73a495003e60a349e0edbf13781c116c50242d7c65648bec9cea",
+      "evento_auditoria": "1cc5316a50f3fe3ad9359d38f30fd83c9dbab62a8fe1f56a34db3c4b93186175",
+      "habilidad": "d9a8bfa617b058ac0d12e658e7cc3ae5d33ee5c29749e943ea19bb868e170a27",
+      "notificacion": "3dc2e32736bc65db3cb4e84dd8598ec165b5a8312ad9faa55cfa2ffe45418c1f",
+      "profesor": "05fe576cfff28a09fde520522edba7707bacb92af3493e4a59038e334be7ae1d",
+      "proyecto": "f131981d9e2a43e25b9d25c932d97a295ca056e6d33e001cde96005fae7aaa4e",
+      "proyecto_habilidad": "13f49dd1e3fc99ea1312eaad0a84f58d329d7252812bfbd5d190eb60a560eb5c",
+      "representacion_empresa": "53e7c752503720f9f549f7792142f1ce4edfe7c6ac475bbc961e9b1a34795749",
+      "revision_proyecto": "20c2bc8731c88f92361a78511532f1cdde6a472bb00f57847239d372e71e6641",
+      "solicitud_direccion": "4bf2b2a64f196996524bb51e2288cee7d1ef161e96b8efffd9bd3738bc825b28",
+      "usuario": "25d1c61b6e6ab8052750765c3a85993bd8d01209e92f4c236e17d55e7589e413"
+    },
+    "secuencias": {
+      "acompanamiento_id_seq": {
+        "ultimo_valor": 6,
+        "llamada": true
+      },
+      "asignacion_alumno_id_seq": {
+        "ultimo_valor": 27,
+        "llamada": true
+      },
+      "asignacion_direccion_id_seq": {
+        "ultimo_valor": 17,
+        "llamada": true
+      },
+      "candidatura_id_seq": {
+        "ultimo_valor": 35,
+        "llamada": true
+      },
+      "criterio_evaluacion_id_seq": {
+        "ultimo_valor": 93,
+        "llamada": true
+      },
+      "decision_administrativa_id_seq": {
+        "ultimo_valor": 217,
+        "llamada": true
+      },
+      "empresa_id_seq": {
+        "ultimo_valor": 5,
+        "llamada": true
+      },
+      "evaluacion_candidato_id_seq": {
+        "ultimo_valor": 34,
+        "llamada": true
+      },
+      "evento_auditoria_id_seq": {
+        "ultimo_valor": 674,
+        "llamada": true
+      },
+      "habilidad_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": true
+      },
+      "notificacion_id_seq": {
+        "ultimo_valor": 2608,
+        "llamada": true
+      },
+      "proyecto_id_seq": {
+        "ultimo_valor": 16,
+        "llamada": true
+      },
+      "revision_proyecto_id_seq": {
+        "ultimo_valor": 180,
+        "llamada": true
+      },
+      "solicitud_direccion_id_seq": {
+        "ultimo_valor": 18,
+        "llamada": true
+      },
+      "usuario_id_seq": {
+        "ultimo_valor": 37,
+        "llamada": true
+      }
+    },
+    "historial_migraciones": "catálogo, versiones, checksum y fechas idénticos; migrate posterior sin cambios",
+    "alcance": "Restauración en otra base: estructura, permisos de esquemas y objetos, contenido, secuencias, historial técnico, migración posterior e integridad comprobados."
+  },
+  "participacion_e_inicio": {
+    "direccion_unica": {
+      "segunda_direccion_vigente": "23505; decisión y asignación revertidas",
+      "proyectos_distintos": "un profesor conserva dos direcciones de proyectos diferentes",
+      "historial": "finalizada y revocada conservadas junto con una vigente; reactivación rechazada con 55000",
+      "concurrencia": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion_rechazada": "23505"
+      },
+      "limite": "Integridad D-03; los datos históricos de prueba no acreditan el flujo de cierres o sustituciones de D-07."
+    },
+    "cupos_y_carga": {
+      "negativos_secuenciales": 15,
+      "candidaturas": "tres estados activos, historial conservado, unicidad y aprobación con asignación atómica",
+      "reservas": "alumno uno global, cupo propio por proyecto y profesor tres proyectos; cuentan desde autorización",
+      "liberacion": "finalizada/revocada liberan por estado; fechas y cuentas inactivas no liberan",
+      "concurrencia": {
+        "tercera_candidatura": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        },
+        "ultima_plaza_proyecto": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        },
+        "carga_alumno_entre_proyectos": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23505"
+        },
+        "tercer_proyecto_profesor": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        }
+      },
+      "limite": "Fixtures del propietario; no acreditan etapas previas D-08 ni flujos/permisos de cierre D-07."
+    },
+    "inicio_proyecto": {
+      "condiciones": "publicación y cupo validados, un alumno y un director con aprobación/origen exactos; actor activo",
+      "cupo_parcial": "un alumno para tres plazas; sin fechas estimadas obligatorias ni inicio automático",
+      "rollback": "fallo al insertar auditoría y fallo posterior a insertarla revierten toda la operación",
+      "idempotencia": "mismo evento; sin auditoría duplicada",
+      "inicio_concurrente": {
+        "espera_de_bloqueo_observada": true,
+        "resultado": "ambos inicios devuelven el mismo evento; una transición"
+      },
+      "inicio_y_cierre": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion_rechazada": "55000"
+      },
+      "cierre_y_inicio": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion_rechazada": "23514"
+      },
+      "protecciones": "sin inicio por CRUD sin evidencia; contenido, evidencia y asignaciones iniciadas preservadas; permisos mínimos",
+      "limites": "Opera sobre autorizaciones ya coherentes; no implementa evaluación previa D-08 ni cierres/incorporaciones D-07."
+    },
+    "cancelacion_candidatura": {
+      "negativos_secuenciales": 12,
+      "estados": "pendiente_evaluacion, evaluada y preseleccionada cancelables antes de asignación; historia cancelada no reabre ni se reescribe",
+      "actor_y_auditoria": "alumno activo propietario; evento con actor/fecha/estado anterior, sin motivo obligatorio para el alumno",
+      "liberacion": "cupo de candidatura liberado atómicamente; otras candidaturas y asignaciones permanecen",
+      "rollback": "fallo de auditoría revierte cancelación y liberación; repetición no duplica el evento",
+      "proyecto_iniciado": "puede cancelar una candidatura previa sin asignación, sin alterar los participantes iniciados",
+      "alumno_ya_asignado": "puede cancelar otra candidatura activa sin modificar el origen aprobado ni su asignación vigente",
+      "concurrencia": {
+        "cancelar_antes_de_asignar": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "55000"
+        },
+        "asignar_antes_de_cancelar": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "55000"
+        },
+        "cancelar_y_nuevo_envio": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "cancelación y nuevo envío confirmados; máximo de tres conservado"
+        }
+      },
+      "limite": "No implementa retiro posterior por administrador, cierre, cancelación docente, reapertura ni etapas de autorización D-08; funciones internas sin autenticación web."
+    },
+    "retiro_pausa_reanudacion": {
+      "negativos_secuenciales": 24,
+      "retiros": "administrador activo, motivo e historial; origen aprobado conservado, carga retirada liberada y otras asignaciones intactas",
+      "periodos_futuros": "padres y acompañamientos no iniciados revocados con fin NULL y fecha real en evento; no admiten hijos vigentes",
+      "historia": "acompañamiento cerrado conserva su evento aunque se retire el otro padre y se inactive al administrador anterior",
+      "pausa": "automática al perder un mínimo, sin liberar otras asignaciones; CT rechaza confirmar En curso sin mínimo",
+      "reposicion": "pendientes y nuevas del tipo faltante; una reposición autorizada no reanuda ni permite extras del tipo ya cubierto",
+      "reanudacion": "administrativa expresa, mínimos y límites revalidados, idempotente y primer inicio intacto",
+      "evidencia": "evento de tipo/objeto/administrador exactos en la misma transacción; rollback en auditoría o tras cambiar el padre",
+      "concurrencia": {
+        "retiros_alumno_y_director": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "ambas operaciones confirman sin interbloqueo"
+        },
+        "dos_reanudaciones": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "ambas operaciones confirman sin interbloqueo"
+        },
+        "reanudar_y_retirar": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "ambas operaciones confirman sin interbloqueo"
+        },
+        "retirar_y_reanudar": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        },
+        "dos_reposiciones_misma_vacante": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "55000"
+        }
+      },
+      "limite": "Fixtures técnicos de aprobación; no etapas D-08, cierre definitivo, cancelación docente pendiente, cambios publicados ni autenticación/avisos web."
+    },
+    "cierre_proyectos": {
+      "negativos_secuenciales": 26,
+      "estados": "cancelación desde todos los estados abiertos; finalización solo En curso; cerrados no reabren ni cambian de destino",
+      "actor": "administrador activo con motivo no blanco, auditoría exacta e idempotencia del mismo cierre",
+      "coordinacion": "asignaciones y acompañamientos cierran; candidaturas activas y solicitudes pendientes se cancelan; cupos y cargas quedan liberados",
+      "revision": "revisión pendiente cancelada con evento, sin inventar decisión; revisiones resueltas y fuentes aprobadas permanecen",
+      "periodos": "fin real cuando el período había empezado; fin NULL con evidencia exacta cuando aún no empezó, incluso al finalizar",
+      "historia": "primer inicio, estados anteriores, decisiones, retiros previos y otros proyectos conservados; administrador histórico puede inactivarse",
+      "rollback": "fallo de auditoría o hijo revierte el cierre y sus efectos conjuntos",
+      "concurrencia": {
+        "cierre_repetido": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "ambas confirman"
+        },
+        "finalizar_y_cancelar": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "segunda rechazada con 55000"
+        },
+        "cierre_y_retiro": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "segunda rechazada con 55000"
+        },
+        "cierre_y_reanudacion": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "segunda rechazada con 55000"
+        },
+        "retiro_y_cierre_reintentable": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "segunda rechazada con 40001"
+        },
+        "nueva_solicitud_y_cierre_reintentable": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "segunda rechazada con 40001"
+        },
+        "autorizacion_y_cierre_reintentable": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "segunda rechazada con 40001"
+        },
+        "cierre_y_nueva_candidatura": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "segunda rechazada con 23514"
+        }
+      },
+      "reintento": "40001 por alcance concurrente cambiado no deja cierres parciales; una transacción nueva cierra el alcance actualizado",
+      "limite": "Pruebas SQL internas con fixtures técnicas de autorización, sin sesión, API ni entrega de avisos externos."
+    },
+    "evaluacion_autorizacion": {
+      "rechazos_secuenciales": 38,
+      "carreras": {
+        "reevaluacion_autorizacion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "55000"
+        },
+        "autorizacion_reevaluacion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "55000"
+        },
+        "cancelacion_autorizacion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "55000"
+        },
+        "autorizacion_cancelacion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "55000"
+        },
+        "autorizacion_repetida": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "misma decisión sin duplicados"
+        },
+        "ultima_plaza_autorizaciones": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        },
+        "cierre_autorizacion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "55000"
+        },
+        "autorizacion_cierre_reintentable": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        }
+      },
+      "evaluacion_inmutable_y_reevaluacion": true,
+      "preseleccion_version_exacta": true,
+      "decision_asignacion_atomica": true,
+      "auditoria_rollback": true,
+      "direccion_sin_evaluacion_empresa": true
+    },
+    "cuentas_privacidad": {
+      "negativos_secuenciales": 24,
+      "concurrencia": {
+        "baja_espera_titular_sin_bloquear_validacion_admin": {
+          "espera_de_bloqueo_observada": true,
+          "resultado": "validación administrativa compartida y baja confirman sin ciclo de bloqueos"
+        },
+        "relevos_sobre_misma_empresa": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23505"
+        },
+        "ultimos_dos_administradores": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        }
+      },
+      "privacidad": "whitelist por titular/admin, postulante de empresa vigente y alumno de dirección vigente; sin hash/login/matrícula compartida",
+      "conservacion": "desactivar conserva asignación y carga; relevo conserva empresa, autoría e historial",
+      "rollback": "fallos de auditoría revierten estado de cuenta y todo el relevo",
+      "limite": "Servicios INVOKER internos sin grants de aplicación; IDs recibidos no autentican. Sin purga ni sesión web."
+    },
+    "acceso_concurrencia": {
+      "concurrencia": {
+        "restablecer_clave_contra_inicio_con_version_anterior": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "ediciones_simultaneas_con_misma_version": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "relevos_simultaneos_del_mismo_representante": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        }
+      },
+      "version_acceso": "Los cambios de acceso y de nombre incrementan versión; una versión anterior no inicia sesión ni sobrescribe una cuenta.",
+      "relevo": "CAS del representante exacto bajo el bloqueo empresarial; segundo formulario sin efectos.",
+      "limite": "Credencial de servidor banco_web; la identidad de persona sigue siendo responsabilidad de sesión Laravel."
+    },
+    "publicacion_concurrencia": {
+      "concurrencia": {
+        "editar_contra_editar_misma_version": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "enviar_contra_editar_misma_version": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "resolver_contra_resolver_misma_version": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "enviar_contra_enviar_misma_version": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "editar_empresa_contra_editar_misma_version": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "relevo_contra_edicion_representante_anterior": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        }
+      },
+      "versiones": "CAS de contenido/habilidades/estado/revisiones/eventos; se rechazan formularios obsoletos sin repetición.",
+      "publicacion": "Un envío y una resolución por revisión; espera real observada y sin avisos duplicados.",
+      "representacion": "La vigencia se vuelve a comprobar después de esperar al relevo.",
+      "limite": "Actor de sesión validado además por Laravel; SQL usa credencial de servidor y no autentica esos IDs."
+    },
+    "perfiles_catalogo_concurrencia": {
+      "concurrencia": {
+        "alta_alumno_contra_alta_misma_version": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "edicion_alumno_habilidades_contra_edicion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "alta_profesor_contra_alta_misma_version": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "edicion_profesor_contra_edicion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "matricula_unica_entre_titulares": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23505"
+        },
+        "numero_empleado_unico_entre_titulares": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23505"
+        },
+        "desactivacion_contra_guardado": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        },
+        "cierre_contra_detalle_catalogo": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23503"
+        }
+      },
+      "perfiles": "Alta sin fila y edición con CAS; unicidad entre titulares sin perfiles parciales.",
+      "permisos": "Cuenta activa revalidada después de esperar una desactivación.",
+      "catalogo": "El detalle espera el cierre y rechaza la publicación que dejó de estar disponible.",
+      "limite": "No acredita nuevas candidaturas web, reservas, evaluación ni asignación desde Laravel."
+    },
+    "participacion_web_concurrencia": {
+      "concurrencia": {
+        "tercera_y_cuarta_candidatura": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "doble_envio_mismo_contexto": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "cancelacion_contra_autorizacion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "reevaluacion_contra_autorizacion_obsoleta": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "autorizar_director_contra_cancelacion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "inicio_contra_cierre_obsoleto": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "dos_autorizaciones_ultima_plaza": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "40001"
+        },
+        "tercera_y_cuarta_direccion": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        },
+        "cierre_contra_nuevo_envio": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23503"
+        },
+        "desactivacion_contra_nuevo_envio": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        },
+        "relevo_contra_lectura_empresarial": {
+          "espera_de_bloqueo_observada": true,
+          "segunda_operacion_rechazada": "23514"
+        }
+      },
+      "integridad": "Máximos reales, resolución/asignación atómicas, estados y token revalidados después de esperar.",
+      "alcance": "Todas las operaciones de participación/ciclo usan banco_web; desactivación utiliza operación interna administrativa."
+    },
+    "avisos_reportes_concurrencia": {
+      "doble_lectura_conserva_primera_fecha": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion": "completada con integridad"
+      },
+      "detalle_sin_efecto_y_lectura_posterior": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion": "completada con integridad"
+      },
+      "desactivacion_contra_lectura": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion_rechazada": "23514"
+      },
+      "reporte_ve_autorizacion_coherente_tras_esperar": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion": "completada con integridad"
+      },
+      "desactivacion_admin_contra_reporte": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion_rechazada": "23514"
+      },
+      "relevo_contra_detalle_aviso_antiguo": {
+        "espera_de_bloqueo_observada": true,
+        "segunda_operacion_rechazada": "23514"
+      }
+    }
+  },
+  "aislamiento_de_escritura": "REPEATABLE READ rechazado con 25001; representante activo conservado",
+  "deteccion_de_corrupcion": {
+    "contenido": "alteración detectada",
+    "indice": "alteración detectada",
+    "permisos_esquema": "alteración detectada",
+    "historial_ausente": "alteración detectada",
+    "historial_checksum": "alteración detectada",
+    "historial_fecha": "alteración detectada",
+    "historial_estructura": "alteración detectada",
+    "secuencia_valor": "alteración detectada",
+    "secuencia_llamada": "alteración detectada",
+    "secuencia_incremento": "alteración detectada",
+    "secuencia_permisos": "alteración detectada"
+  },
+  "migraciones_y_semillas": "segunda ejecución sin cambios",
+  "protecciones_migracion": {
+    "checksum_modificado": "rechazado",
+    "archivo_ausente": "rechazado",
+    "fallo_parcial": "rollback comprobado"
+  },
+  "actualizacion_con_historial": {
+    "version_inicial": "001–003 instaladas por migrador real; publicación v1 y datos de negocio anteriores",
+    "actualizacion": "todas las migraciones vigentes aplicadas; contenido anterior exacto conservado",
+    "publicacion_historica": "sin cupo ni inicio inventados; nuevas operaciones condicionadas a D-02",
+    "publicacion_nueva": "snapshot v2 con cupo propuesto y validado",
+    "recuperacion_version_anterior": "rechazo previo claro, sin respaldo, base temporal ni cambios; primero aplicar las migraciones actuales",
+    "datos_incompatibles": "cuatro candidaturas activas o asignación sin cupo previo rechazan 006 con rollback de DDL y sin registro aplicado",
+    "motivos_historicos_blancos": "011 rechazada sin reescribir las 21 tablas, registrar aplicación ni dejar CHECK/helper parciales",
+    "limite": "La conciliación de publicaciones/asignaciones anteriores requiere decisión y procedimiento explícitos; el test no los inventa."
+  },
+  "sha256_fuentes": {
+    "manage.py": "29ceccc336cb8e290638e77dadf226a09d05b053240c071c022fc0db149e584f",
+    "migrations\\001_estructura.sql": "f6423fc7fd0e5baed92e093804b246a37b776837be48ecc4175953660ee464ec",
+    "migrations\\002_integridad.sql": "7b81c45c4f1417555612663db2e2ae5d70a1e8a33dd77269a3295b8bf303519c",
+    "migrations\\003_publicacion.sql": "d56080edfd3415f90f4f0a814023ec6ad2527ded8c50fc7742b441ba357cb3e8",
+    "migrations\\004_cupo_publicacion.sql": "5764cf01fdb66486bbc0bff158683d74969631e713f235801f64bbb6d80e5e8c",
+    "migrations\\005_director_unico.sql": "f1d9a02eead486b010c4418691df1d06a93ba4b6205e2f7ec3683d4c32b1825d",
+    "migrations\\006_cupos_y_carga.sql": "7cd435d95f5bcfbf7216458a1995dc339d5dae0d5aad07b07eb45c2a701111cf",
+    "migrations\\007_inicio_proyecto.sql": "ad7a38d25af63a4f1bb3484bd9092e07dc95dec764a37f3a55ec2425e9ff6bf0",
+    "migrations\\008_envio_participaciones.sql": "06be79022790f8c215073a70fefeffb2dcffa3b535090fa1ca9f80443b00dff3",
+    "migrations\\009_texto_solicitud.sql": "41314d9fb1413f86eb00f95aead01e112e923ab1197faffd2365191f37012e79",
+    "migrations\\010_alta_cuentas.sql": "7328d69c26cde1ec4f892a2458f82bd669ac710a8087066cab3dee36cdd91e24",
+    "migrations\\011_textos_obligatorios.sql": "b6d97d9c74ce45882f7ef943a11aadf914274ccf3e2605102320d189f269d16e",
+    "migrations\\012_cancelacion_candidatura.sql": "6787dd13bdf715dcc85e5b4f543fa3df3e2494b38b54065b23ecdefcf5353000",
+    "migrations\\013_retiro_pausa_reanudacion.sql": "a912ebfc12a344157e8ec31fb2f681750a09b2fee691c3f63c3444cb0dfcf7da",
+    "migrations\\014_cierre_proyectos.sql": "bd2721c175d698c33b44388ba0d4c785d578f5f270a9145662494eb05f048aa0",
+    "migrations\\015_cancelacion_solicitud_direccion.sql": "1cc37ed7e40dde734dd0100cd1b8470017aea16cb02592e6a1ea0728065d36dc",
+    "migrations\\016_evaluacion_autorizacion.sql": "1915da2c86d6d396b1973a25fece4c6dc90f6e678e0a672dbe5d1cfbff0d4969",
+    "migrations\\017_cuentas_y_privacidad.sql": "e4795f0487c5d8c79667fbdeec31e94a3c2504166a2e8345a79d44b801081411",
+    "migrations\\018_notificaciones_internas.sql": "c5c7966e10bfeeef13eda742870c7cc9e61d5eca6c7365ba6f1c82c89d217924",
+    "migrations\\019_conexion_web.sql": "cbaa751bc53e3724cf6358d39480d9ebdf53f92126d454e888ccf4d561e86a3a",
+    "migrations\\020_acceso_web.sql": "0dc3d1fe0531a293e6389b4cf2f897deaabf6b8df7396e4a0612401c94643cd9",
+    "migrations\\021_publicacion_web.sql": "e5a3c199ff0abc920d35221cd2e52f6ef47fbb103bd4de4b035a035a55601313",
+    "migrations\\022_perfiles_catalogo_web.sql": "d3d692921926afdda31832f2c15a221b289453414e0852ede696dae9e26fed66",
+    "migrations\\023_participacion_web.sql": "6d36e50dba585811ad571518d30d0c6efc38c09c05b92bbca4bf5c9364da187f",
+    "migrations\\024_avisos_reportes_web.sql": "82ca5a402ab35bdd1897d2a1390d0778c26fef68a9fabc091e0aae61947887d3",
+    "migrations\\025_coincidencia_habilidades_web.sql": "24245e41d3af9bb99ac63cab9a29ef5c149507d500eb651a7afbf62515f61fc4",
+    "migrations\\026_documentos_pdf_web.sql": "690c13f4fd308fde491968dee943de6ff4c731e2d2a31dff9bf091c8b22d051e",
+    "seed.sql": "4e996c7a6552a092551f4f802fd975f652a8cd2f6397b1d7ab40f803b3789ada",
+    "tests\\acceso_concurrencia.py": "6582b04485b0bbc886afb003301a2e10eb19cd36544a61bd24b63adcbed81d07",
+    "tests\\acceso_web.sql": "f1ec48e4428412bf7dceaa014a0e92d1502be1ea6b75d1310ef29bb668318eae",
+    "tests\\actualizacion.py": "433ff0ae1cd60590614ac4a19f545658ed2f989f708779c27026584c47d90535",
+    "tests\\altas_cuentas.sql": "18c13066a47114b13cb5785773639a7b8749ceaa80db1efe98ecd73b493e01cf",
+    "tests\\avisos_reportes_concurrencia.py": "19899bd143fbb6b9f0d3ea5e2f969abe5d0346b22371077d267f902eca11617e",
+    "tests\\avisos_reportes_web.sql": "299c06e02d9a10f6c1f70c495ffaeba470fb0f26ecec159b2826746ef8cd4817",
+    "tests\\cancelacion_candidatura.py": "f0195c70bd302f2ccaa82120a15f9dc66695d82e111477f63f2bfe38af5386b2",
+    "tests\\cancelacion_direccion.sql": "8bb26e3e60f22fa918ab5dfb11881ad582c58b1be95b38a4d430f3bcda703456",
+    "tests\\cierre_proyectos.py": "c91749036f3d816d2b713c74e289ae8441e44afd90a0a58747d126a28d762a47",
+    "tests\\concurrencia.py": "26f9ff0384ed1f2e06ed32f0ae026011894381f2c0196840b2af870831218050",
+    "tests\\conexion_web.sql": "4aa3423f82291a8bebc14697b2275a4e72ffde03d59fefe6f2be43324e361876",
+    "tests\\cuentas_privacidad.py": "da882837e3230f6d7b3dba40ec1b26d35b5f6a797ddd44c7e29aa2a67d0dd9af",
+    "tests\\cupo_publicacion.sql": "cc187261047dcb7ca6644995787fbdfa0740e1e20e9782dc0cb7571f31c973af",
+    "tests\\cupos_y_carga.py": "f4dc69280229115ff180c9bb4e157db1efc3861bf42fbbab3683807b1d697806",
+    "tests\\direccion_unica.py": "0f20eb2733b31ec96a6d11e3096b40d6fa69f152cd15d124834abe2cd5ca7020",
+    "tests\\evaluacion_autorizacion.py": "7db10d549c3bc84fe635083db245724019b882ebcf3cbf486324366b3fa7fd52",
+    "tests\\inicio_proyecto.py": "c116446f5e21e124751f25bcf2309ee696bcd60ccbf9902bf6fa9e586f049347",
+    "tests\\integridad.sql": "ad3c0942c6ee2f69b7f057fab80c49846ecaa1173fcabb347490a8de64e55f5d",
+    "tests\\migraciones.py": "fe9d49a0e706c6436525b0f63309cd2823b12660a120f38f4409b0f1ddc38699",
+    "tests\\notificaciones.sql": "9e49421d5731e9514e661839f2b5fb9ca0a8c2c9aae3ca7a6cec3a98d77fd96e",
+    "tests\\participacion_web.sql": "e2482665d58a6272837b7dde3801eb2ba684a47353ef07b1c89d043bd7f797fa",
+    "tests\\participacion_web_concurrencia.py": "6ebdf6ef596bfb1519c5bb3296a283dd12f74bb085e56d0d31fd88cdb614b03f",
+    "tests\\participaciones.sql": "7167d6b56295481326ffa19b72c84cf7ae6311b92687dcfc17e510bad0605780",
+    "tests\\perfiles_catalogo_concurrencia.py": "201f9f2ade129872e185696201a0b26d3b95310036b9e1eee1d049249d141c7f",
+    "tests\\perfiles_catalogo_web.sql": "ed3ff8b8c74be41c4d9e1830085b5eb6f9eec39b5630d8f75eeec41d7d5d826c",
+    "tests\\proyectos.sql": "6aab65da8d0f2cef76bc1df3123ee2ba39989d5a11f74cbeef02ecf1f097f3a9",
+    "tests\\publicacion_concurrencia.py": "58adfcd50e0bf247ff6042f1204e3876a1897a4130e030ad3d2ba708901c1f83",
+    "tests\\publicacion_web.sql": "0b13ee530cbbcee7bc50c31383989dfb9b57239ca142195992ecbcae1bbb3272",
+    "tests\\recuperacion.py": "22dd619d9cfbba83f13711f6aca5dcd37da2b112cd99ce2ef70c7e247f10a8c7",
+    "tests\\retiro_pausa_reanudacion.py": "b69226de10e5225ae9c833da9077398cc1470b84f5b3825d95872750aeb853d4",
+    "tests\\test_runner.py": "c3df188417868b96c79f66e3ab0a696309c91dc4fc5e20fb1c2549c531df1b33",
+    "tests\\textos_obligatorios.sql": "f89c2615468068b7d84db9fe57a545039a5986337878db9f1091c2cd6d5abc04"
+  },
+  "politicas_pendientes": [],
+  "datos_institucionales_por_conocer": [
+    "D-12: alojamiento, calendario, equipo y carga de producción; retención legal D-10"
+  ],
+  "decisiones_delegadas": "D-07/D-08/D-10/D-11 concretadas para primera versión por delegación del usuario el 10 de noviembre de 2026.",
+  "limite": "Base PostgreSQL local con operaciones internas y avisos persistentes; sin APIs, autenticación web, envío externo ni despliegue institucional. No acredita los recorridos web de los 42 RF.",
+  "segundos": 280.22
+}

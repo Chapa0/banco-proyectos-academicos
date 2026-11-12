@@ -1,0 +1,154 @@
+{
+  "fecha_utc": "2026-11-12T03:01:40.689386+00:00",
+  "bloque": "WEB-06",
+  "resultado": "correcto",
+  "contract": "../../DESIGN.md#participación-y-seguimiento-de-web-06; solicitudes, rúbrica y seguimiento por rol con componentes existentes.",
+  "targetViewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "entorno": "Chrome157.0.8103.50 real en modo headless, Playwright persistente con instancia propia; dos servidores/bases temporales sucesivos con destino HTTP comprobado. Solo cuentas ficticias.",
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Etiquetas, errores asociados y resumen enfocado comprobados. Tab/Enter activan Saltar al contenido y enfocan MAIN. Rúbrica320px sin IDs duplicados o campos activos sin etiqueta; controles visibles >=44px. Nueve pares de contraste correctos. Preferencia reducedMotion=reduce emulada: media=true, transición0s y0animaciones."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Revisión renderizada1440x900 y390x844; reflujo320px en empresa y administrador, scrollWidth320=viewport320. Rúbrica y navegación apiladas, título simulado242caracteres y responsables largos parten línea. Vacante móvil muestra Solicitar dirección a488px de alto dentro del primer viewport."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "Durante POST de candidatura se registraron Enviando solicitud…, botón disabled y aria-busy=true; después hubo confirmación y redirección."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "Buscar SinCoincidenciasWEB06 conservó búsqueda/estado y mostró Ver todas las solicitudes; enlace recuperó el listado."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Experiencia/justificación faltantes recibieron errores de servidor. Segunda cancelación desde pestaña obsoleta fue rechazada con mensaje de recarga, foco en resumen e historia intacta."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Alumno sin perfil vio Completar mi perfil. Vacante sin relación mostró solo contenido público y acción permitida, omitiendo secciones personales vacías."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Recorrido real: enviar alumno/profesor, evaluar y preseleccionar, aprobar ambas asignaciones, iniciar, retirar director/pausar, reponer/reanudar, retirar alumno/pausar, reponer/reanudar y finalizar; avisos visibles y asignaciones cerradas. Cancelaciones propias de ambos tipos también confirmadas."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "Solicitud docente ajena403 y proyecto cerrado404 en catálogo. Empresa sin matrícula/correo de acceso ni enlaces ejecutables; vacante sin perfiles ajenos. La autorización completa por recurso se contrasta además en HTTP/SQL."
+    }
+  },
+  "comprobaciones_adicionales": {
+    "sin_javascript": "Contexto creado con javaScriptEnabled=false: login y envío nativo de alumno completados, confirmación Candidatura enviada.",
+    "lecturas_definitivas": "Tras corrección de orden Empresa→Usuario en023, se creó otra base desde fuentes definitivas y se repitieron envío, lectura empresarial, privacidad y reflujo. Las carreras y HTTP finales prueban el código corregido.",
+    "exploracion": "Se recorrieron filtros/vacío/recuperación, límites de envío, cancelación de ambos roles, pestaña obsoleta, perfil ausente, consulta ajena y cierre fuera de catálogo; sin otros defectos observados.",
+    "limpieza": "Sesiones ficticias cerradas; ambos servidoresQA8765 y sus bases eliminados; navegador propio cerrado y sondas eliminadas. El navegador ECC ocupado se dejó intacto."
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "1440x900",
+      "artifact": "candidatura-escritorio.jpg",
+      "observation": "Envío del alumno con perfil completo, límite y consecuencias visibles."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "candidatura-enviada.jpg",
+      "observation": "Confirmación de envío y solicitud pendiente; perfil propio e historial."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "direccion-error-movil.jpg",
+      "observation": "Experiencia y justificación vacías rechazadas por servidor; foco en resumen y errores asociados."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "evaluacion-escritorio.jpg",
+      "observation": "Perfil académico permitido a empresa y rúbrica de tres criterios, puntuaciones/comentarios y recomendación."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "inicio-escritorio.jpg",
+      "observation": "Inicio administrativo tras autorizar alumno/director; proyecto En curso y acciones de cierre."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "vacante-movil.jpg",
+      "observation": "Vacante docente pausada: llamada a solicitar en primer viewport; sin perfiles o historia ajenos."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "cierre-movil.jpg",
+      "observation": "Cierre coordinado con asignaciones finalizadas/revocadas e historial de inicio, pausas y reanudaciones."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "direccion-cancelada-movil.jpg",
+      "observation": "Cancelación propia pendiente del profesor, confirmada y conservada."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "limite-candidaturas.jpg",
+      "observation": "Tres candidaturas activas impiden la cuarta; enlace a solicitudes para recuperación."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "perfil-pendiente-movil.jpg",
+      "observation": "Cuenta sin perfil no puede enviar y encuentra Completar mi perfil."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "bandeja-movil.jpg",
+      "observation": "Lista móvil con filtro Cancelada, datos de solicitud y estado textual."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "bandeja-vacia-movil.jpg",
+      "observation": "Búsqueda sin resultados conserva filtros y ofrece recuperación."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "conflicto-movil.jpg",
+      "observation": "Dos pestañas cancelando la misma candidatura: segunda recibe conflicto y foco en resumen."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "permiso-movil.jpg",
+      "observation": "Alumno intentando leer solicitud docente ajena recibe403 sin contenido privado."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "proyecto-cerrado-404.jpg",
+      "observation": "Proyecto cerrado sale del catálogo; su historia propia permanece en seguimiento."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "evaluacion-320.jpg",
+      "observation": "Vista empresarial a320px con matrícula reservada omitida y sin desbordamiento."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "rubrica-320.jpg",
+      "observation": "Rúbrica desplegada a320px: controles/etiquetas legibles y puntuaciones nativas."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "texto-largo-320.jpg",
+      "observation": "Título simulado242caracteres sin espacios y texto de responsable largo; reflujo sin desplazamiento horizontal."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "sin-javascript.jpg",
+      "observation": "Envío de candidatura con JavaScript deshabilitado en una base con SQL023 definitivo."
+    }
+  ],
+  "limites": [
+    "Revisión local sin lector de pantalla ni certificación completa de accesibilidad.",
+    "Reflujo320px no cubre todas las variantes de zoom.",
+    "El conector Chrome DevTools estaba ocupado; se usó Playwright aislado y no se ejecutó Lighthouse en este bloque.",
+    "Sin APIs, bandeja general de avisos, reportes ni despliegue institucional."
+  ]
+}

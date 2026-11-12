@@ -1,0 +1,165 @@
+{
+  "fecha_utc": "2026-11-12T03:54:59.940968+00:00",
+  "bloque": "WEB-07",
+  "resultado": "correcto",
+  "contract": "../../DESIGN.md#avisos-y-reportes-de-web-07; bandeja individual y cinco reportes administrativos con componentes existentes.",
+  "targetViewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "entorno": "Chrome157.0.8103.50 real headless y Playwright persistente aislado; servidor8765 con destino temporal comprobado. Solo cuentas ficticias.",
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Tab/Enter activan Saltar al contenido y enfocan MAIN. En asignaciones320px: cero IDs duplicados, campos visibles sin etiqueta o controles menores de44px. Resumen de error recibe foco. Nueve pares de contraste correctos. ReducedMotion=reduce emulado: media=true, transición0s y0animaciones."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Renderizado1440x900 y390x844 más reflujo320px: scrollWidth320=viewport320. Aviso simulado largo sin espacios parte línea; reportes móviles conservan todos los campos y navegación/filtros apilados."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "Durante el submit real de lectura, el observador registró Registrando lectura…, botón disabled y formulario aria-busy=true; después hubo confirmación."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "Cuenta sin avisos y búsquedas SinCoincidenciasWEB07 en ambas pantallas muestran recuperación; los enlaces recuperan sus listados."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Estado de reporte desconocido rechazado por servidor; mensaje Selecciona una opción válida para estado y foco en errores-formulario. Dos páginas fuera de rango ahora se distinguen de filtros vacíos; Primera página conserva los filtros y recupera1aviso/5proyectos."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Aviso sin recurso muestra No hay información adicional disponible; no inventa un enlace. Asignación vigente muestra Sin fecha final."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "GET conserva No leído; POST confirma, reduce contador27→26 y conserva primera fecha ante segundo POST desde pestaña antigua. El enlace lleva a la candidatura real. Los cinco reportes muestran datos; totales de26proyectos filtrados permanecen en página2."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "Alumno en reportes403 y aviso docente ajeno403. Bandejas de alumno/profesor/empresa/administrador consultadas. Mensaje script se ve como texto y main no contiene scripts."
+    }
+  },
+  "comprobaciones_adicionales": {
+    "sin_javascript": "Dos contextos JavaScript=false: login y lectura docente confirmados; reporte filtrado de proyectos correcto.",
+    "carga": "Filtro WEB07 muestra cuatro profesores con cargas2/0/1/0, incluyendo una vigente del profesor inactivo; totales3direcciones y2profesores con carga.",
+    "paginacion": "Avisos página1/2 y regreso; reportes WEB07 página2 conserva buscar y mismos totales del conjunto.",
+    "limpieza": "Nueve sesiones ficticias cerradas; contextos y navegadores propios cerrados, servidoresQA8765 y sus bases eliminados. Un hijo QA rezagado de artisan serve en Windows fue identificado por ruta/puerto y retirado; la revisión adicional usó PHP directo y cerró el puerto. No se intervino el navegador ocupado del conector.",
+    "integracion": "El recorrido CA-01–CA-10 y la preservación exacta de fecha se acreditan adicionalmente mediante las pruebas HTTP, no por las capturas."
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "1440x900",
+      "artifact": "avisos-escritorio.jpg",
+      "observation": "Bandeja propia, búsqueda, lectura y contador; mensaje con HTML presentado como texto."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "aviso-detalle-escritorio.jpg",
+      "observation": "Consultar conserva No leído y ofrece el recurso autorizado y la lectura explícita."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "aviso-leido-escritorio.jpg",
+      "observation": "Confirmación de lectura y primera fecha; desaparece la acción de marcar."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "reporte-proyectos-escritorio.jpg",
+      "observation": "Filtros de proyectos, totales de todas las páginas y tabla con cupos y participantes."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "reporte-candidaturas-escritorio.jpg",
+      "observation": "Estados, proyecto, empresa, solicitante y fecha; filtros propios del reporte."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "reporte-direcciones-movil.jpg",
+      "observation": "Navegación y filtros de dirección se apilan sin desplazamiento horizontal."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "reporte-carga-movil.jpg",
+      "observation": "Cuatro profesores filtrados, cargas2/0/1/0; el profesor inactivo conserva una dirección vigente."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "reporte-asignaciones-movil.jpg",
+      "observation": "Tres participantes del proyecto, con todos los campos y Sin fecha final en vigentes."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "reporte-asignaciones-320.jpg",
+      "observation": "Los registros conservan todos los campos a320px; etiquetas y controles accesibles."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "reporte-vacio-320.jpg",
+      "observation": "Búsqueda sin coincidencias, totales cero y enlace Ver reporte completo."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "reporte-error-320.jpg",
+      "observation": "Estado inválido rechazado por el servidor, con resumen enfocado."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "avisos-movil.jpg",
+      "observation": "Bandeja móvil con filtro de lectura, contador y mensajes que parten línea."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "avisos-vacio-movil.jpg",
+      "observation": "Sin coincidencias: conserva la búsqueda y ofrece Ver todos los avisos."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "aviso-sin-vinculo-movil.jpg",
+      "observation": "Mensaje sin recurso relacionado, sin enlaces inventados y con texto HTML escapado."
+    },
+    {
+      "viewport": "320x800",
+      "artifact": "aviso-texto-largo-320.jpg",
+      "observation": "Mensaje simulado largo sin espacios para comprobar reflujo; después se recargó el contenido real."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "permiso-reportes-movil.jpg",
+      "observation": "Alumno sin permiso para reportes recibe403 sin información privada."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "bandeja-sin-avisos-movil.jpg",
+      "observation": "Cuenta ficticia sin avisos: contador cero y explicación del estado vacío."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "lectura-sin-javascript-movil.jpg",
+      "observation": "Login y lectura del aviso docente confirmados con JavaScript deshabilitado."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "reporte-sin-javascript.jpg",
+      "observation": "Consulta filtrada WEB07/Publicado sin JavaScript:19proyectos,2alumnos y2directores vigentes."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "avisos-pagina-fuera-de-rango-movil.jpg",
+      "observation": "Página999 vacía distingue el total1 y permite volver a Primera página conservando búsqueda y lectura."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "reporte-pagina-fuera-de-rango.jpg",
+      "observation": "Página999 vacía conserva el total5 y retorna a los cinco proyectos con todos los filtros."
+    }
+  ],
+  "limites": [
+    "Revisión local sin lector de pantalla ni certificación completa de accesibilidad.",
+    "Reflujo320px no cubre todas las variantes de zoom.",
+    "Conector Chrome DevTools ocupado; se usó Playwright aislado, sin Lighthouse.",
+    "Sin despliegue institucional ni APIs."
+  ]
+}

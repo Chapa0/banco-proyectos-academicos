@@ -1,0 +1,47 @@
+{
+  "fecha_utc": "2026-11-12T03:59:43.223351+00:00",
+  "resultado": "correcto",
+  "alcance": "Auditoria independiente de cierre documental, trazabilidad, manifiestos y privacidad; sin ejecutar pruebas nuevas.",
+  "documentacion": {
+    "markdown_curados": 18,
+    "enlaces_locales": 535,
+    "anclas_locales": 98,
+    "bloques_codigo_cerrados": 15,
+    "UTF8": true,
+    "trazabilidad": {
+      "RF": 42,
+      "CA": 10,
+      "RNF": 12,
+      "WEB": 7,
+      "casos_tecnicos": 92
+    },
+    "estado": "WEB-01 a WEB-07 completados localmente; limites D-12, APIs y despliegue conservados"
+  },
+  "sha256": {
+    "manifiesto_fuentes": 221,
+    "manifiesto_evidencias": 35,
+    "compilacion": 3,
+    "recibos_sql": 2,
+    "recuperacion_fuentes": 154,
+    "HTTP_fuentes": 949,
+    "sql_fuentes": 58,
+    "instalacion_archivos": 27,
+    "recibos_historicos_preservados": 5,
+    "discrepancias": 0
+  },
+  "recibos_phpunit": {
+    "pruebas": 279,
+    "aserciones": 4717
+  },
+  "privacidad": {
+    "archivos_compartibles_examinados": 363,
+    "archivos_textuales_UTF8": 280,
+    "JSON_validos": 58,
+    "secretos_env_conexion_detectados": false,
+    "rutas_privadas_git_ignoradas": 4,
+    "privados_versionados": false
+  },
+  "limpieza_QA": "Cierre de puertos 8765/8766, navegador propio y cero temporales confirmado por el agente principal; no se repiten operaciones ni pruebas en esta auditoria.",
+  "limites": "No se comparan hashes documentales historicos con fuentes actuales ni se reauditan PDF academicos; este recibo no se incluye a si mismo ni hornea el hash del manifiesto que lo incluira.",
+  "errores": []
+}

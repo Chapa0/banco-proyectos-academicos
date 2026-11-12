@@ -1,0 +1,79 @@
+{
+  "fecha_utc": "2026-11-10T17:30:33.276854+00:00",
+  "resultado": "correcto",
+  "metodo": "Luminancia relativa sRGB y relación WCAG; tokens cotejados con CSS real. Revisión por pares, no certificación completa.",
+  "pares": [
+    {
+      "frente": "#334852",
+      "fondo": "#ffffff",
+      "uso": "text/surface",
+      "relacion": 9.59,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "frente": "#536670",
+      "fondo": "#ffffff",
+      "uso": "muted/surface",
+      "relacion": 6.0,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "frente": "#536670",
+      "fondo": "#f3f5f6",
+      "uso": "muted/canvas",
+      "relacion": 5.48,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "frente": "#ffffff",
+      "fondo": "#245c59",
+      "uso": "surface/accent",
+      "relacion": 7.64,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "frente": "#a52a36",
+      "fondo": "#fbefef",
+      "uso": "danger/danger-bg",
+      "relacion": 6.26,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "frente": "#235b44",
+      "fondo": "#eaf3ee",
+      "uso": "success/success-bg",
+      "relacion": 7.0,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "frente": "#165e91",
+      "fondo": "#ffffff",
+      "uso": "focus/surface",
+      "relacion": 6.9,
+      "minimo": 3,
+      "resultado": "correcto"
+    },
+    {
+      "frente": "#7b8d96",
+      "fondo": "#ffffff",
+      "uso": "control-border/surface",
+      "relacion": 3.45,
+      "minimo": 3,
+      "resultado": "correcto"
+    },
+    {
+      "frente": "#245c59",
+      "fondo": "#ffffff",
+      "uso": "accent/surface",
+      "relacion": 7.64,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    }
+  ]
+}

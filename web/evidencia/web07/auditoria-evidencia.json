@@ -1,0 +1,49 @@
+{
+  "fecha_utc": "2026-11-12T03:50:12.485781+00:00",
+  "resultado": "correcto",
+  "recibos": [
+    "regresion-postgres.json",
+    "conexion-postgres.json",
+    "acceso-regresion.json",
+    "publicacion-regresion.json",
+    "perfiles-regresion.json",
+    "participacion-regresion.json",
+    "unit-feature.json",
+    "regresiones.json"
+  ],
+  "comparaciones_sha256_fuentes": 949,
+  "secretos_privados_en_recibos": false,
+  "cinco_recibos_historicos_preservados": true,
+  "phpunit": {
+    "regresion-postgres.json": {
+      "pruebas": 65,
+      "aserciones": 1402
+    },
+    "conexion-postgres.json": {
+      "pruebas": 13,
+      "aserciones": 37
+    },
+    "acceso-regresion.json": {
+      "pruebas": 34,
+      "aserciones": 292
+    },
+    "publicacion-regresion.json": {
+      "pruebas": 37,
+      "aserciones": 641
+    },
+    "perfiles-regresion.json": {
+      "pruebas": 61,
+      "aserciones": 628
+    },
+    "participacion-regresion.json": {
+      "pruebas": 65,
+      "aserciones": 1703
+    },
+    "unit-feature.json": {
+      "pruebas": 4,
+      "aserciones": 14
+    }
+  },
+  "errores": [],
+  "limites": "Auditoría de recibos HTTP; la revisión visual, SQL e instalación se acreditan aparte."
+}

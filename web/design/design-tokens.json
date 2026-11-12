@@ -1,0 +1,49 @@
+{
+  "color": {
+    "ink": "#183342",
+    "text": "#334852",
+    "muted": "#536670",
+    "accent": "#245c59",
+    "accent-hover": "#1b4845",
+    "canvas": "#f3f5f6",
+    "surface": "#ffffff",
+    "border": "#d9e0e3",
+    "control-border": "#7b8d96",
+    "focus": "#165e91",
+    "danger": "#a52a36",
+    "success": "#235b44",
+    "success-bg": "#eaf3ee",
+    "danger-bg": "#fbefef"
+  },
+  "font": {
+    "family": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
+    "body": "1rem",
+    "small": "0.875rem",
+    "title": "2rem",
+    "section": "1.25rem"
+  },
+  "space": {
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "6": "1.5rem",
+    "8": "2rem",
+    "12": "3rem"
+  },
+  "radius": {
+    "control": "0.375rem",
+    "surface": "0.625rem"
+  },
+  "layout": {
+    "auth-max": "30rem",
+    "form-max": "52rem",
+    "touch-min": "2.75rem",
+    "mobile-breakpoint": "768px",
+    "container-max": "1320px"
+  },
+  "motion": {
+    "duration": "120ms",
+    "reduced": "0ms"
+  }
+}

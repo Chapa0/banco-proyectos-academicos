@@ -1,0 +1,210 @@
+{
+  "archivo": "modelo-entidad-relacion.pdf",
+  "revision_editorial": "1.1",
+  "fecha": "27 de octubre de 2026",
+  "paginas": 15,
+  "formato": "A3 horizontal uniforme",
+  "entidades": 21,
+  "relaciones_fk": 37,
+  "laminas_vectoriales": 6,
+  "secciones": [
+    [
+      1,
+      "Presentación e índice",
+      1
+    ],
+    [
+      1,
+      "Funcionamiento del sistema",
+      2
+    ],
+    [
+      1,
+      "Cómo leer el modelo",
+      3
+    ],
+    [
+      1,
+      "Modelo general completo",
+      4
+    ],
+    [
+      1,
+      "Identidad y representación empresarial",
+      5
+    ],
+    [
+      1,
+      "Proyectos, revisiones y habilidades",
+      6
+    ],
+    [
+      1,
+      "Participación, asignación y acompañamiento",
+      7
+    ],
+    [
+      1,
+      "Evaluación de candidatos",
+      8
+    ],
+    [
+      1,
+      "Autorizaciones, auditoría y notificaciones",
+      9
+    ],
+    [
+      1,
+      "Caso práctico integrado",
+      10
+    ],
+    [
+      1,
+      "Catálogo de entidades",
+      11
+    ],
+    [
+      1,
+      "Reglas de integridad",
+      14
+    ],
+    [
+      1,
+      "Definiciones pendientes y fuentes",
+      15
+    ]
+  ],
+  "ubicacion_diagramas": [
+    {
+      "pagina": 4,
+      "vista": "general",
+      "rect": [
+        58,
+        152,
+        1132.5511811023623,
+        704
+      ],
+      "escala": 0.715
+    },
+    {
+      "pagina": 5,
+      "vista": "identidad",
+      "rect": [
+        58,
+        153,
+        1132.5511811023623,
+        561
+      ],
+      "escala": 1.4783
+    },
+    {
+      "pagina": 6,
+      "vista": "proyectos",
+      "rect": [
+        58,
+        153,
+        1132.5511811023623,
+        561
+      ],
+      "escala": 1.1027
+    },
+    {
+      "pagina": 7,
+      "vista": "participacion",
+      "rect": [
+        58,
+        153,
+        1132.5511811023623,
+        561
+      ],
+      "escala": 0.7984
+    },
+    {
+      "pagina": 8,
+      "vista": "evaluacion",
+      "rect": [
+        58,
+        153,
+        1132.5511811023623,
+        561
+      ],
+      "escala": 1.7
+    },
+    {
+      "pagina": 9,
+      "vista": "control",
+      "rect": [
+        58,
+        153,
+        1132.5511811023623,
+        561
+      ],
+      "escala": 0.7208
+    }
+  ],
+  "modelo_sha256": "f2e968bbb8c7a1a6a64d4181a558e60f1c42702cef3c1ca54998700e4cb788f6",
+  "explicaciones_sha256": "2386050f312b69d86cde81ed8f69086ad08e406cf6b32d9d853a12c1a115c503",
+  "pdf_sha256": "8bdafe2088a6ecabc60c55881e4c919cb177f5cadeab01e4d749d5c1ea330f67",
+  "dimensiones_pt": [
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ],
+    [
+      1190.55,
+      841.89
+    ]
+  ]
+}

@@ -1,0 +1,4 @@
+/.local/
+/database/.local/
+**/__pycache__/
+*.pyc

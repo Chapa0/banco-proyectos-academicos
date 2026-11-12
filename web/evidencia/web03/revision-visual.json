@@ -1,0 +1,115 @@
+{
+  "contract": "../../DESIGN.md: acceso/cambio de clave, panel por rol y cuentas; misma autorización y PostgreSQL; jerarquía útil, sin módulos ficticios; 390x844 y 1440x900, reflujo adicional 320 px.",
+  "targetViewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Controles visibles de al menos 44 px en acceso/cuentas/edición; etiquetas nativas y ayudas vinculadas; Tab alcanzó Saltar al contenido, Enter movió foco al main; foco visible; resumen de errores enfocado; ocho pares de contraste calculados en contraste.json. Lighthouse snapshot móvil del acceso: accesibilidad100, 32 comprobaciones aprobadas, ninguna fallida. En el navegador las superficies no tienen animación; se inspeccionó en la hoja cargada la regla de movimiento reducido. No se usó un lector de pantalla ni se emuló esa preferencia del sistema."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Acceso, lista y administración revisados a 390x844 y1440x900. Lista cambia a registros móviles con los mismos datos; edición y panel con nombre de143caracteres sin espacios no desbordan. Reflujo extra320px correcto en edición/panel. Contraseñas se mantuvieron vacías tras error."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "Envío real del alta con requestSubmit: HTML válido, aria-busy=true, botón deshabilitado, estado «Enviando…» fuera del formulario ocupado; navegación terminó con error de confirmación y permitió corregir/reintentar."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "Filtro Sin coincidencia WEB03 devolvió0cuentas, explicó la ausencia y ofreció Ver todas las cuentas; captura cuentas-vacio.jpg."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Contraseñas de confirmación diferentes devolvieron error de servidor, resumen enfocado y mensaje asociado al campo; nombres/correo conservados y contraseñas vacías; alta-error-movil.jpg. Regresión adicional de correo array probada por HTTP contra PostgreSQL."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Alta de alumno sin perfil académico ni empresa: edición y panel mostraron identidad/correo/rol disponibles sin inventar razón social, estadísticas o módulos; alta-exito-movil.jpg y panel-alumno-movil.jpg."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Alta válida confirmó cuenta creada en la página de administración; login temporal exigió cambio de clave y el cambio confirmó cierre de las otras sesiones; después se accedió al panel."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "Alumno solicitó /admin/cuentas: respuesta real403, explicación sin datos de cuentas y enlace al panel; permiso-movil.jpg."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "1440x900",
+      "artifact": "login-escritorio.jpg",
+      "observation": "Acceso centrado, una tarea, campos etiquetados y ayuda breve."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "login-movil.jpg",
+      "observation": "Acceso móvil y aviso de sesión cerrada, foco en correo sin desborde."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "panel-escritorio.png",
+      "observation": "Panel administrativo con dos unidades funcionales y correo visible."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "cuentas-escritorio.jpg",
+      "observation": "Filtros y tabla con nombre/correo/rol/estado/administración."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "cuentas-movil.jpg",
+      "observation": "Filtros apilados y comienzo de registros móviles."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "cuentas-vacio.jpg",
+      "observation": "Búsqueda vacía con recuperación."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "alta-error-movil.jpg",
+      "observation": "Resumen de error con foco, campo señalado y contraseñas vacías."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "alta-exito-movil.jpg",
+      "observation": "Alta confirmada y nombre largo ajustado, sin empresa inventada para alumno."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "administrar-escritorio.jpg",
+      "observation": "Formularios separados de datos, contraseña y relevo; superficie de estado ajustada a su contenido."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "administrar-movil.jpg",
+      "observation": "Los mismos formularios apilados y etiquetas legibles."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "clave-movil.jpg",
+      "observation": "Cambio temporal obligatorio, ayudas y acción visibles."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "panel-alumno-movil.jpg",
+      "observation": "Panel de alumno con texto largo, correo real de prueba y sin navegación administrativa."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "permiso-movil.jpg",
+      "observation": "Página403 con explicación y enlace seguro de regreso."
+    }
+  ],
+  "limits": [
+    "Capturas de cuentas ficticias y servidor local aislado; no se cambió el primer administrador de la base de trabajo.",
+    "Reflujo a320px acredita ancho disponible, no una revisión completa de todos los ajustes de zoom o navegadores.",
+    "Movimiento reducido: regla cargada inspeccionada, preferencia del sistema no emulada; lector de pantalla no probado.",
+    "Lighthouse corresponde al acceso móvil en modo snapshot y no certifica toda la aplicación.",
+    "No hay APIs ni despliegue ni recorridos WEB-04 y posteriores."
+  ]
+}

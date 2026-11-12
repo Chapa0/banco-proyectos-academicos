@@ -1,0 +1,12 @@
+{
+  "fecha_utc": "2026-11-12T03:54:02.402Z",
+  "resultado": "correcto",
+  "avisos": {
+    "primera": "http://127.0.0.1:8765/avisos?page=1&buscar=AVISO_XSS_WEB07&estado=no_leidos",
+    "recuperado": 1
+  },
+  "reportes": {
+    "primera": "http://127.0.0.1:8765/reportes/proyectos?page=1&buscar=Proyecto%20WEB07&estado=publicado&empresa_id=-220102",
+    "recuperado": 5
+  }
+}

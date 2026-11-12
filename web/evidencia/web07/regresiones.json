@@ -1,0 +1,59 @@
+{
+  "fecha_utc": "2026-11-12T03:49:54.290651+00:00",
+  "resultado": "correcto",
+  "recibos_historicos": {
+    "evidencia\\postgres.json": "a9c3d2969feedc6d0456afaa42a33a30fd39aca8082d11ff1a051a2d12db048c",
+    "evidencia\\web02-postgres.json": "40f75e40e0c01f9829a512f3bbb2aefa3613325b549dac62864609cc102f46ea",
+    "evidencia\\web04\\regresion-postgres.json": "e88049d36a621e12173176f504487e68c1f0661ee30d9bf2a21c99e53d5f0e08",
+    "evidencia\\web05\\regresion-postgres.json": "8daff0ecef6e79c4ba00d2722fcd7f8e85d8f40a903147cc60593169efb7631e",
+    "evidencia\\web06\\regresion-postgres.json": "1178c7c29ca0c6d22a80eeea6d7d98c733612028c7514579b749735f6415f1b4"
+  },
+  "verificados_byte_a_byte": true,
+  "regresiones": [
+    {
+      "suite": "postgres.py",
+      "correcto": true,
+      "phpunit": {
+        "pruebas": 13,
+        "aserciones": 37
+      },
+      "recibo": "conexion-postgres.json"
+    },
+    {
+      "suite": "acceso.py",
+      "correcto": true,
+      "phpunit": {
+        "pruebas": 34,
+        "aserciones": 292
+      },
+      "recibo": "acceso-regresion.json"
+    },
+    {
+      "suite": "publicacion.py",
+      "correcto": true,
+      "phpunit": {
+        "pruebas": 37,
+        "aserciones": 641
+      },
+      "recibo": "publicacion-regresion.json"
+    },
+    {
+      "suite": "perfiles.py",
+      "correcto": true,
+      "phpunit": {
+        "pruebas": 61,
+        "aserciones": 628
+      },
+      "recibo": "perfiles-regresion.json"
+    },
+    {
+      "suite": "participacion.py",
+      "correcto": true,
+      "phpunit": {
+        "pruebas": 65,
+        "aserciones": 1703
+      },
+      "recibo": "participacion-regresion.json"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+@props(['estado'])
+@php($etiquetas = ['borrador' => 'Borrador', 'en_revision' => 'En revisión', 'en_correccion' => 'En corrección', 'publicado' => 'Publicado', 'rechazado' => 'Rechazado', 'en_curso' => 'En curso', 'pausado' => 'Pausado', 'finalizado' => 'Finalizado', 'cancelado' => 'Cancelado', 'aprobada' => 'Aprobada', 'rechazada' => 'Rechazada', 'cancelada' => 'Cancelada'])
+<span class="status-badge {{ in_array($estado, ['publicado','aprobada']) ? 'status-active' : (in_array($estado, ['rechazado','rechazada','cancelado','cancelada']) ? 'status-rejected' : 'status-inactive') }}">{{ $etiquetas[$estado] ?? $estado }}</span>

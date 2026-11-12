@@ -1,0 +1,253 @@
+{
+  "fecha_utc": "2026-11-12T03:37:28.771479+00:00",
+  "resultado": "correcto",
+  "base": "banco_proyectos",
+  "servidor": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+  "conexion": "127.0.0.1:55432",
+  "esquema": "banco",
+  "tablas": 21,
+  "columnas": 164,
+  "restricciones": 263,
+  "indices": 86,
+  "triggers": 75,
+  "funciones": 148,
+  "secuencias": 15,
+  "migraciones_aplicadas": 24,
+  "contenido_previo": "WEB-07: las 21 tablas, 15 secuencias, 23 registros técnicos previos, 141 funciones y siete artefactos académicos se conservaron exactamente; solo 024, sin semillas.",
+  "esquema_sql": "sql/esquema.sql",
+  "restauracion_base_trabajo": {
+    "resultado": "correcto",
+    "tablas": 21,
+    "filas_por_tabla": {
+      "acompanamiento": 0,
+      "alumno": 1,
+      "alumno_habilidad": 1,
+      "asignacion_alumno": 0,
+      "asignacion_direccion": 0,
+      "candidatura": 0,
+      "criterio_evaluacion": 0,
+      "decision_administrativa": 0,
+      "detalle_evaluacion": 0,
+      "empresa": 1,
+      "evaluacion_candidato": 0,
+      "evento_auditoria": 2,
+      "habilidad": 1,
+      "notificacion": 0,
+      "profesor": 1,
+      "proyecto": 1,
+      "proyecto_habilidad": 1,
+      "representacion_empresa": 1,
+      "revision_proyecto": 0,
+      "solicitud_direccion": 0,
+      "usuario": 5
+    },
+    "sha256_respaldo": "744db7a596acc88bc0a0e9d62785779d6674b62ccda0049bbad37f89a2c4511b",
+    "sha256_contenido_por_tabla": {
+      "acompanamiento": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "alumno": "f1434723107c22575015257841acff469aa8ca578fe33cd20ba6226e33735ec1",
+      "alumno_habilidad": "c9baf78da61be0d45a0ad58f52f96b2d72d38f964ddfefa16ffba444c7e3ce59",
+      "asignacion_alumno": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "asignacion_direccion": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "candidatura": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "criterio_evaluacion": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "decision_administrativa": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "detalle_evaluacion": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "empresa": "078f491f5324e0120b03c79ebdb4549596bc6836f7392887eec102f90f89684b",
+      "evaluacion_candidato": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evento_auditoria": "02e41147487129d7ccbb7553b37b579e4600ba43fcefe25852b86298d1d7e742",
+      "habilidad": "400624acf82d7c92f948457f9ccd54ed0902ca7bb97f63f5e69b1f236ce2f11a",
+      "notificacion": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "profesor": "b08fb01118daaa2611f499601b220638bef1ab938ee4252139af0f9e82a56cab",
+      "proyecto": "41221f5207cdfcf69e4c62670fee32a2ea3e516fa49e45106a7fe6727a4f4b45",
+      "proyecto_habilidad": "13f49dd1e3fc99ea1312eaad0a84f58d329d7252812bfbd5d190eb60a560eb5c",
+      "representacion_empresa": "b7fa49391183581a372e19c6e6d7c0cee948b939ad070692398399fcf486e5df",
+      "revision_proyecto": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "solicitud_direccion": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "usuario": "03a155465cef2b2d2f45d74c5cb9e990a146afe062469bafa6208944111dabba"
+    },
+    "secuencias": {
+      "acompanamiento_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "asignacion_alumno_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "asignacion_direccion_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "candidatura_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "criterio_evaluacion_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "decision_administrativa_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "empresa_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": true
+      },
+      "evaluacion_candidato_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "evento_auditoria_id_seq": {
+        "ultimo_valor": 2,
+        "llamada": true
+      },
+      "habilidad_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": true
+      },
+      "notificacion_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "proyecto_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": true
+      },
+      "revision_proyecto_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "solicitud_direccion_id_seq": {
+        "ultimo_valor": 1,
+        "llamada": false
+      },
+      "usuario_id_seq": {
+        "ultimo_valor": 13,
+        "llamada": true
+      }
+    },
+    "historial_migraciones": "catálogo, versiones, checksum y fechas idénticos; migrate posterior sin cambios",
+    "alcance": "Restauración en otra base: estructura, permisos de esquemas y objetos, contenido, secuencias, historial técnico, migración posterior e integridad comprobados."
+  },
+  "sha256_archivos": {
+    "manage.py": "29ceccc336cb8e290638e77dadf226a09d05b053240c071c022fc0db149e584f",
+    "migrations/001_estructura.sql": "f6423fc7fd0e5baed92e093804b246a37b776837be48ecc4175953660ee464ec",
+    "migrations/002_integridad.sql": "7b81c45c4f1417555612663db2e2ae5d70a1e8a33dd77269a3295b8bf303519c",
+    "migrations/003_publicacion.sql": "d56080edfd3415f90f4f0a814023ec6ad2527ded8c50fc7742b441ba357cb3e8",
+    "migrations/004_cupo_publicacion.sql": "5764cf01fdb66486bbc0bff158683d74969631e713f235801f64bbb6d80e5e8c",
+    "migrations/005_director_unico.sql": "f1d9a02eead486b010c4418691df1d06a93ba4b6205e2f7ec3683d4c32b1825d",
+    "migrations/006_cupos_y_carga.sql": "7cd435d95f5bcfbf7216458a1995dc339d5dae0d5aad07b07eb45c2a701111cf",
+    "migrations/007_inicio_proyecto.sql": "ad7a38d25af63a4f1bb3484bd9092e07dc95dec764a37f3a55ec2425e9ff6bf0",
+    "migrations/008_envio_participaciones.sql": "06be79022790f8c215073a70fefeffb2dcffa3b535090fa1ca9f80443b00dff3",
+    "migrations/009_texto_solicitud.sql": "41314d9fb1413f86eb00f95aead01e112e923ab1197faffd2365191f37012e79",
+    "migrations/010_alta_cuentas.sql": "7328d69c26cde1ec4f892a2458f82bd669ac710a8087066cab3dee36cdd91e24",
+    "migrations/011_textos_obligatorios.sql": "b6d97d9c74ce45882f7ef943a11aadf914274ccf3e2605102320d189f269d16e",
+    "migrations/012_cancelacion_candidatura.sql": "6787dd13bdf715dcc85e5b4f543fa3df3e2494b38b54065b23ecdefcf5353000",
+    "migrations/013_retiro_pausa_reanudacion.sql": "a912ebfc12a344157e8ec31fb2f681750a09b2fee691c3f63c3444cb0dfcf7da",
+    "migrations/014_cierre_proyectos.sql": "bd2721c175d698c33b44388ba0d4c785d578f5f270a9145662494eb05f048aa0",
+    "migrations/015_cancelacion_solicitud_direccion.sql": "1cc37ed7e40dde734dd0100cd1b8470017aea16cb02592e6a1ea0728065d36dc",
+    "migrations/016_evaluacion_autorizacion.sql": "1915da2c86d6d396b1973a25fece4c6dc90f6e678e0a672dbe5d1cfbff0d4969",
+    "migrations/017_cuentas_y_privacidad.sql": "e4795f0487c5d8c79667fbdeec31e94a3c2504166a2e8345a79d44b801081411",
+    "migrations/018_notificaciones_internas.sql": "c5c7966e10bfeeef13eda742870c7cc9e61d5eca6c7365ba6f1c82c89d217924",
+    "migrations/019_conexion_web.sql": "cbaa751bc53e3724cf6358d39480d9ebdf53f92126d454e888ccf4d561e86a3a",
+    "migrations/020_acceso_web.sql": "0dc3d1fe0531a293e6389b4cf2f897deaabf6b8df7396e4a0612401c94643cd9",
+    "migrations/021_publicacion_web.sql": "e5a3c199ff0abc920d35221cd2e52f6ef47fbb103bd4de4b035a035a55601313",
+    "migrations/022_perfiles_catalogo_web.sql": "d3d692921926afdda31832f2c15a221b289453414e0852ede696dae9e26fed66",
+    "migrations/023_participacion_web.sql": "6d36e50dba585811ad571518d30d0c6efc38c09c05b92bbca4bf5c9364da187f",
+    "migrations/024_avisos_reportes_web.sql": "82ca5a402ab35bdd1897d2a1390d0778c26fef68a9fabc091e0aae61947887d3",
+    "seed.sql": "4e996c7a6552a092551f4f802fd975f652a8cd2f6397b1d7ab40f803b3789ada",
+    "sql/esquema.sql": "e534267d29425ac33948f812268c92003e8ffbb98e359ff7c050435e5f6c5855"
+  },
+  "fuentes_verificadas": "27 archivos de instalación coinciden con sus SHA actuales; 58 fuentes de la suite SQL coinciden; los recibos históricos conservan su fecha.",
+  "proteccion_entregas": "Siete PDF/JSON académicos comparados con sus SHA previos; sin modificaciones.",
+  "reglas_hba": "scram-sha-256",
+  "cobertura_modelo": {
+    "entidades": 21,
+    "relaciones": 37,
+    "fk_fisicas": 54
+  },
+  "politicas_pendientes": [],
+  "datos_institucionales_por_conocer": [
+    "D-12 alojamiento, calendario, equipo y carga de producción",
+    "D-10 retención legal de producción"
+  ],
+  "limite": "Instalación PostgreSQL local verificada con 24 migraciones; las pruebas SQL e instalación acreditan operaciones y recuperación de base. Recorridos HTTP, revisión visual y recuperación combinada con Laravel tienen evidencia separada; no acredita APIs ni despliegue institucional.",
+  "columnas_catalogadas": 169,
+  "columnas_vistas": 5,
+  "conexion_web": "proweb_web: miembro banco_web, 38 gateways concretos; sin superusuario, DDL o SELECT/DML general de tablas privadas.",
+  "primer_acceso": "Primer administrador local con bcrypt12 y cambio inicial obligatorio, auditado por sistema; solo el administrador ficticio exacto quedó inactivo, sin borrar historia. Clave no publicada. Repetición sin cambios y proveedor Laravel verificado; demás19 tablas conservadas.",
+  "filas_por_tabla": {
+    "acompanamiento": 0,
+    "alumno": 1,
+    "alumno_habilidad": 1,
+    "asignacion_alumno": 0,
+    "asignacion_direccion": 0,
+    "candidatura": 0,
+    "criterio_evaluacion": 0,
+    "decision_administrativa": 0,
+    "detalle_evaluacion": 0,
+    "empresa": 1,
+    "evaluacion_candidato": 0,
+    "evento_auditoria": 2,
+    "habilidad": 1,
+    "notificacion": 0,
+    "profesor": 1,
+    "proyecto": 1,
+    "proyecto_habilidad": 1,
+    "representacion_empresa": 1,
+    "revision_proyecto": 0,
+    "solicitud_direccion": 0,
+    "usuario": 5
+  },
+  "datos_locales": "Cuatro cuentas ficticias conservadas (administrador ficticio inactivo) y un administrador inicial válido con acceso temporal privado; las contraseñas no se incluyen en evidencia.",
+  "runtime_minimo": {
+    "privilegios": {
+      "omitir_rls": false,
+      "crear_bases": false,
+      "crear_roles": false,
+      "replicacion": false,
+      "superusuario": false,
+      "miembro_banco_web": true
+    },
+    "tablas_privadas_accesibles": 0,
+    "gateways_sd": 38
+  },
+  "preservacion_web05": {
+    "tablas": 21,
+    "conteos": true,
+    "huellas": true,
+    "secuencias": 15,
+    "historial_previo": 21,
+    "migraciones001021_inmutables": true,
+    "academicos": 7
+  },
+  "temporales_propias_restantes": 0,
+  "preservacion_web06": {
+    "tablas": 21,
+    "conteos": true,
+    "huellas": true,
+    "secuencias": 15,
+    "historial_previo": 22,
+    "migraciones001022_inmutables": true,
+    "funciones_previas": 125,
+    "academicos": 7
+  },
+  "temporales_de_otros_bloques": "QA de root bajo su control; no forma parte de las temporales de esta instalación.",
+  "preservacion_web07": {
+    "tablas": 21,
+    "conteos": true,
+    "huellas": true,
+    "secuencias": 15,
+    "historial_previo": 23,
+    "migraciones001023_inmutables": true,
+    "funciones_previas": 141,
+    "academicos": 7
+  },
+  "esquema_exportado_verificado": {
+    "resultado": "correcto",
+    "sha256": "e534267d29425ac33948f812268c92003e8ffbb98e359ff7c050435e5f6c5855",
+    "comparacion": "Esquema exportado cargado en base nueva propia; catálogo estructural idéntico. ACL excluidas de este archivo con --no-privileges; ACL sí cotejadas en restore_check.",
+    "temporal_propia_eliminada": true
+  }
+}

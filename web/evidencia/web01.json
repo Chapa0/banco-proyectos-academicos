@@ -1,0 +1,98 @@
+{
+  "fecha_utc": "2026-11-10T14:25:26.168020+00:00",
+  "resultado": "correcto",
+  "bloque": "WEB-01",
+  "versiones": {
+    "php": "8.5.12",
+    "laravel": "13.40.0",
+    "composer": "2.11.2",
+    "node": "24.14.1",
+    "npm": "10.5.2",
+    "bootstrap": "5.3.8",
+    "vite": "8.3.7",
+    "laravel_vite_plugin": "3.2.1"
+  },
+  "pagina": "http://127.0.0.1:8000/",
+  "phpunit": {
+    "unit_feature": {
+      "pruebas": 4,
+      "aserciones": 13
+    },
+    "integracion": {
+      "pruebas": 13,
+      "aserciones": 37,
+      "recibo": "postgres.json"
+    }
+  },
+  "dependencias": "Composer install/validate/check-platform-reqs/audit correctos; npm ci/build y audit sin vulnerabilidades conocidas en esta ejecución.",
+  "calidad": "Pint correcto; config/route/view cache compilados y config/route cache limpiados al terminar.",
+  "http": {
+    "php": "8.5.12",
+    "sapi": "cli-server",
+    "pdo_pgsql": true,
+    "base": "banco_proyectos",
+    "esquema": "banco",
+    "zona_horaria": "UTC",
+    "usuario": "proweb_web"
+  },
+  "sonda_temporal": "Retirada; petición posterior devolvió404. No hay ruta pública de diagnóstico de BD.",
+  "navegador": {
+    "escritorio_ancho": 1367,
+    "movil": {
+      "ancho": 390,
+      "alto": 844
+    },
+    "sin_desborde_horizontal": true,
+    "anclas_validas": true,
+    "foco_visible_y_salto_contenido": true,
+    "consola_sin_errores_advertencias": true,
+    "revision_visual": "Correcta en escritorio y móvil; base visual, no navegación por rol todavía."
+  },
+  "preservacion": "21 huellas, cantidades y quince secuencias de trabajo conservadas;001–018 inmutables.019 solo permisos.",
+  "configuracion": "Credencial LOGIN propia, grupo banco_web mínimo, APP_KEY aleatoria, secretos ignorados porGit; provisión repetida conserva archivo y credenciales.",
+  "limites": "Sin login, autorregistro, paneles por rol, edición/publicación web ni APIs; WEB-02 es el siguiente bloque.",
+  "sha256_fuentes": {
+    "database\\provision_web.py": "fa00ab88c65918b4d70d2f9d9b6e3a8e945e9b03419dfed9a050ab6df6012699",
+    "web\\.env.example": "283b7bc28504886a9e7855412c6590066b2a26303d3081e7bc0a9b532aae77ea",
+    "web\\app\\Console\\Commands\\ComprobarConexion.php": "b8afec9ff40ab445deb8332f69f4edbc6bf4a8307cb9cb5725a0dbfdf74385ce",
+    "web\\app\\Http\\Controllers\\Controller.php": "25d1c1ef8e6cc8a376553faacfba2b07d9dfaee9bdbb84f14f77517580e9deb1",
+    "web\\app\\Http\\Controllers\\InicioController.php": "4ebf1af2663ddc06dff5ee6558c1707c7226b243eee519fdf27b2762a8308b0a",
+    "web\\app\\Models\\Usuario.php": "1e2e9f1fa4d991d54119bb77b5676cc1b2c14602cb7f4404f45e360f763a4932",
+    "web\\app\\Providers\\AppServiceProvider.php": "d0879b52fa057919d6020a369790a05142c95672d91c8a1818305fdfe7b16ebc",
+    "web\\app\\Services\\ConexionPostgres.php": "aaeeac0afba36b214be9f0dcb12a2c8e77235e6c12283c0f1e5331407bbcc17f",
+    "web\\bootstrap\\app.php": "5affac529645646b3e4d599096e79c194aac63e8293690364b856d72c1e9ecbf",
+    "web\\bootstrap\\providers.php": "f720e185207a343d4c19fc99dbb317a4187efbcd7d38a303a695bbdd77ffb943",
+    "web\\composer.json": "48a1d8ec5da933d162d789d649ad21b527c3a3ae0f162535d9c8c3d7c1baa7ff",
+    "web\\composer.lock": "4a7b1682cabf28fe995d52bf01487ddfb3aa22ac2cc447b38f44bc52312995b6",
+    "web\\config\\app.php": "4f49f720bf4070eee15b0b44ea3128c434e506ff5c44103f6a2469a83df32f44",
+    "web\\config\\auth.php": "ec1f1ee005c28770c2c7c0a23dd4ff991544ad9b919e2a3b6ec1e2e4df16a5be",
+    "web\\config\\cache.php": "5030cdf171704e58b96f2cf17f1c6d5921b27d5c63c2cefb730eeb2da49a8240",
+    "web\\config\\database.php": "a3b800f64303501bf533c42542780e6a16ccc82c062c07a0b437b71840845e56",
+    "web\\config\\filesystems.php": "ba7060d7a23e490c3ce830656f6d24ad3ccf5b868e3293f2a12e411959dc5635",
+    "web\\config\\logging.php": "beb1ffd0db910f6f0b4f75214c3d5aa385d692733ece8a450f4c169d2c99ce38",
+    "web\\config\\mail.php": "c43ff49a31c5f32ce21eb7159f2a4b3cd2f4074eaed5838d265646dbfedd3474",
+    "web\\config\\queue.php": "6101774da7c8b79af46d0028f2b8b31a484c3f7eda10b76e5b27b6093ad364a4",
+    "web\\config\\services.php": "b7ee786ea1adbc92db9f229f479431c94503527c47051da3862eb0e4d7db70aa",
+    "web\\config\\session.php": "64272cfbef6f47c65bf857f1c5b1e853700c0d0278de46b86663fd83ef4aeed8",
+    "web\\dev.ps1": "ce311c3d828e0baf33dd3a962c57cf9b3f5af28c0ff9d4bbca068d38a27fef11",
+    "web\\package-lock.json": "fe87522b034d84997e8f9c2a26eeb2d380bf849ed5ab62974aa1a95829607207",
+    "web\\package.json": "97e38877f4fa1f19b011eeec73f134b3b223b75d0428455bbb6de2458765019b",
+    "web\\phpunit.xml": "fcbc25d56b806c08027440c7e6f47ddd5526e9104dc8e40400fc671cd041da98",
+    "web\\public\\index.php": "eba77cba39695b6bd091fe5211d481f7ebb2ce2d8d26230b5a609465d0a4aff9",
+    "web\\resources\\css\\app.css": "bf3c7455a2ec6726e83f05eedb982f448ccd9591c769e7af7d51dea004909562",
+    "web\\resources\\js\\app.js": "ffef161dd7b3af3c2a56fc647a0313293736075ed5dbacb674e40ec003657091",
+    "web\\resources\\views\\inicio.blade.php": "97da201e232c0925ae25e600b4d967703d43e5514607971ec486bd9be7e1ebc6",
+    "web\\resources\\views\\layouts\\app.blade.php": "dc8748934979b46d2b4d2b27d106064b74fcd1d9f0d0e1602a3a34cd86c1e8ce",
+    "web\\routes\\console.php": "9adccc33e7dd400683e434774077c7fdb2f299c5712cedf16a43fdf56f2850fa",
+    "web\\routes\\web.php": "0a6c9ccab4ce1ec5755316e2e6ad1aa8f1864a4bc22fabec9e4d00b3be862324",
+    "web\\tests\\Feature\\InicioTest.php": "8e7c8f77ff9ef123e1c1ed0647bdebb942d6c2e66f65024e78693b0ad20632a1",
+    "web\\tests\\Feature\\ProteccionEsquemaTest.php": "1b4d588edc56d4339e13feccdb9b2aee91736c788f58071769d4a8cb77365ceb",
+    "web\\tests\\Integration\\PostgresConnectionTest.php": "dc955929d3a270bd41e28a402c98f878e51f855782120f5101e87db33679dbd9",
+    "web\\tests\\postgres.py": "bcd2bf738b4687e2af3f0a6d1b543c24207326cc067a79244fd3079c3a5db7ab",
+    "web\\tests\\TestCase.php": "c7c209f5579c42647c1f7b2a79ac828e8b54ac62a98442045a6e94fa2c0d0ebc",
+    "web\\tests\\Unit\\UsuarioTest.php": "b9343ffc2dd973722dfa2d5cc6b14da12f9707ba482edf55f16b5afc664db3e4",
+    "web\\vite.config.js": "3ad93993836e4be8edc23190f489eb28fff8dfe6e23964e715f231d233247c0a"
+  },
+  "guard_provision": "Verificado en PostgreSQL real: acepta019enbase destino; rechaza001–018 aunque banco_web exista globalmente. Sin cambios de roles/.env, temporal eliminada.",
+  "guard_provision_fecha_utc": "2026-11-10T14:32:25.718711+00:00"
+}

@@ -1,0 +1,79 @@
+{
+  "fecha_utc": "2026-11-12T03:01:40.687866+00:00",
+  "resultado": "correcto",
+  "metodo": "Luminancia relativa sRGB; tokens cotejados con CSS. Comprobación por pares, no certificación completa.",
+  "pares": [
+    {
+      "uso": "text/surface",
+      "frente": "#334852",
+      "fondo": "#ffffff",
+      "relacion": 9.59,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "uso": "muted/surface",
+      "frente": "#536670",
+      "fondo": "#ffffff",
+      "relacion": 6.0,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "uso": "muted/canvas",
+      "frente": "#536670",
+      "fondo": "#f3f5f6",
+      "relacion": 5.48,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "uso": "surface/accent",
+      "frente": "#ffffff",
+      "fondo": "#245c59",
+      "relacion": 7.64,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "uso": "danger/danger-bg",
+      "frente": "#a52a36",
+      "fondo": "#fbefef",
+      "relacion": 6.26,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "uso": "success/success-bg",
+      "frente": "#235b44",
+      "fondo": "#eaf3ee",
+      "relacion": 7.0,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    },
+    {
+      "uso": "focus/surface",
+      "frente": "#165e91",
+      "fondo": "#ffffff",
+      "relacion": 6.9,
+      "minimo": 3,
+      "resultado": "correcto"
+    },
+    {
+      "uso": "control-border/surface",
+      "frente": "#7b8d96",
+      "fondo": "#ffffff",
+      "relacion": 3.45,
+      "minimo": 3,
+      "resultado": "correcto"
+    },
+    {
+      "uso": "accent/surface",
+      "frente": "#245c59",
+      "fondo": "#ffffff",
+      "relacion": 7.64,
+      "minimo": 4.5,
+      "resultado": "correcto"
+    }
+  ]
+}

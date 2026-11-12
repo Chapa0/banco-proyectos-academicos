@@ -1,0 +1,8 @@
+{
+  "pg_bin": "C:/ruta/postgresql18/bin",
+  "host": "127.0.0.1",
+  "port": 55432,
+  "user": "proweb_admin",
+  "database": "banco_proyectos",
+  "passfile": "C:/ruta/proyecto/database/.local/secrets/pgpass.conf"
+}

@@ -1,0 +1,60 @@
+{
+  "archivo": "modelo-conceptual-y-flujo.pdf",
+  "fecha": "27 de octubre de 2026",
+  "paginas": 3,
+  "formato": "A4 horizontal uniforme",
+  "chen": {
+    "entities": [
+      "Empresa",
+      "Proyecto",
+      "Alumno",
+      "Profesor",
+      "Candidatura",
+      "Solicitud de\ndirección",
+      "Administrador"
+    ],
+    "entity_count": 7,
+    "relationships": [
+      "propone",
+      "evalua",
+      "presenta_candidatura",
+      "corresponde_candidatura",
+      "presenta_direccion",
+      "corresponde_direccion",
+      "resuelve_candidatura",
+      "resuelve_direccion",
+      "participa",
+      "dirige"
+    ],
+    "relationship_count": 10,
+    "attributes": [
+      "matrícula",
+      "especialidad"
+    ],
+    "attribute_count": 2,
+    "cardinality_count": 20,
+    "bounds": [
+      35,
+      116,
+      790,
+      499
+    ],
+    "omitted_detail": "Acompañamiento, habilidades e historial se explican en el informe y en el modelo lógico."
+  },
+  "pdf_sha256": "c8f0bf74a2cc7c5f2b25332313a5d20bb59c24a4bd2621eae8387604bdad288d",
+  "dimensiones_pt": [
+    [
+      841.89,
+      595.28
+    ],
+    [
+      841.89,
+      595.28
+    ],
+    [
+      841.89,
+      595.28
+    ]
+  ],
+  "modelo_logico_sha256": "f2e968bbb8c7a1a6a64d4181a558e60f1c42702cef3c1ca54998700e4cb788f6"
+}

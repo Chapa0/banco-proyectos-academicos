@@ -1,0 +1,69 @@
+{
+  "revision": "1.1",
+  "fecha": "27 de octubre de 2026",
+  "introduccion": "El banco de proyectos académicos conecta necesidades tecnológicas de empresas con alumnos y profesores. La empresa registra proyectos y revisa a sus candidatos; los alumnos presentan candidaturas y los profesores solicitan dirigir proyectos. El administrador controla la publicación y autoriza las participaciones. El modelo permite identificar quién solicitó, quién evaluó, quién resolvió y qué participación quedó formalizada.",
+  "objetivo": "Explicar cómo se organiza la información del sistema y por qué sus entidades se relacionan de esta manera, desde el registro de cuentas hasta las asignaciones y su historial.",
+  "areas": {
+    "identidad": {
+      "proposito": "Distingue a las personas que acceden al sistema de las organizaciones que representan. Usuario conserva la cuenta y su rol; Alumno y Profesor contienen los perfiles académicos; Empresa conserva los datos de la organización.",
+      "relaciones": ["Usuario → RepresentacionEmpresa, 1 / 0..1: cada cuenta tiene como máximo un vínculo empresarial; una cuenta de otro rol no lo necesita.", "Empresa → RepresentacionEmpresa, 1 / 1..N: conserva representantes anteriores y mantiene exactamente uno vigente con cuenta activa."],
+      "ejemplo": "El administrador crea la cuenta de Elena y la vincula con Nova. Elena completa los datos de la empresa. Los proyectos pertenecen a Nova y conservan la identidad de quien los registró.",
+      "clave": "La cuenta de una persona y el registro de la empresa son conceptos distintos. D-09 fija las altas administrativas y la representación activa."
+    },
+    "proyectos": {
+      "proposito": "Describe qué necesita la empresa, qué contenido se somete a revisión y qué habilidades requiere el proyecto. El catálogo de habilidades también permite describir las capacidades de los alumnos.",
+      "relaciones": ["Empresa → Proyecto, 1 / 0..N: cada proyecto tiene una empresa propietaria; una empresa puede conservar varios proyectos.", "Proyecto → RevisionProyecto, 1 / 0..N: cada envío a revisión conserva el contenido y los requisitos recibidos."],
+      "ejemplo": "Nova propone un sistema de inventario que requiere bases de datos. Lucía declara esa habilidad en su perfil con su propio nivel y evidencia. El requisito y el conocimiento del alumno se conservan por separado.",
+      "clave": "AlumnoHabilidad indica lo que sabe el alumno; ProyectoHabilidad, lo que requiere el proyecto. Ambas resuelven relaciones de muchos a muchos."
+    },
+    "participacion": {
+      "proposito": "Separa la intención de participar de la participación autorizada. Candidatura registra la solicitud del alumno y SolicitudDireccion la del profesor; las asignaciones conservan sus formalizaciones independientes.",
+      "relaciones": ["Candidatura → AsignacionAlumno, 1 / 0..1: una solicitud puede terminar sin asignación o dar lugar a una formalización autorizada.", "AsignacionDireccion → Acompanamiento, 1 / 0..N: conserva vínculos históricos con participaciones de alumnos del mismo proyecto."],
+      "ejemplo": "Lucía se postula y Raúl solicita dirigir el proyecto. Después de autorizar cada participación por separado, Acompanamiento identifica que la dirección de Raúl acompaña a Lucía.",
+      "clave": "Los vínculos deben compartir proyecto y vigencias compatibles. Los máximos simultáneos, equipos y condiciones de inicio siguen por concretar."
+    },
+    "evaluacion": {
+      "proposito": "Conserva la valoración empresarial de una candidatura concreta y la identidad del evaluador. Permite distinguir la recomendación de la empresa de la decisión administrativa que formaliza la participación.",
+      "relaciones": ["Candidatura → EvaluacionCandidato, 1 / 0..N: cada evaluación pertenece a una solicitud identificable.", "EvaluacionCandidato → DetalleEvaluacion, 1 / 0..N: el detalle conserva las valoraciones por criterio cuando se concrete la rúbrica."],
+      "ejemplo": "Elena consulta las habilidades de Lucía, registra comentarios y una recomendación. El sistema conserva a Elena como evaluadora; su recomendación no crea automáticamente una asignación.",
+      "clave": "La escala, ponderación, obligatoriedad y cantidad de evaluaciones son propuestas sujetas a D-08. La multiplicidad histórica no aprueba reevaluaciones ilimitadas."
+    },
+    "control": {
+      "proposito": "Conserva las decisiones institucionales y permite conocer sus resultados. Cada decisión identifica administrador, fecha, resultado y justificación; la auditoría registra cambios y las notificaciones avisan a usuarios concretos.",
+      "relaciones": ["Usuario → DecisionAdministrativa, 1 / 0..N: un administrador puede emitir muchas decisiones; cada decisión identifica quién la resolvió.", "EventoAuditoria → Notificacion, 1 / 0..N: un cambio puede motivar avisos a varios destinatarios o no requerir notificaciones."],
+      "ejemplo": "Una decisión aprueba la candidatura de Lucía y otra la solicitud de Raúl. Cada resolución conserva su objeto; el historial registra las operaciones y los avisos informan a los involucrados.",
+      "clave": "XOR significa exactamente un objeto: revisión de proyecto, candidatura o solicitud de dirección. Una decisión no resuelve los tres objetos a la vez."
+    }
+  },
+  "caso": [
+    ["01", "Crear cuentas y vincular a Elena con Nova", "Administrador", "Usuario · Empresa · RepresentacionEmpresa"],
+    ["02", "Registrar el proyecto de inventario y enviarlo a revisión", "Elena / Nova", "Proyecto · RevisionProyecto"],
+    ["03", "Resolver la publicación de la revisión presentada", "Administrador", "DecisionAdministrativa sobre la revisión"],
+    ["04", "Presentar la candidatura al proyecto disponible", "Lucía", "Candidatura"],
+    ["05", "Revisar habilidades y registrar la recomendación", "Elena / Nova", "EvaluacionCandidato y su detalle cuando corresponda"],
+    ["06", "Solicitar dirigir el proyecto por una rama independiente", "Raúl", "SolicitudDireccion"],
+    ["07", "Autorizar las dos participaciones por separado", "Administrador", "Dos decisiones · AsignacionAlumno · AsignacionDireccion"],
+    ["08", "Identificar qué dirección acompaña a la participación de Lucía", "Operación autorizada del sistema", "Acompanamiento entre ambas asignaciones"],
+    ["09", "Conservar cambios y comunicar los resultados pertinentes", "Sistema", "EventoAuditoria · Notificacion"]
+  ],
+  "reglas": [
+    ["Identidad y representación", "Cada cuenta tiene un rol principal y una sola empresa vinculada cuando es empresarial. Cada empresa tiene exactamente un representante vigente con cuenta activa.", "Evita confundir la cuenta de Elena con la empresa Nova y conserva a los representantes anteriores."],
+    ["Propiedad y autoría", "El proyecto pertenece a Empresa. El autor y el evaluador deben representar a la empresa al efectuar la operación.", "Cambiar de representante no traslada los proyectos ni cambia quién registró una operación histórica."],
+    ["Habilidades y revisiones", "Las parejas alumno/habilidad y proyecto/habilidad son únicas. Cada revisión se identifica por proyecto y número y conserva una instantánea.", "Distingue el requisito empresarial de la capacidad del alumno y permite saber qué contenido se revisó."],
+    ["Solicitudes activas e historial", "Se impiden candidaturas activas duplicadas, conservando las solicitudes rechazadas o canceladas.", "Una restricción histórica absoluta impediría conservar nuevas solicitudes válidas de la misma pareja."],
+    ["Objeto único de decisión", "Exactamente una FK de objeto debe estar informada: revisión, candidatura o solicitud de dirección. Las tres referencias son mutuamente excluyentes (XOR).", "Una sola resolución no puede publicar un proyecto y asignar al mismo tiempo a un alumno y un profesor."],
+    ["Autorización y coherencia", "La asignación exige decisión aprobatoria sobre su solicitud de origen. Alumno/profesor y proyecto deben coincidir con esa solicitud.", "Una recomendación empresarial no es una asignación; tampoco puede usarse la aprobación de otra persona."],
+    ["Acompañamiento", "Las dos asignaciones deben ser del mismo proyecto y su intervalo compatible con ambas vigencias. Se evitan vínculos vigentes duplicados de una pareja.", "Identifica quién acompaña a Lucía sin sustituir ninguna autorización ni aprobar capacidades institucionales."],
+    ["Evaluación interpretable", "La evaluación conserva candidatura y evaluador; el detalle conserva la definición del criterio aplicada.", "Una modificación posterior de la rúbrica no debe reinterpretar la puntuación histórica."],
+    ["Carga docente", "La carga cuenta proyectos distintos con dirección vigente; no se multiplica por alumnos ni por solicitudes pendientes.", "El límite docente del PDF y la capacidad de alumnos del proyecto son reglas distintas."],
+    ["Historial y avisos", "La auditoría conserva actor u origen automático, fecha y resultado. Cada aviso conserva evento y destinatario, evitando duplicados.", "Se puede explicar qué ocurrió y a quién se notificó sin guardar contraseñas ni otros secretos."]
+  ],
+  "pendientes": [
+    ["¿El límite de candidaturas se cuenta simultáneamente o por periodo?", "D-01", "Si se adopta cómputo por periodo, se añadirá PeriodoAcademico y su vínculo."],
+    ["¿Cuántos alumnos y directores admite un proyecto y qué carga tiene el alumno?", "D-02, D-03, D-04", "El modelo conserva el historial sin fijar máximos simultáneos, equipos ni codirección."],
+    ["¿Cuándo inicia el proyecto, qué estados consumen cupo y hasta cuándo se cancela?", "D-05, D-06, D-07", "Estas respuestas concretarán vigencias, transiciones y condiciones de formalización."],
+    ["¿Qué rúbrica, escala y evaluación previa se exigen?", "D-08", "La estructura de evaluación se propone sin dar por aprobados cantidad, pesos ni obligatoriedad."],
+    ["¿Qué datos se ven y conservan, y cómo se presentan evidencias y avisos?", "D-10, D-11", "No se presuponen archivos adjuntos, correo externo ni un procedimiento de relevo."],
+    ["¿Qué entorno, carga y condiciones de operación tendrá la aplicación?", "D-12, D-14", "Se concretarán al preparar la implementación y la operación institucional."]
+  ]
+}

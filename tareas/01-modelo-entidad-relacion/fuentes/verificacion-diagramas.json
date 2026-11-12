@@ -1,0 +1,138 @@
+{
+  "fecha": "27 de octubre de 2026",
+  "presentacion": "Compacta horizontal; claves y relaciones; atributos completos en catálogo",
+  "motor": "@viz-js/viz / Graphviz WASM",
+  "modeloSha256": "f2e968bbb8c7a1a6a64d4181a558e60f1c42702cef3c1ca54998700e4cb788f6",
+  "vistas": [
+    {
+      "vista": "general",
+      "archivo": "diagramas/general.svg",
+      "entidades": 21,
+      "relaciones": 37,
+      "viewBox": [
+        0,
+        0,
+        1472,
+        772
+      ],
+      "fuenteMinimaPt": 12,
+      "escalaEnMarco1090x570": 0.7383419689119171,
+      "ajustesEtiquetas": [
+        {
+          "id": "relation-habilidad-alumno_habilidad-habilidad_id",
+          "expected": [
+            507.18,
+            -400.82
+          ],
+          "position": [
+            458,
+            -355
+          ]
+        },
+        {
+          "id": "relation-proyecto-solicitud_direccion-proyecto_id",
+          "expected": [
+            507.18,
+            -535.2
+          ],
+          "position": [
+            540,
+            -620
+          ]
+        }
+      ],
+      "sha256": "b556587748c77a4861f3a6dfe8f8d66cde7401024067c3f58d87ccb351ebc87c",
+      "advertencias": [
+        {
+          "message": "Warning: no value for width of non-ASCII character 195. Falling back to width of space character",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "vista": "identidad",
+      "archivo": "diagramas/identidad.svg",
+      "entidades": 5,
+      "relaciones": 4,
+      "viewBox": [
+        0,
+        0,
+        380,
+        276
+      ],
+      "fuenteMinimaPt": 12,
+      "escalaEnMarco1090x570": 2.0652173913043477,
+      "ajustesEtiquetas": [],
+      "sha256": "6a68c842c3cfe27101f118019ff9e153c640cf1e342a02c15ca3d3dbda18431f",
+      "advertencias": []
+    },
+    {
+      "vista": "proyectos",
+      "archivo": "diagramas/proyectos.svg",
+      "entidades": 8,
+      "relaciones": 9,
+      "viewBox": [
+        0,
+        0,
+        538,
+        370
+      ],
+      "fuenteMinimaPt": 12,
+      "escalaEnMarco1090x570": 1.5405405405405406,
+      "ajustesEtiquetas": [],
+      "sha256": "f4b862640b9761b4a6e1aecb5c56bffea0e85b31ccfa187b8e9e3d4c06a092f2",
+      "advertencias": []
+    },
+    {
+      "vista": "participacion",
+      "archivo": "diagramas/participacion.svg",
+      "entidades": 9,
+      "relaciones": 16,
+      "viewBox": [
+        0,
+        0,
+        1159,
+        511
+      ],
+      "fuenteMinimaPt": 12,
+      "escalaEnMarco1090x570": 0.9404659188955996,
+      "ajustesEtiquetas": [],
+      "sha256": "6b5fedc46e954b7e21d23387aa8a6361ee1519621b4d4cb4ce1da1780b22b137",
+      "advertencias": []
+    },
+    {
+      "vista": "evaluacion",
+      "archivo": "diagramas/evaluacion.svg",
+      "entidades": 5,
+      "relaciones": 4,
+      "viewBox": [
+        0,
+        0,
+        606,
+        240
+      ],
+      "fuenteMinimaPt": 12,
+      "escalaEnMarco1090x570": 1.7986798679867986,
+      "ajustesEtiquetas": [],
+      "sha256": "e57d1ea78eea116959a2efd9b59fd1b96cc859b84cc70fa668f97b3c3e3b9eaa",
+      "advertencias": []
+    },
+    {
+      "vista": "control",
+      "archivo": "diagramas/control.svg",
+      "entidades": 9,
+      "relaciones": 12,
+      "viewBox": [
+        0,
+        0,
+        882,
+        566
+      ],
+      "fuenteMinimaPt": 12,
+      "escalaEnMarco1090x570": 1.0070671378091873,
+      "ajustesEtiquetas": [],
+      "sha256": "562944727aeb9b4d413e251d70a34a8d888e126e4a7eb07d832b7c62f7908ddc",
+      "advertencias": []
+    }
+  ]
+}

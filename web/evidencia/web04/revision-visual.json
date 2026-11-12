@@ -1,0 +1,111 @@
+{
+  "fecha_utc": "2026-11-10T16:46:16.334819+00:00",
+  "contract": "../../DESIGN.md, Proyectos y revisión WEB-04. Datos propios, borradores, envío y resolución de la versión exacta; reutilizar paleta/controles; sin edición de publicados. Target390x844 y1440x900, reflujo320px.",
+  "targetViewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Etiquetas y ayudas nativas inspeccionadas en formularios de empresa/proyecto/resolución. Tab y Enter activaron salto al main; Enter expandió la revisión anterior y se verificó su contenido original. Se amplió el contorno de foco compartido a summary y se comprobó visible en navegador. Controles ordinarios44px; casillas24px con etiquetas activables44px. Ocho pares de contraste correctos en contraste.json. Lighthouse snapshot móvil del formulario administrativo:100 accesibilidad,31 chequeos correctos,0 fallidos. No se usó lector de pantalla ni se emuló preferencia del sistema de movimiento reducido; CSS la respeta."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Escritorio1440x900 y móvil390x844 revisados en datos de empresa, creación/edición, listado y resolución. Contenido y formulario de resolución se apilan. A320px no hay desborde; título de247caracteres sin espacios simulado en DOM se ajustó, sin alterar datos del servidor. Se conservaron fechas, habilidades y valores tras editar."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "Envío real de editar proyecto: form válido, aria-busy=true, botón deshabilitado y aviso Enviando fuera de form ocupado; respuesta confirmó cambios. El recorrido usa formularios HTML y no requiere JavaScript para guardar o resolver."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "Bandeja administrativa con búsqueda SinCoincidenciaWEB04 devolvió0proyectos y ofreció Ver todos los proyectos; proyectos-vacio-movil.jpg."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Enviar borrador solo con título mostró campos faltantes y foco en resumen. Publicar con cupo3 frentea propuesta2 devolvió error y conservó estado En revisión, motivo y datos; envio-incompleto-movil.jpg/cupo-invalido-movil.jpg."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Borrador solo con título se guardó y se pudo editar; faltantes académicos/cupo se indican Sin registrar y opcionales vacíos se omiten. Una revisión histórica v1 sin cupo se consultó, sin inventarle capacidad; aprobación bloqueada por pruebasHTTP/SQL."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Empresa actualizó contacto, creó/editó/envió el proyecto. Admin devolvió con motivo; empresa corrigió y reenvió. Admin publicó revisión2/cupo2; dejó de ofrecer resolución. El historial conserva revisión1 En corrección y revisión2 Aprobada, con alcances diferentes e intactos."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "Admin intentó abrir la ruta de empresa /empresa/proyectos: respuesta403 real y página de regreso al panel. PruebasHTTP adicionales acreditan alumno/profesor, empresa ajena404, CSRF y campos protegidos."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "1440x900",
+      "artifact": "empresa-escritorio.jpg",
+      "observation": "Datos propios guardados, campos y contacto claramente separados."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "borrador-escritorio.jpg",
+      "observation": "Borrador parcial creado, estado y acciones de completar/enviar."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "envio-incompleto-movil.jpg",
+      "observation": "Errores de campos pendientes y resumen con foco."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "editar-movil.jpg",
+      "observation": "Contenido, cupo, requisitos, fechas y habilidades en formulario móvil."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "proyectos-movil.jpg",
+      "observation": "Lista filtrable con estado y cupo de los proyectos propios."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "revision-escritorio.jpg",
+      "observation": "Instantánea enviada junto a resolución administrativa y cupo; historial plegado."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "revision-movil.jpg",
+      "observation": "El formulario de resolución sigue al contenido en móvil."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "cupo-invalido-movil.jpg",
+      "observation": "Cupo distinto rechazado sin publicación parcial."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "devuelto-movil.jpg",
+      "observation": "Devolución confirmada y estado En corrección."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "publicado-movil.jpg",
+      "observation": "Publicación confirmada con la versión revisada y cupo validado."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "proyectos-vacio-movil.jpg",
+      "observation": "Búsqueda sin resultados con recuperación."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "permiso-movil.jpg",
+      "observation": "Denegación de una ruta no autorizada para el rol."
+    }
+  ],
+  "limites": [
+    "Chromium local; no certificación completa de accesibilidad o compatibilidad en todos los navegadores.",
+    "Lector de pantalla y preferencia reducida del sistema no emulados; reflujo320px no sustituye todos los ajustes de zoom.",
+    "Cuentas y proyecto ficticios en base temporal propia; primer administrador real no utilizado.",
+    "Catálogo de habilidades existente, sin gestión nueva del catálogo ni bandeja general de avisos en WEB-04.",
+    "Sin APIs, adjuntos o despliegue institucional."
+  ]
+}

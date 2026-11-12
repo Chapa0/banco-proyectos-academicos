@@ -1,0 +1,73 @@
+digraph ER {
+graph [rankdir=LR, compound=true, bgcolor="white", pad=.15, ranksep=.45, nodesep=.25, splines=polyline, newrank=true, outputorder=edgesfirst];
+node [shape=box, style="rounded,filled", fontname="Arial", fontsize=14, margin=".08,.06"];
+edge [color="#8795A1", fontcolor="#475569", fontname="Arial", fontsize=12, penwidth=.7, arrowsize=.5];
+subgraph cluster_identidad {label="Identidad y empresas"; color="#12666B"; fillcolor="#EAF5F4"; style="rounded,filled"; fontname="Arial"; fontsize=16; fontcolor="#12666B"; margin=12;
+usuario [id="entity-usuario", fillcolor="white", color="#12666B", label="Usuario\nPK id"];
+empresa [id="entity-empresa", fillcolor="white", color="#12666B", label="Empresa\nPK id"];
+representacion_empresa [id="entity-representacion_empresa", fillcolor="white", color="#12666B", label="RepresentacionEmpresa\nPK usuario_id"];
+alumno [id="entity-alumno", fillcolor="white", color="#12666B", label="Alumno\nPK usuario_id"];
+profesor [id="entity-profesor", fillcolor="white", color="#12666B", label="Profesor\nPK usuario_id"];
+}
+subgraph cluster_proyectos {label="Proyectos y habilidades"; color="#245997"; fillcolor="#EDF3FB"; style="rounded,filled"; fontname="Arial"; fontsize=16; fontcolor="#245997"; margin=12;
+proyecto [id="entity-proyecto", fillcolor="white", color="#245997", label="Proyecto\nPK id"];
+revision_proyecto [id="entity-revision_proyecto", fillcolor="white", color="#245997", label="RevisionProyecto\nPK id"];
+habilidad [id="entity-habilidad", fillcolor="white", color="#245997", label="Habilidad\nPK id"];
+alumno_habilidad [id="entity-alumno_habilidad", fillcolor="white", color="#245997", label="AlumnoHabilidad\nPK alumno_id, habilidad_id"];
+proyecto_habilidad [id="entity-proyecto_habilidad", fillcolor="white", color="#245997", label="ProyectoHabilidad\nPK proyecto_id, habilidad_id"];
+}
+subgraph cluster_participacion {label="Participación y acompañamiento"; color="#6A4C93"; fillcolor="#F2EDF8"; style="rounded,filled"; fontname="Arial"; fontsize=16; fontcolor="#6A4C93"; margin=12;
+candidatura [id="entity-candidatura", fillcolor="white", color="#6A4C93", label="Candidatura\nPK id"];
+solicitud_direccion [id="entity-solicitud_direccion", fillcolor="white", color="#6A4C93", label="SolicitudDireccion\nPK id"];
+asignacion_alumno [id="entity-asignacion_alumno", fillcolor="white", color="#6A4C93", label="AsignacionAlumno\nPK id"];
+asignacion_direccion [id="entity-asignacion_direccion", fillcolor="white", color="#6A4C93", label="AsignacionDireccion\nPK id"];
+acompanamiento [id="entity-acompanamiento", fillcolor="white", color="#6A4C93", label="Acompanamiento\nPK id"];
+}
+subgraph cluster_evaluacion {label="Evaluación empresarial"; color="#A36115"; fillcolor="#FCF4E7"; style="rounded,filled"; fontname="Arial"; fontsize=16; fontcolor="#A36115"; margin=12;
+evaluacion_candidato [id="entity-evaluacion_candidato", fillcolor="white", color="#A36115", label="EvaluacionCandidato\nPK id"];
+criterio_evaluacion [id="entity-criterio_evaluacion", fillcolor="white", color="#A36115", label="CriterioEvaluacion\nPK id"];
+detalle_evaluacion [id="entity-detalle_evaluacion", fillcolor="white", color="#A36115", label="DetalleEvaluacion\nPK evaluacion_id, criterio_id"];
+}
+subgraph cluster_control {label="Autorización y trazabilidad"; color="#A04358"; fillcolor="#FAEDF1"; style="rounded,filled"; fontname="Arial"; fontsize=16; fontcolor="#A04358"; margin=12;
+decision_administrativa [id="entity-decision_administrativa", fillcolor="white", color="#A04358", label="DecisionAdministrativa\nPK id"];
+evento_auditoria [id="entity-evento_auditoria", fillcolor="white", color="#A04358", label="EventoAuditoria\nPK id"];
+notificacion [id="entity-notificacion", fillcolor="white", color="#A04358", label="Notificacion\nPK id"];
+}
+usuario -> alumno [id="relation-usuario-alumno-usuario_id", label="1 / 0..1",  ];
+usuario -> profesor [id="relation-usuario-profesor-usuario_id", label="1 / 0..1",  ];
+usuario -> representacion_empresa [id="relation-usuario-representacion_empresa-usuario_id", label="1 / 0..1",  ];
+empresa -> representacion_empresa [id="relation-empresa-representacion_empresa-empresa_id", label="1 / 1..N",  ];
+empresa -> proyecto [id="relation-empresa-proyecto-empresa_id", label="1 / 0..N",  ];
+usuario -> proyecto [id="relation-usuario-proyecto-autor_usuario_id", label="1 / 0..N", constraint=false, ];
+proyecto -> revision_proyecto [id="relation-proyecto-revision_proyecto-proyecto_id", label="1 / 0..N",  ];
+usuario -> revision_proyecto [id="relation-usuario-revision_proyecto-autor_usuario_id", label="1 / 0..N", constraint=false, ];
+alumno -> alumno_habilidad [id="relation-alumno-alumno_habilidad-alumno_id", label="1 / 0..N",  ];
+habilidad -> alumno_habilidad [id="relation-habilidad-alumno_habilidad-habilidad_id", label="1 / 0..N",  ];
+proyecto -> proyecto_habilidad [id="relation-proyecto-proyecto_habilidad-proyecto_id", label="1 / 0..N",  ];
+habilidad -> proyecto_habilidad [id="relation-habilidad-proyecto_habilidad-habilidad_id", label="1 / 0..N",  ];
+alumno -> candidatura [id="relation-alumno-candidatura-alumno_id", label="1 / 0..N",  ];
+proyecto -> candidatura [id="relation-proyecto-candidatura-proyecto_id", label="1 / 0..N",  ];
+profesor -> solicitud_direccion [id="relation-profesor-solicitud_direccion-profesor_id", label="1 / 0..N",  ];
+proyecto -> solicitud_direccion [id="relation-proyecto-solicitud_direccion-proyecto_id", label="1 / 0..N",  ];
+candidatura -> asignacion_alumno [id="relation-candidatura-asignacion_alumno-candidatura_id", label="1 / 0..1",  ];
+decision_administrativa -> asignacion_alumno [id="relation-decision_administrativa-asignacion_alumno-decision_id", label="1 / 0..1",  ];
+alumno -> asignacion_alumno [id="relation-alumno-asignacion_alumno-alumno_id", label="1 / 0..N",  ];
+proyecto -> asignacion_alumno [id="relation-proyecto-asignacion_alumno-proyecto_id", label="1 / 0..N",  ];
+solicitud_direccion -> asignacion_direccion [id="relation-solicitud_direccion-asignacion_direccion-solicitud_direccion_id", label="1 / 0..1",  ];
+decision_administrativa -> asignacion_direccion [id="relation-decision_administrativa-asignacion_direccion-decision_id", label="1 / 0..1",  ];
+profesor -> asignacion_direccion [id="relation-profesor-asignacion_direccion-profesor_id", label="1 / 0..N",  ];
+proyecto -> asignacion_direccion [id="relation-proyecto-asignacion_direccion-proyecto_id", label="1 / 0..N",  ];
+asignacion_alumno -> acompanamiento [id="relation-asignacion_alumno-acompanamiento-asignacion_alumno_id", label="1 / 0..N",  ];
+asignacion_direccion -> acompanamiento [id="relation-asignacion_direccion-acompanamiento-asignacion_direccion_id", label="1 / 0..N",  ];
+candidatura -> evaluacion_candidato [id="relation-candidatura-evaluacion_candidato-candidatura_id", label="1 / 0..N",  ];
+usuario -> evaluacion_candidato [id="relation-usuario-evaluacion_candidato-evaluador_usuario_id", label="1 / 0..N", constraint=false, ];
+evaluacion_candidato -> detalle_evaluacion [id="relation-evaluacion_candidato-detalle_evaluacion-evaluacion_id", label="1 / 0..N",  ];
+criterio_evaluacion -> detalle_evaluacion [id="relation-criterio_evaluacion-detalle_evaluacion-criterio_id", label="1 / 0..N",  ];
+usuario -> decision_administrativa [id="relation-usuario-decision_administrativa-administrador_usuario_id", label="1 / 0..N", constraint=false, ];
+revision_proyecto -> decision_administrativa [id="relation-revision_proyecto-decision_administrativa-revision_proyecto_id", label="0..1 / 0..N",  style=dashed, color="#A04358", fontcolor="#A04358",];
+candidatura -> decision_administrativa [id="relation-candidatura-decision_administrativa-candidatura_id", label="0..1 / 0..N",  style=dashed, color="#A04358", fontcolor="#A04358",];
+solicitud_direccion -> decision_administrativa [id="relation-solicitud_direccion-decision_administrativa-solicitud_direccion_id", label="0..1 / 0..N",  style=dashed, color="#A04358", fontcolor="#A04358",];
+usuario -> evento_auditoria [id="relation-usuario-evento_auditoria-actor_usuario_id", label="0..1 / 0..N", constraint=false, ];
+usuario -> notificacion [id="relation-usuario-notificacion-destinatario_usuario_id", label="1 / 0..N", constraint=false, ];
+evento_auditoria -> notificacion [id="relation-evento_auditoria-notificacion-evento_id", label="1 / 0..N",  ];
+}
