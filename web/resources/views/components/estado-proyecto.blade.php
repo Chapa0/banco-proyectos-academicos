@@ -1,3 +1,12 @@
 @props(['estado'])
-@php($etiquetas = ['borrador' => 'Borrador', 'en_revision' => 'En revisión', 'en_correccion' => 'En corrección', 'publicado' => 'Publicado', 'rechazado' => 'Rechazado', 'en_curso' => 'En curso', 'pausado' => 'Pausado', 'finalizado' => 'Finalizado', 'cancelado' => 'Cancelado', 'aprobada' => 'Aprobada', 'rechazada' => 'Rechazada', 'cancelada' => 'Cancelada'])
-<span class="status-badge {{ in_array($estado, ['publicado','aprobada']) ? 'status-active' : (in_array($estado, ['rechazado','rechazada','cancelado','cancelada']) ? 'status-rejected' : 'status-inactive') }}">{{ $etiquetas[$estado] ?? $estado }}</span>
+{{-- RD-01: etiqueta de estado con ícono y texto; el color no es la única señal. --}}
+@php
+    $etiquetas = ['borrador' => 'Borrador', 'en_revision' => 'En revisión', 'en_correccion' => 'En corrección', 'publicado' => 'Publicado', 'rechazado' => 'Rechazado', 'en_curso' => 'En curso', 'pausado' => 'Pausado', 'finalizado' => 'Finalizado', 'cancelado' => 'Cancelado', 'aprobada' => 'Aprobada', 'rechazada' => 'Rechazada', 'cancelada' => 'Cancelada'];
+    $tono = match (true) {
+        in_array($estado, ['publicado', 'aprobada', 'vigente', 'en_curso', 'finalizado', 'finalizada'], true) => ['status-active', 'bi-check-circle-fill'],
+        in_array($estado, ['rechazado', 'rechazada', 'cancelado', 'cancelada', 'revocada'], true) => ['status-rejected', 'bi-x-circle-fill'],
+        in_array($estado, ['en_revision', 'pendiente', 'pendiente_evaluacion', 'evaluada', 'preseleccionada', 'en_correccion', 'pausado'], true) => ['status-pending', 'bi-hourglass-split'],
+        default => ['status-inactive', 'bi-circle'],
+    };
+@endphp
+<span class="status-badge {{ $tono[0] }}"><i class="bi {{ $tono[1] }}" aria-hidden="true"></i>{{ $etiquetas[$estado] ?? $estado }}</span>

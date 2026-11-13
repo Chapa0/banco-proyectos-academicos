@@ -18,12 +18,13 @@
                     <li class="pending-item" data-pendiente="{{ $pendiente['clave'] }}">
                         <span class="pending-count" aria-hidden="true">{{ $pendiente['cantidad'] }}</span>
                         <span class="pending-text"><span class="visually-hidden">{{ $pendiente['cantidad'] }} </span>{{ $pendiente['texto'] }}</span>
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ $pendiente['url'] }}">{{ $pendiente['accion'] }}<span class="visually-hidden">: {{ $pendiente['texto'] }}</span></a>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ \App\Support\Regreso::enlace($pendiente['url']) }}">{{ $pendiente['accion'] }}<span class="visually-hidden">: {{ $pendiente['texto'] }}</span></a>
                     </li>
                 @endforeach
             </ul>
         @endif
     </section>
+    <x-recomendados :proyectos="$recomendados ?? []" :logos="$logos ?? []" class="surface mb-4" />
     <div class="row g-4">
         @can('administrar-cuentas')
             <div class="col-lg-7">
@@ -33,6 +34,7 @@
                     <div class="d-flex flex-wrap gap-3">
                         <a href="{{ route('revision.index') }}" class="btn btn-primary">Revisar proyectos</a>
                         <a href="{{ route('cuentas.index') }}" class="btn btn-outline-secondary">Administrar cuentas</a>
+                        <a href="{{ route('habilidades.index') }}" class="btn btn-outline-secondary">Catálogo de habilidades</a>
                         <a href="{{ route('participacion.index', 'candidatura') }}" class="btn btn-outline-secondary">Candidaturas</a>
                         <a href="{{ route('participacion.index', 'direccion') }}" class="btn btn-outline-secondary">Solicitudes de dirección</a>
                         <a href="{{ route('seguimiento.index') }}" class="btn btn-outline-secondary">Seguimiento</a>

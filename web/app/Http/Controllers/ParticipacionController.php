@@ -7,8 +7,10 @@ use App\Http\Requests\Participacion\FiltrarParticipacionRequest;
 use App\Http\Requests\Participacion\OperarParticipacionRequest;
 use App\Services\CoincidenciaService;
 use App\Services\DocumentoService;
+use App\Services\ImagenService;
 use App\Services\ParticipacionService;
 use App\Services\PublicacionService;
+use App\Support\LineaTiempo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -22,6 +24,7 @@ class ParticipacionController extends Controller
         private readonly PublicacionService $publicacion,
         private readonly CoincidenciaService $coincidencias,
         private readonly DocumentoService $documentos,
+        private readonly ImagenService $imagenes,
     ) {}
 
     public function index(FiltrarParticipacionRequest $request, string $tipo): View
@@ -74,12 +77,16 @@ class ParticipacionController extends Controller
         $detalle = $this->participacion->obtener($actor, $tipo, $solicitud);
 
         return view('participacion.show', [
-            'detalle' => $detalle,
+            'detalle' => $detalle, 'lineaTiempo' => LineaTiempo::participacion($tipo, $detalle),
             'tipo' => $tipo, 'tipos' => ParticipacionService::TIPOS, 'rol' => $rol,
             'estados' => $this->participacion->estados($tipo), 'estadosProyecto' => PublicacionService::ESTADOS,
             'coincidencia' => $tipo === 'candidatura' && in_array($rol, ['empresa', 'administrador'], true)
                 ? $this->coincidenciaCandidato($actor, $detalle) : null,
             'documentos' => $this->documentos->mapa($actor, [$detalle->perfil ?? null]),
+            'imagenes' => $this->imagenes->mapa($actor, [$detalle->perfil->usuario_id ?? null]),
+            // Solo orienta la vista; el permiso real lo comprueba banco.web_constancia al descargar.
+            'constanciaDisponible' => in_array($rol, ['administrador', 'alumno', 'profesor'], true)
+                && ($detalle->asignacion->estado ?? null) === 'finalizada' && ($detalle->proyecto->estado ?? null) === 'finalizado',
         ]);
     }
 

@@ -3,7 +3,7 @@
 
 @section('content')
 <section class="container workspace-section">
-    <a class="back-link" href="{{ route('cuentas.index') }}">Volver a cuentas</a>
+    <a class="back-link" href="{{ route('cuentas.index') }}"><i class="bi bi-arrow-left me-2" aria-hidden="true"></i>Volver a cuentas</a>
     <header class="page-header mt-3">
         <div>
             <h1 class="page-title">Crear cuenta</h1>

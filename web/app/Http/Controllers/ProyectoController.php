@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Proyectos\EnviarProyectoRequest;
 use App\Http\Requests\Proyectos\GuardarProyectoRequest;
 use App\Services\PublicacionService;
+use App\Support\LineaTiempo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -55,7 +56,7 @@ class ProyectoController extends Controller
         $actual = $this->publicacion->obtener((int) $request->user()->getAuthIdentifier(), $proyecto);
 
         return view('proyectos.show', [
-            'proyecto' => $actual, 'estados' => PublicacionService::ESTADOS,
+            'proyecto' => $actual, 'estados' => PublicacionService::ESTADOS, 'lineaTiempo' => LineaTiempo::proyecto($actual->estado, $actual->revisiones ?? []),
             'puedeEditar' => $this->publicacion->puedeEditar($actual),
             'puedeEnviar' => $this->publicacion->puedeEditar($actual),
             'ultimaRevision' => $this->publicacion->revisionActual($actual),

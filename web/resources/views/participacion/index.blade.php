@@ -15,7 +15,7 @@
         <p class="field-hint px-4 py-3 mb-0">{{ $solicitudes->total() }} {{ $solicitudes->total() === 1 ? 'solicitud encontrada' : 'solicitudes encontradas' }}</p>
         @forelse($solicitudes as $item)
             <article class="catalog-list-item">
-                <div class="catalog-list-content"><h2 class="mb-2"><a href="{{ route('participacion.show', ['tipo' => $tipo, 'solicitud' => $item->id]) }}">{{ $item->titulo }}</a></h2><p class="mb-2">{{ $item->razon_social }}</p>@if(!in_array($rol, ['alumno','profesor']))<p class="mb-2">{{ $item->solicitante_nombre }}</p>@endif<p class="field-hint mb-0">Enviada: <x-fecha-local :valor="$item->fecha_solicitud" /></p></div>
+                <div class="catalog-list-content"><h2 class="mb-2"><a href="{{ \App\Support\Regreso::enlace(route('participacion.show', ['tipo' => $tipo, 'solicitud' => $item->id])) }}">{{ $item->titulo }}</a></h2><p class="mb-2">{{ $item->razon_social }}</p>@if(!in_array($rol, ['alumno','profesor']))<p class="mb-2">{{ $item->solicitante_nombre }}</p>@endif<p class="field-hint mb-0">Enviada: <x-fecha-local :valor="$item->fecha_solicitud" /></p></div>
                 <div><x-estado-participacion :estado="$item->estado" /></div>
             </article>
         @empty

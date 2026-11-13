@@ -2,6 +2,24 @@
 
 Guía vigente para las pantallas del banco de proyectos. WEB-03 la aplica al inicio de sesión, cambio de contraseña, panel de los cuatro roles y administración de cuentas. Las pantallas futuras seguirán esta base y se verificarán al implementarlas.
 
+## Rediseño vigente (RD-01)
+
+12 de noviembre de 2026. El usuario aprobó la [vista previa](design/rediseno-vista-previa.html) y eligió la paleta azul. Este apartado prevalece sobre lo que las secciones siguientes digan de colores, encabezado, fuentes y bibliotecas; el resto de sus reglas (jerarquía, ayudas, estados, accesibilidad) sigue vigente.
+
+**Color.** Primario azul `#2f5bd3` (texto blanco 5.9:1), fondo `#f5f7fb`, superficies blancas, texto `#172036`/`#3a4560`/`#5f6b85`. Estados con significado fijo: verde aprobado, ámbar en espera, rojo rechazado, siempre con ícono y texto. **Modo oscuro** con fondos gris azulado (`#0d1322`, `#161e33`), primario aclarado `#8fa8ff` y texto oscuro sobre los botones (8.3:1). Gráficas `#2f5bd3` en claro y `#6f8cf0` en oscuro, validadas con la guía de visualización. Los valores están en [design-tokens.json](design/design-tokens.json) y en las variables `--site-*` de `app.css`.
+
+**Tema.** Botón sol/luna en la barra superior y en el encabezado público. Sin elección previa sigue la preferencia del sistema; la elección se recuerda en el navegador. El tema se aplica antes de pintar para evitar un destello.
+
+**Estructura.** Las cuentas trabajan con una barra lateral clara a la izquierda: marca, grupos (Proyectos, Participación, Mi cuenta, Administración) con íconos, contador de avisos sin leer, y al pie nombre, rol, Cambiar contraseña y **Cerrar sesión** en rojo, separado del resto. Arriba, una barra con el tema y la campana de avisos. Por debajo de 992 px la barra lateral se esconde tras un botón de menú y se abre sobre el contenido con fondo atenuado; Escape o el fondo la cierran y devuelven el foco. Quien tiene contraseña temporal solo ve Cambiar contraseña y Cerrar sesión.
+
+**Regreso al origen (NAV-01).** El enlace «Volver» de una página de detalle lleva a la página desde la que se llegó, con su texto («Volver a la solicitud de dirección», «Volver al proyecto», «Volver a mi espacio»), y conserva los filtros y la página de las listas. Los enlaces que cruzan secciones añaden el origen en `?volver=` con `App\Support\Regreso::enlace`; las páginas lo leen con el componente `<x-volver>`. Sin origen o con uno no válido, «Volver» va a la lista de su sección. Los pasos internos (crear o editar) siguen volviendo a su propia lista o ficha.
+
+**Portada y acceso.** Encabezado público con marca, «Cómo funciona», tema e «Iniciar sesión». Portada con título grande, tarjetas ilustrativas del sistema, pasos y participantes en tarjetas con ícono; no consulta la base.
+
+**Tipografía e íconos.** Inter (variable) y Bootstrap Icons instalados con npm y compilados por Vite: funcionan sin conexión. Tarjetas con radio de 14 px y sombra suave; controles con radio de 10 px y foco con halo del primario.
+
+**Verificación.** Auditoría automática de contraste de todos los textos visibles en 29 páginas por rol (administración, empresa, alumna, profesor y públicas), en claro y oscuro: sin fallos tras corregir el distintivo ilustrativo de la portada. Teléfono a 375 px sin desplazamiento horizontal.
+
 ## Dirección y estructura
 
 El sistema es una herramienta de trabajo para alumnos, profesores, representantes y administradores. Debe permitir reconocer la cuenta, encontrar la acción y comprender el resultado con pocas distracciones. Usamos una composición sobria: fondo gris claro, superficies blancas, texto azul oscuro y verde discreto para la acción principal. El detalle común es la navegación activa subrayada y el orden estable de títulos, ayudas y controles.
@@ -95,6 +113,28 @@ El alumno ve en cada proyecto del catálogo y en su detalle «Cumples X de Y hab
 ### Documentos PDF del perfil (UX-04)
 
 «Mi perfil» termina con la sección **Documentos PDF**: currículum (subir, reemplazar, descargar y quitar) y, para el alumno, evidencias por habilidad con un selector de la habilidad y hasta tres archivos por cada una. Un texto inicial dice quién podrá verlos. Cada archivo se muestra con la etiqueta «PDF», su nombre y tamaño; «Quitar» pide confirmación. Errores de tipo, tamaño, firma o máximo se muestran bajo el formulario que los produjo y en el resumen superior. En el perfil que consultan empresa, administración o director aparecen «Currículum» y «Evidencias en PDF» dentro de cada habilidad. Las descargas son siempre archivos adjuntos; no se previsualizan en la página.
+
+### Catálogo de habilidades (UX-10)
+
+La administración tiene **Habilidades** en la navegación y en su panel. La página muestra tres cifras (total, duras y blandas), un bloque plegable **Agregar habilidad** (abierto si el catálogo está vacío o el alta tuvo errores), búsqueda por nombre o descripción y filtro por tipo. Cada fila tiene el nombre con una etiqueta de tipo, la descripción, el uso («Usada por 3 alumnos · 1 proyecto · en 1 versión publicada» o «Sin uso») y, si aplica, un aviso rojo claro de **posible duplicado**. **Editar** despliega el formulario en la propia fila; **Eliminar** solo aparece cuando la habilidad no se usa y pide confirmación. Los errores se muestran únicamente en el formulario que se envió.
+
+### Panorama gráfico de Reportes (UX-09)
+
+Reportes empieza con **Panorama general**: cuatro tarjetas en cuadrícula (una columna en teléfonos). Tres son barras horizontales de una sola serie (proyectos, candidaturas y solicitudes de dirección por estado), en el orden fijo de los estados y con los estados en cero atenuados; la cuarta es una lista de medidores con la carga de cada profesor frente al límite de tres, con «al límite» en texto cuando se alcanza. Cada fila muestra el nombre del estado a la izquierda, la barra y el número a la derecha en tinta del texto; al pasar el cursor se resalta y su `title` da cantidad y porcentaje; el nombre enlaza al reporte filtrado. Las barras tienen 14 px de grosor, punta redondeada de 4 px y base recta, sin ejes ni cuadrícula. El color de las marcas, `#008a7e`, es un verde azulado de la misma familia que el acento, elegido porque el acento `#245c59` no supera el mínimo de croma para datos; se comprobó con el validador de la guía de visualización (luminosidad, croma ≥ 0.10 y contraste ≥ 3:1). No hay leyenda: cada gráfica tiene una sola serie y su título la nombra.
+
+### Foto de perfil y logo de empresa (UX-08)
+
+El alumno y el profesor suben su **foto** en «Mi perfil», en una tarjeta propia bajo el avance del perfil; la empresa sube su **logo** en «Datos de empresa». Cada tarjeta muestra la imagen actual en grande (círculo para la foto, cuadrado redondeado con borde para el logo) o las iniciales en su lugar, el selector de archivo con su ayuda «i», el botón Subir o Reemplazar y el enlace rojo «Quitar imagen» con confirmación. La foto aparece en el menú de cuenta y en el perfil que consultan la empresa, la administración y el director; el logo, junto al nombre de la empresa en el catálogo, en las recomendaciones y en el encabezado del proyecto publicado. Sin imagen se muestran iniciales: en la foto, blancas sobre el color de acento; en el logo, del color de acento sobre gris claro.
+
+### Constancia de participación (UX-07)
+
+Cuando una participación concluye con el cierre del proyecto, la tarjeta **Asignación** del detalle muestra un recuadro verde claro con borde de acento: «Participación concluida» y el botón principal **Descargar constancia (PDF)**. Lo ven el alumno o director titular y la administración; la empresa no. El PDF, tamaño carta, tiene doble marco en el color de acento, una franja corta sobre el nombre del sistema, el título «Constancia de participación», el nombre de la persona en grande, su matrícula o número de empleado, un párrafo con proyecto, empresa y periodo, una tabla con empresa, modalidad, periodo, dirección académica y equipo, y al pie el folio, la fecha de emisión y la aclaración de que no sustituye una constancia firmada por la institución. Los textos son neutros en género.
+
+### Recomendados para ti y línea de tiempo (UX-06)
+
+**Recomendados para ti** aparece al alumno en «Mi espacio» y en la primera vista del catálogo, sin filtros ni otra página: hasta tres tarjetas con el título, la empresa y la modalidad, la coincidencia compacta («Cumples 3 de 3») y las plazas libres. Cada tarjeta tiene un borde superior de color de acento. Una línea explica el criterio: habilidades del perfil, solo proyectos con plazas en los que aún no participa. Si no hay coincidencias, la sección no aparece.
+
+La **línea de tiempo del estado** va bajo el encabezado del detalle de candidatura o solicitud de dirección, del proyecto de la empresa, de la revisión y del seguimiento. Cada paso tiene un círculo: con palomita si ya ocurrió, con punto y halo si es el paso actual, vacío si falta y rojo con «×» si el trámite terminó ahí (rechazo o cancelación). Debajo va su fecha cuando se conoce. En pantallas anchas es horizontal con una línea que se colorea hasta el paso actual; en teléfonos se apila en vertical. Para lectores de pantalla cada paso dice si está completado, es el actual o está pendiente, y el actual lleva `aria-current="step"`.
 
 ### Pendientes del panel y exportación (UX-05)
 

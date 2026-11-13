@@ -1,0 +1,445 @@
+{
+  "fecha_utc": "2026-11-12T23:36:15.115099+00:00",
+  "resultado": "correcto",
+  "phpunit": {
+    "pruebas": 21,
+    "aserciones": 500
+  },
+  "demo": {
+    "cuentas": 19,
+    "empresas": 4,
+    "proyectos": {
+      "borrador": 1,
+      "en_correccion": 1,
+      "en_curso": 1,
+      "en_revision": 1,
+      "finalizado": 1,
+      "publicado": 3,
+      "rechazado": 1
+    },
+    "candidaturas": {
+      "aprobada": 5,
+      "evaluada": 1,
+      "pendiente_evaluacion": 3,
+      "preseleccionada": 1,
+      "rechazada": 1
+    },
+    "avisos": 83
+  },
+  "base_temporal_eliminada": true,
+  "bases_de_trabajo_y_publica_usadas": false,
+  "alcance": "Rutas sin sesión, roles, intercambio de IDs, campos ocultos, verbos simulados, relaciones proyecto/revisión/asignación, lectura y escrituras denegadas sin mutación del recurso.",
+  "rutas": [
+    {
+      "metodo": "GET|HEAD",
+      "uri": "/",
+      "nombre": "inicio"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "admin/cuentas",
+      "nombre": "cuentas.index"
+    },
+    {
+      "metodo": "POST",
+      "uri": "admin/cuentas",
+      "nombre": "cuentas.store"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "admin/cuentas/crear",
+      "nombre": "cuentas.create"
+    },
+    {
+      "metodo": "PUT",
+      "uri": "admin/cuentas/{cuenta}",
+      "nombre": "cuentas.update"
+    },
+    {
+      "metodo": "POST",
+      "uri": "admin/cuentas/{cuenta}/clave",
+      "nombre": "cuentas.clave"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "admin/cuentas/{cuenta}/editar",
+      "nombre": "cuentas.edit"
+    },
+    {
+      "metodo": "POST",
+      "uri": "admin/cuentas/{cuenta}/estado",
+      "nombre": "cuentas.estado"
+    },
+    {
+      "metodo": "POST",
+      "uri": "admin/cuentas/{cuenta}/relevo",
+      "nombre": "cuentas.relevo"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "admin/habilidades",
+      "nombre": "habilidades.index"
+    },
+    {
+      "metodo": "POST",
+      "uri": "admin/habilidades",
+      "nombre": "habilidades.store"
+    },
+    {
+      "metodo": "PUT",
+      "uri": "admin/habilidades/{habilidad}",
+      "nombre": "habilidades.update"
+    },
+    {
+      "metodo": "DELETE",
+      "uri": "admin/habilidades/{habilidad}",
+      "nombre": "habilidades.destroy"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "admin/proyectos",
+      "nombre": "revision.index"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "admin/proyectos/{proyecto}",
+      "nombre": "revision.show"
+    },
+    {
+      "metodo": "POST",
+      "uri": "admin/proyectos/{proyecto}/resolver",
+      "nombre": "revision.resolver"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "avisos",
+      "nombre": "avisos.index"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "avisos/{aviso}",
+      "nombre": "avisos.show"
+    },
+    {
+      "metodo": "POST",
+      "uri": "avisos/{aviso}/leer",
+      "nombre": "avisos.leer"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "catalogo",
+      "nombre": "catalogo.index"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "catalogo/{proyecto}",
+      "nombre": "catalogo.show"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "catalogo/{proyecto}/participar",
+      "nombre": "participacion.create"
+    },
+    {
+      "metodo": "POST",
+      "uri": "catalogo/{proyecto}/participar",
+      "nombre": "participacion.store"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "clave",
+      "nombre": "clave.edit"
+    },
+    {
+      "metodo": "PUT",
+      "uri": "clave",
+      "nombre": "clave.update"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "documentos/{documento}",
+      "nombre": "documentos.show"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "empresa",
+      "nombre": "empresa.edit"
+    },
+    {
+      "metodo": "PUT",
+      "uri": "empresa",
+      "nombre": "empresa.update"
+    },
+    {
+      "metodo": "POST",
+      "uri": "empresa/logo",
+      "nombre": "empresa.logo.store"
+    },
+    {
+      "metodo": "DELETE",
+      "uri": "empresa/logo",
+      "nombre": "empresa.logo.destroy"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "empresa/proyectos",
+      "nombre": "proyectos.index"
+    },
+    {
+      "metodo": "POST",
+      "uri": "empresa/proyectos",
+      "nombre": "proyectos.store"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "empresa/proyectos/crear",
+      "nombre": "proyectos.create"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "empresa/proyectos/{proyecto}",
+      "nombre": "proyectos.show"
+    },
+    {
+      "metodo": "PUT",
+      "uri": "empresa/proyectos/{proyecto}",
+      "nombre": "proyectos.update"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "empresa/proyectos/{proyecto}/editar",
+      "nombre": "proyectos.edit"
+    },
+    {
+      "metodo": "POST",
+      "uri": "empresa/proyectos/{proyecto}/enviar",
+      "nombre": "proyectos.enviar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "imagenes/{imagen}",
+      "nombre": "imagenes.show"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "login",
+      "nombre": "login"
+    },
+    {
+      "metodo": "POST",
+      "uri": "login",
+      "nombre": "login.store"
+    },
+    {
+      "metodo": "POST",
+      "uri": "logout",
+      "nombre": "logout"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "panel",
+      "nombre": "panel"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "participacion/{tipo}",
+      "nombre": "participacion.index"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "participacion/{tipo}/{solicitud}",
+      "nombre": "participacion.show"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "participacion/{tipo}/{solicitud}/constancia",
+      "nombre": "participacion.constancia"
+    },
+    {
+      "metodo": "POST",
+      "uri": "participacion/{tipo}/{solicitud}/{accion}",
+      "nombre": "participacion.operar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "perfil",
+      "nombre": "perfil.edit"
+    },
+    {
+      "metodo": "PUT",
+      "uri": "perfil",
+      "nombre": "perfil.update"
+    },
+    {
+      "metodo": "POST",
+      "uri": "perfil/documentos",
+      "nombre": "documentos.store"
+    },
+    {
+      "metodo": "DELETE",
+      "uri": "perfil/documentos/{documento}",
+      "nombre": "documentos.destroy"
+    },
+    {
+      "metodo": "POST",
+      "uri": "perfil/foto",
+      "nombre": "perfil.foto.store"
+    },
+    {
+      "metodo": "DELETE",
+      "uri": "perfil/foto",
+      "nombre": "perfil.foto.destroy"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "reportes/{tipo?}",
+      "nombre": "reportes.index"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "reportes/{tipo}/exportar",
+      "nombre": "reportes.exportar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "seguimiento/proyectos",
+      "nombre": "seguimiento.index"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "seguimiento/proyectos/{proyecto}",
+      "nombre": "seguimiento.show"
+    },
+    {
+      "metodo": "POST",
+      "uri": "seguimiento/proyectos/{proyecto}/{accion}",
+      "nombre": "seguimiento.operar"
+    },
+    {
+      "metodo": "GET|HEAD",
+      "uri": "up",
+      "nombre": null
+    }
+  ],
+  "sha256_fuentes": {
+    "database\\demo.sql": "1fd8617a18d11f535d62ed07594c30c550a003a7d7c142c1b821739aa6ca0a43",
+    "database\\migrations\\001_estructura.sql": "f6423fc7fd0e5baed92e093804b246a37b776837be48ecc4175953660ee464ec",
+    "database\\migrations\\002_integridad.sql": "7b81c45c4f1417555612663db2e2ae5d70a1e8a33dd77269a3295b8bf303519c",
+    "database\\migrations\\003_publicacion.sql": "d56080edfd3415f90f4f0a814023ec6ad2527ded8c50fc7742b441ba357cb3e8",
+    "database\\migrations\\004_cupo_publicacion.sql": "5764cf01fdb66486bbc0bff158683d74969631e713f235801f64bbb6d80e5e8c",
+    "database\\migrations\\005_director_unico.sql": "f1d9a02eead486b010c4418691df1d06a93ba4b6205e2f7ec3683d4c32b1825d",
+    "database\\migrations\\006_cupos_y_carga.sql": "7cd435d95f5bcfbf7216458a1995dc339d5dae0d5aad07b07eb45c2a701111cf",
+    "database\\migrations\\007_inicio_proyecto.sql": "ad7a38d25af63a4f1bb3484bd9092e07dc95dec764a37f3a55ec2425e9ff6bf0",
+    "database\\migrations\\008_envio_participaciones.sql": "06be79022790f8c215073a70fefeffb2dcffa3b535090fa1ca9f80443b00dff3",
+    "database\\migrations\\009_texto_solicitud.sql": "41314d9fb1413f86eb00f95aead01e112e923ab1197faffd2365191f37012e79",
+    "database\\migrations\\010_alta_cuentas.sql": "7328d69c26cde1ec4f892a2458f82bd669ac710a8087066cab3dee36cdd91e24",
+    "database\\migrations\\011_textos_obligatorios.sql": "b6d97d9c74ce45882f7ef943a11aadf914274ccf3e2605102320d189f269d16e",
+    "database\\migrations\\012_cancelacion_candidatura.sql": "6787dd13bdf715dcc85e5b4f543fa3df3e2494b38b54065b23ecdefcf5353000",
+    "database\\migrations\\013_retiro_pausa_reanudacion.sql": "a912ebfc12a344157e8ec31fb2f681750a09b2fee691c3f63c3444cb0dfcf7da",
+    "database\\migrations\\014_cierre_proyectos.sql": "bd2721c175d698c33b44388ba0d4c785d578f5f270a9145662494eb05f048aa0",
+    "database\\migrations\\015_cancelacion_solicitud_direccion.sql": "1cc37ed7e40dde734dd0100cd1b8470017aea16cb02592e6a1ea0728065d36dc",
+    "database\\migrations\\016_evaluacion_autorizacion.sql": "1915da2c86d6d396b1973a25fece4c6dc90f6e678e0a672dbe5d1cfbff0d4969",
+    "database\\migrations\\017_cuentas_y_privacidad.sql": "e4795f0487c5d8c79667fbdeec31e94a3c2504166a2e8345a79d44b801081411",
+    "database\\migrations\\018_notificaciones_internas.sql": "c5c7966e10bfeeef13eda742870c7cc9e61d5eca6c7365ba6f1c82c89d217924",
+    "database\\migrations\\019_conexion_web.sql": "cbaa751bc53e3724cf6358d39480d9ebdf53f92126d454e888ccf4d561e86a3a",
+    "database\\migrations\\020_acceso_web.sql": "0dc3d1fe0531a293e6389b4cf2f897deaabf6b8df7396e4a0612401c94643cd9",
+    "database\\migrations\\021_publicacion_web.sql": "e5a3c199ff0abc920d35221cd2e52f6ef47fbb103bd4de4b035a035a55601313",
+    "database\\migrations\\022_perfiles_catalogo_web.sql": "d3d692921926afdda31832f2c15a221b289453414e0852ede696dae9e26fed66",
+    "database\\migrations\\023_participacion_web.sql": "6d36e50dba585811ad571518d30d0c6efc38c09c05b92bbca4bf5c9364da187f",
+    "database\\migrations\\024_avisos_reportes_web.sql": "82ca5a402ab35bdd1897d2a1390d0778c26fef68a9fabc091e0aae61947887d3",
+    "database\\migrations\\025_coincidencia_habilidades_web.sql": "24245e41d3af9bb99ac63cab9a29ef5c149507d500eb651a7afbf62515f61fc4",
+    "database\\migrations\\026_documentos_pdf_web.sql": "690c13f4fd308fde491968dee943de6ff4c731e2d2a31dff9bf091c8b22d051e",
+    "database\\migrations\\027_recomendaciones_web.sql": "fa5a63e57d8db1fa81c099385e963bd6da759f8c280bafd22c19c208e257c258",
+    "database\\migrations\\028_constancia_participacion_web.sql": "af1231fc1891a0f0542e80dab25f27a39634b3823cb0ae5b0a9b3948e5b809e4",
+    "database\\migrations\\029_imagenes_web.sql": "e000224dc90630615336aea123fb667fa2cdc03c165486525d274886f4cc029e",
+    "database\\migrations\\030_panorama_reportes_web.sql": "ccb487ec01294202b522e4ec6199f8bb5a6a235e2c1224287564815c16fbfccd",
+    "database\\migrations\\031_catalogo_habilidades_web.sql": "b094b4a5dc01c52e6a6da261d258d5cc2405885ce2933f6dba9c65c0fa5a252e",
+    "web\\app\\Auth\\UsuarioProvider.php": "b51187147bc4a021ee988052f9a02b7f1f0391e66db44efbac7922aa7400985d",
+    "web\\app\\Console\\Commands\\ComprobarConexion.php": "b8afec9ff40ab445deb8332f69f4edbc6bf4a8307cb9cb5725a0dbfdf74385ce",
+    "web\\app\\Http\\Controllers\\Admin\\CuentaController.php": "0b9e467a476c880a8be5b55d3f555d990c760315ac94195b675a15a35621e364",
+    "web\\app\\Http\\Controllers\\Admin\\HabilidadController.php": "67c16732f8be59658bbbd45f7c9089bc9d7726900fcb091d841c78ba5674c1e2",
+    "web\\app\\Http\\Controllers\\Admin\\RevisionProyectoController.php": "7ecb8f66f35544558415e2033308a4455e6870309355ba2361cb3512672e3b07",
+    "web\\app\\Http\\Controllers\\AuthController.php": "1bda38bb84f883904537210dec178fba5ab7be6c6bd5de576b78966f927de720",
+    "web\\app\\Http\\Controllers\\AvisoController.php": "8a52a957a99140ba780ba18bd779a05173a1d835a495460491cbf0434075f220",
+    "web\\app\\Http\\Controllers\\CatalogoController.php": "f35c9d35a7b9913e4b3e0663d69b8ff08d9ec0daa7cafe9ebb992577dd91f5f2",
+    "web\\app\\Http\\Controllers\\ClaveController.php": "5a720d19e280cd0295beeb0fd50c2e378f92ad99b193c681323eada9a16cf2ad",
+    "web\\app\\Http\\Controllers\\ConstanciaController.php": "14eb31bd75cd5a9fe9786076915fb23a9c8a2741b416573633791c91de586476",
+    "web\\app\\Http\\Controllers\\Controller.php": "ba2a69d598a46fc1ad1761306eb4470ed7d85cc4fc2a94049364565187a1d135",
+    "web\\app\\Http\\Controllers\\DocumentoController.php": "7fae3fc04f705c7c3a6c82a47a618defc97366679e71185eeb1630a3cb0adc77",
+    "web\\app\\Http\\Controllers\\EmpresaController.php": "fb06424ec5308032ef9cefea4f3ca064a2e989db0e799b971bd3ea904e724c2d",
+    "web\\app\\Http\\Controllers\\ImagenController.php": "a5305f820a916662ef9dc7999e6b62d1a62575127cbbac6e6271b90d28452e66",
+    "web\\app\\Http\\Controllers\\InicioController.php": "4ebf1af2663ddc06dff5ee6558c1707c7226b243eee519fdf27b2762a8308b0a",
+    "web\\app\\Http\\Controllers\\PanelController.php": "08512b10b1db6ab431200daeccd4db3c9c55a2f418bb44e7da54b1f86c107fd1",
+    "web\\app\\Http\\Controllers\\ParticipacionController.php": "ca59db36fd1cad537c6249e2b8007b6a3e468af1f6ee60d97996ab0308e89d30",
+    "web\\app\\Http\\Controllers\\PerfilController.php": "254bffed16bf6c3c06cc1c8b4f9d42606961b6ae21b8041cab76510319a678ae",
+    "web\\app\\Http\\Controllers\\ProyectoController.php": "1e17f2fdc67000ce655c4514c3f92e5fbf2e48f1bd4e51b6cbabbac1cac1e571",
+    "web\\app\\Http\\Controllers\\ReporteController.php": "749c487862fa52454fa5b32b63083f1101d6c7a7606277cda688b5cc7ab78d86",
+    "web\\app\\Http\\Controllers\\SeguimientoController.php": "b50395751523244a48aca8e5bae0de187bd55590b764bb1fbe9844dd1b751026",
+    "web\\app\\Http\\Middleware\\ClaveActualizada.php": "ab2f2cf4ed48febcfce8389a58cbf76856f6f300ea793ff0fa664e0ef96d6fc1",
+    "web\\app\\Http\\Middleware\\CuentaActiva.php": "9078721994a3e0176388332bb4cb173c840d8e30c8667357da83ab823e48379b",
+    "web\\app\\Http\\Middleware\\NoAlmacenarPrivado.php": "b1ee67978cec058eb10080c6ed4c928fd17111136085d1ca4656eb92c2f2aedd",
+    "web\\app\\Http\\Requests\\CambiarClaveRequest.php": "d2963437923b4e7b1dcd488aea51d4f1ab23490c4c4647bf7f731bcc76910380",
+    "web\\app\\Http\\Requests\\Consultas\\FiltrarAvisosRequest.php": "7733536daf2507b0f3a70fdf5616a7a038542d93ca1d203b7acf8b00a2289578",
+    "web\\app\\Http\\Requests\\Consultas\\FiltrarReporteRequest.php": "735d2e062551d6643de1aa239f3986d3a8b38131f2e3a726ae36dbe08248e8df",
+    "web\\app\\Http\\Requests\\Consultas\\MarcarAvisoRequest.php": "8246dde58a0e180b3d92f504f35e06d2e3994a4973a45a19886621456f01330e",
+    "web\\app\\Http\\Requests\\Cuentas\\CrearCuentaRequest.php": "a138928c17b34db85321d8ad4c2551a788f6341ee0cb5d184c06e3d1eb2619c9",
+    "web\\app\\Http\\Requests\\Cuentas\\CuentaRequest.php": "bd14d5378f24ce7a8f4e15bdd762457f8dc074523675a81f073679a0955fcb0d",
+    "web\\app\\Http\\Requests\\Cuentas\\EditarCuentaRequest.php": "399bf24ca5e9547d07cb66b800e210ac8359d8eac7dc3957c49a30d631b31fff",
+    "web\\app\\Http\\Requests\\Cuentas\\EstadoCuentaRequest.php": "96114b0e8b057db5c73efadf7ab79cd14fa7a3483431b8ea289fdfd4832ed7fa",
+    "web\\app\\Http\\Requests\\Cuentas\\GuardarHabilidadRequest.php": "cb4e90d63a61ee75152f86c10513b89eb9b73617faba8091860afb25e71df30d",
+    "web\\app\\Http\\Requests\\Cuentas\\RelevarRepresentanteRequest.php": "205bb09c726daece54d127200ad9e29a3e2f404c8b2764b65546c8a586b5953a",
+    "web\\app\\Http\\Requests\\Cuentas\\RestablecerClaveRequest.php": "671cbf5c9e59eafbc3033a3f78a8a21f6df72629842d715cfb6addf2fd92c7e5",
+    "web\\app\\Http\\Requests\\LoginRequest.php": "ea63b6e53d6be69f1ff2f3c6dd8d1448113dbea06f1f235896ff923a6732ae20",
+    "web\\app\\Http\\Requests\\Participacion\\EnviarParticipacionRequest.php": "6efc6424889fcddcb62705513ae364db8aaf7d6a35204ac13b482fde60e0bbc1",
+    "web\\app\\Http\\Requests\\Participacion\\FiltrarParticipacionRequest.php": "8f28868037290b2df77909d86ddbd656008bf04b4aa4a8b8b357d4b4c2a56c2d",
+    "web\\app\\Http\\Requests\\Participacion\\OperarParticipacionRequest.php": "bf36be3ae8ecbf34c2e577ec04f5f189c37a6bb900d96b02a0df8691dc097f68",
+    "web\\app\\Http\\Requests\\Participacion\\ParticipacionRequest.php": "b798e4e07ce08a0131880191c3fd65b4c5ab6c7c8a98f9d119c2d1844bcec8e4",
+    "web\\app\\Http\\Requests\\Perfiles\\FiltrarCatalogoRequest.php": "3b00ec266277b31d74011bb88411ff0a90eeb4982336efafead19ce6e0b74801",
+    "web\\app\\Http\\Requests\\Perfiles\\GuardarPerfilRequest.php": "4402c594355fdb7db8f254db5e5bf74e53366d341b4a83c763dd2a3882ae41ab",
+    "web\\app\\Http\\Requests\\Perfiles\\SubirDocumentoRequest.php": "b7e4f034cce7ab95dab21b82b33d26a2540df9f85fc38f5c074f65641238e982",
+    "web\\app\\Http\\Requests\\Perfiles\\SubirImagenRequest.php": "b57503816bfc192cd08d0559ae84c78ab73c2edd8cf31c64d2b68e5ef1227252",
+    "web\\app\\Http\\Requests\\Proyectos\\EditarEmpresaRequest.php": "b106b44c3e62690db6e03ec97402fca7a6546990b654ff0eca418cdaa8c497bd",
+    "web\\app\\Http\\Requests\\Proyectos\\EnviarProyectoRequest.php": "ea707611a4f38e5cba7fcfa055bd87d3c80008f79140a85fd789cb1b9770f974",
+    "web\\app\\Http\\Requests\\Proyectos\\GuardarProyectoRequest.php": "6a6ba42508bfaea011b82e6d49954e72cd337de62c705709cea6c6f1fe260cdd",
+    "web\\app\\Http\\Requests\\Proyectos\\PublicacionRequest.php": "265e42379d5d1a968ddb02e829f835b935d3902bc38d3eb9cb15d4b017b98ebd",
+    "web\\app\\Http\\Requests\\Proyectos\\ResolverProyectoRequest.php": "61fae14a0874810f38a978f465197c6b360109804de473a1cdea3f05a4b0103b",
+    "web\\app\\Models\\Usuario.php": "c2be7f3c2244447628d1113e44bb92f004007a5938fe6cdcc8319f325bd7c14d",
+    "web\\app\\Providers\\AppServiceProvider.php": "b0e16f86c6dfc743bcc4c18bf8180f4bdd28dfa7398cbe68d45559592573b2dd",
+    "web\\app\\Services\\CatalogoService.php": "bd7d00cb21e3df9955491aa0b764fba0817f8766c4b7326ac13ee2849132ffdb",
+    "web\\app\\Services\\CoincidenciaService.php": "8012c132c0a9e5c6f0678a38db4f9b606b19c58dca9af13efb0f3a42781e86ba",
+    "web\\app\\Services\\ConexionPostgres.php": "aaeeac0afba36b214be9f0dcb12a2c8e77235e6c12283c0f1e5331407bbcc17f",
+    "web\\app\\Services\\ConstanciaService.php": "ec1fcdbe317a1c3f0df6f052bd8373a678aef0c73d5eb27ef1c5100c9cc5ec93",
+    "web\\app\\Services\\ConsultaService.php": "ce212caae0ec2f19617298e3bd331de4b3732e55586d3d7e7957f042440cc74d",
+    "web\\app\\Services\\CuentaService.php": "4016669c0a37907cee5ca88ed4a2376cf75e1926aa755c3c29e54c5a9ea5af3e",
+    "web\\app\\Services\\DocumentoService.php": "7a518cf2ae945d90bc2ee54a57f512412e26e72a8ac0270347795e85e7788edb",
+    "web\\app\\Services\\HabilidadService.php": "b303a7c3ce03a37ceb7ac26c2857c0860b65ba253b491819f0404cec13deefb4",
+    "web\\app\\Services\\ImagenService.php": "469ad0a1e30ad1e20f48b118d158772c951c1408c466431253c26660d8d46c12",
+    "web\\app\\Services\\ParticipacionService.php": "1512a5c7d3be5c1cdb68a47b108fe74fa3474bcfbc1ed521dbd82554a8ba7b7b",
+    "web\\app\\Services\\PendienteService.php": "090321f8bfc7dc85076741a2277efabf527f180be2d4d26e61861b0b3efae2b8",
+    "web\\app\\Services\\PerfilService.php": "b6cea64fea4c8dccf9ac3f7630aed0a8e47c62b4f2036ceb168162e72da5bb93",
+    "web\\app\\Services\\PublicacionService.php": "d12c97a48d73d9d526935aeba95f0eb45c46ebcee5c0875a1446aeee60ae5d58",
+    "web\\app\\Support\\LineaTiempo.php": "f1f004ebf0f96be4433fb8a8072af64e70b302fe4200a747234ec0256fbc8f20",
+    "web\\bootstrap\\app.php": "3f7ede4ba44821acc67fac07ddd5926217ea5a0a6ae23a733b6fa7da31e8e734",
+    "web\\bootstrap\\providers.php": "f720e185207a343d4c19fc99dbb317a4187efbcd7d38a303a695bbdd77ffb943",
+    "web\\composer.lock": "07c346a3335e9de5c3bad09d1573bb4e66e514a2c7188296df5f028405902331",
+    "web\\config\\app.php": "4f49f720bf4070eee15b0b44ea3128c434e506ff5c44103f6a2469a83df32f44",
+    "web\\config\\auth.php": "58a923b06fe3189a4bbb4a758bccf1bf5c219aa9836eede64fdd9f3af27fdd6f",
+    "web\\config\\cache.php": "5030cdf171704e58b96f2cf17f1c6d5921b27d5c63c2cefb730eeb2da49a8240",
+    "web\\config\\database.php": "a3b800f64303501bf533c42542780e6a16ccc82c062c07a0b437b71840845e56",
+    "web\\config\\filesystems.php": "7b7d9c0da1dab6c7f318efc83d5d2f44698c12fae5c38db5c15ab91e478f5e3e",
+    "web\\config\\logging.php": "beb1ffd0db910f6f0b4f75214c3d5aa385d692733ece8a450f4c169d2c99ce38",
+    "web\\config\\mail.php": "c43ff49a31c5f32ce21eb7159f2a4b3cd2f4074eaed5838d265646dbfedd3474",
+    "web\\config\\queue.php": "6101774da7c8b79af46d0028f2b8b31a484c3f7eda10b76e5b27b6093ad364a4",
+    "web\\config\\services.php": "b7ee786ea1adbc92db9f229f479431c94503527c47051da3862eb0e4d7db70aa",
+    "web\\config\\session.php": "64272cfbef6f47c65bf857f1c5b1e853700c0d0278de46b86663fd83ef4aeed8",
+    "web\\phpunit.xml": "fcbc25d56b806c08027440c7e6f47ddd5526e9104dc8e40400fc671cd041da98",
+    "web\\routes\\console.php": "9adccc33e7dd400683e434774077c7fdb2f299c5712cedf16a43fdf56f2850fa",
+    "web\\routes\\web.php": "e71748333c48be3d85a61371cbc36998da250ce78a73cd96669ac41f8c5e688e",
+    "web\\tests\\autorizacion.py": "401f8cd52ff1ccab0163a715dfd8c2181d2530d437f1be39e08915efd0fba471",
+    "web\\tests\\Feature\\AlmacenamientoPrivadoTest.php": "ba7ab96bad816f117b0c812e197d28f1df66428dacb8b22bf7be5d1760ebfbad",
+    "web\\tests\\Integration\\AutorizacionRecursosTest.php": "712c312ce1d973db09707cef18c7e37343f8ddb8d1cff3aa3cc98820d9843d9e",
+    "web\\tests\\PostgresTestCase.php": "3489c3c6fbc7381bd1095a368acf1c3dc64ab6045b6f37cced1577efc7a68831"
+  },
+  "segundos": 25.95,
+  "limites": "HTTP Laravel y PostgreSQL real en temporal propia; no es prueba de carga, navegador ni auditoría de dependencias completa."
+}

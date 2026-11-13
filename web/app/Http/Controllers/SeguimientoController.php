@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Participacion\FiltrarParticipacionRequest;
 use App\Http\Requests\Participacion\OperarParticipacionRequest;
 use App\Services\DocumentoService;
+use App\Services\ImagenService;
 use App\Services\ParticipacionService;
 use App\Services\PublicacionService;
+use App\Support\LineaTiempo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -17,6 +19,7 @@ class SeguimientoController extends Controller
     public function __construct(
         private readonly ParticipacionService $participacion,
         private readonly DocumentoService $documentos,
+        private readonly ImagenService $imagenes,
     ) {}
 
     public function index(FiltrarParticipacionRequest $request): View
@@ -40,9 +43,10 @@ class SeguimientoController extends Controller
         $perfiles = collect(array_merge($detalle->alumnos ?? [], $detalle->directores ?? []))->pluck('perfil')->filter();
 
         return view('seguimiento.show', [
-            'detalle' => $detalle,
+            'detalle' => $detalle, 'lineaTiempo' => LineaTiempo::proyecto($detalle->proyecto->estado, [], $detalle->historial ?? []),
             'rol' => $request->user()->rol_principal, 'estados' => PublicacionService::ESTADOS,
             'documentos' => $this->documentos->mapa($actor, $perfiles),
+            'imagenes' => $this->imagenes->mapa($actor, $perfiles->pluck('usuario_id')->all()),
         ]);
     }
 

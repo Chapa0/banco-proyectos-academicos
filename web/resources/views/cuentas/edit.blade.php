@@ -8,7 +8,7 @@
     $version = is_scalar($anterior) && ctype_digit((string) $anterior) ? (string) $anterior : (string) $cuenta->version_acceso;
 @endphp
 <section class="container workspace-section">
-    <a class="back-link" href="{{ route('cuentas.index') }}">Volver a cuentas</a>
+    <x-volver :defecto="route('cuentas.index')" etiqueta="Volver a cuentas" />
     <header class="page-header mt-3">
         <div>
             <h1 class="page-title">Administrar cuenta</h1>

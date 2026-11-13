@@ -6,6 +6,7 @@
 @endphp
 <section class="container workspace-section">
     <header class="page-header"><div><h1 class="page-title">Reportes</h1><p class="page-description">Consulta proyectos, solicitudes y asignaciones con sus totales.</p></div></header>
+    @if($panorama ?? null)@include('reportes._panorama')@endif
     <nav class="report-navigation" aria-label="Tipos de reporte">@foreach($tipos as $codigo => $nombre)<a class="{{ $tipo === $codigo ? 'is-current' : '' }}" href="{{ route('reportes.index', $codigo) }}" @if($tipo === $codigo) aria-current="page" @endif>{{ $nombre }}</a>@endforeach</nav>
     <div class="report-heading-row mt-4 mb-3">
         <h2 class="section-heading mb-0">{{ $tipos[$tipo] }}</h2>

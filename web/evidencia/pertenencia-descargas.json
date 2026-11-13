@@ -1,0 +1,27 @@
+{
+  "fecha_utc": "2026-11-12T23:17:27.967925+00:00",
+  "url": "https://bacteria-naples-diary-scanned.trycloudflare.com",
+  "resultado": "correcto",
+  "casos": [
+    {
+      "cuenta": "diego.morales@demo.test",
+      "solicitud_propia": 1,
+      "solicitud_ajena": 2,
+      "detalle_propio": 200,
+      "detalle_ajeno": 403,
+      "constancia_propia": 200,
+      "constancia_ajena": 404
+    },
+    {
+      "cuenta": "sebastian.cortes@demo.test",
+      "solicitud_propia": 2,
+      "solicitud_ajena": 1,
+      "detalle_propio": 200,
+      "detalle_ajeno": 403,
+      "constancia_propia": 200,
+      "constancia_ajena": 404
+    }
+  ],
+  "alcance": "HTTP real por HTTPS: intercambio de IDs de dos candidaturas y sus constancias entre dos alumnos.",
+  "limites": "Sin cambios de datos o permisos; no sustituye una auditoría de todas las rutas."
+}

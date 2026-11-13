@@ -44,6 +44,44 @@ Para detener únicamente esta instancia, una vez cerradas las conexiones de trab
 python database/manage.py stop
 ```
 
+## Datos de demostración (DEMO-01)
+
+Para presentar el sistema con datos creíbles:
+
+```
+py -3.12 database/cargar_demo.py
+```
+
+Primero respalda la base de trabajo en `database/.local/backups/<fecha>-antes-demo.dump`, luego ejecuta [demo.sql](demo.sql). Si la demostración ya está cargada no hace nada; para quitarla, restaurar ese respaldo. Todo es ficticio: personas, empresas, matrículas y teléfonos inventados, y correos del dominio reservado `demo.test`. Los estados se producen con las funciones de negocio (enviar, publicar, postular, evaluar, resolver, iniciar y cerrar), así que la auditoría y los avisos son coherentes.
+
+Todas las cuentas usan la contraseña **`Demo-Banco-2026`** y no piden cambiarla.
+
+| Rol | Cuenta | Qué muestra |
+| --- | --- | --- |
+| Administración | `coordinacion@demo.test` (María Fernanda Ruiz) | Un proyecto por revisar, una candidatura preseleccionada y una solicitud de dirección pendientes; reportes con nueve proyectos |
+| Empresa | `jorge.medina@demo.test` (Panadería La Espiga) | Proyecto en curso con dos alumnas y directora; inventario con candidaturas por evaluar y por preseleccionar |
+| Empresa | `daniela.ortiz@demo.test` (Clínica Veterinaria Huellitas) | Expediente clínico publicado con dos candidaturas nuevas y un proyecto en revisión |
+| Empresa | `ricardo.salas@demo.test` (Transportes del Golfo) | Proyecto finalizado, uno devuelto a corrección y uno rechazado con motivo |
+| Empresa | `lucia.hernandez@demo.test` (Cooperativa Café Altura) | Proyecto publicado con alumna y director aprobados, una candidatura rechazada y un borrador |
+| Alumno | `ana.torres@demo.test` | Perfil al 100 %, asignada a un proyecto en curso y con otra candidatura pendiente |
+| Alumno | `luis.ramirez@demo.test` | Perfil y participación ficticios |
+| Alumno | `valeria.gomez@demo.test` | Perfil y participación ficticios |
+| Alumno | `diego.morales@demo.test` | Participación concluida con constancia disponible |
+| Alumno | `camila.reyes@demo.test` | Perfil y participación ficticios |
+| Alumno | `emiliano.vazquez@demo.test` | Perfil y participación ficticios |
+| Alumno | `ximena.flores@demo.test` | Perfil y participación ficticios |
+| Alumno | `sebastian.cortes@demo.test` | Perfil y participación ficticios |
+| Alumno | `renata.aguirre@demo.test` | Perfil y participación ficticios |
+| Alumno | `mateo.juarez@demo.test` | Perfil incompleto, para mostrar el avance del perfil |
+| Profesor | `alberto.cruz@demo.test` | Dirección aprobada en Café Altura y solicitud pendiente en Inventario |
+| Profesor | `patricia.lara@demo.test` | Directora del sistema de pedidos en curso |
+| Profesor | `fernando.rios@demo.test` | Participación concluida con constancia disponible |
+| Profesor | `sofia.mendoza@demo.test` | Perfil docente ficticio y solicitud rechazada |
+
+Las 19 cuentas figuran en la tabla. Todas las fechas de los trámites son las del momento de la carga; las fechas estimadas de los proyectos sí están repartidas en 2026 y 2027.
+
+Para pruebas compartidas por internet, [la guía web](../web/README.md#compartir-pruebas-por-internet-pruebas-01) usa una base independiente, `banco_pruebas_publicas`. `py -3.12 database/preparar_demo_publica.py` la prepara con el mismo SQL versionado y la demostración; no carga los ejemplos anteriores de `seed.sql`, no modifica la base de trabajo y conserva lo probado al volver a ejecutarlo. Su configuración privada queda en `proyecto/.local/pruebas-publicas/`. No es una migración ni una sustitución del alojamiento institucional.
+
 ## Reproducir en otro equipo
 
 1. Obtener PostgreSQL 18 para el equipo desde [la distribución oficial de Windows](https://www.postgresql.org/download/windows/). Se necesitan `postgres`, `initdb`, `pg_ctl`, `psql`, `pg_dump` y `pg_restore` de la misma rama.
@@ -76,7 +114,7 @@ El respaldo de base no contiene `web/.env`, `APP_KEY`, credenciales PostgreSQL, 
 
 ## Estado de los procesos
 
-Las fuentes incluyen veintiséis migraciones y 154 funciones en `banco`, y conservan las 21 tablas de negocio, 164 columnas de tablas y cinco de vista. 001–025 permanecen inmutables. 014–018 completan cierre, cancelación docente previa, evaluación/autorización, cuentas/perfiles y avisos internos; 019 prepara la conexión y 020 integra acceso/cuentas. [021](migrations/021_publicacion_web.sql) añade nueve gateways de empresa/publicación y siete auxiliares privados, sin columnas nuevas ni cambios de contenido histórico. [022](migrations/022_perfiles_catalogo_web.sql) añade seis gateways de perfiles propios/catálogo y cinco auxiliares privados. [023](migrations/023_participacion_web.sql) añade ocho gateways de participación/ciclo y ocho auxiliares privados. [024](migrations/024_avisos_reportes_web.sql) añade cuatro gateways de avisos/reportes y tres auxiliares privados sobre el mismo esquema, sin tablas nuevas. [025](migrations/025_coincidencia_habilidades_web.sql) añade un gateway de solo lectura con la coincidencia entre las habilidades propias del alumno y las de proyectos publicados (UX-02), sin tablas ni datos nuevos. [026](migrations/026_documentos_pdf_web.sql) añade el esquema `adjunto` con la tabla de metadatos de PDF del perfil (D-11) y cuatro gateways; queda fuera de las 21 entidades de `banco`. `snapshot` y `restore-check` no comparan `adjunto`, y los archivos de `web/storage/app/private/documentos` se respaldan aparte. El [seguimiento](../docs/06-seguimiento.md) y los recibos distinguen las fuentes preparadas de la instalación verificada. El [diccionario físico](../docs/09-base-de-datos.md) explica sus referencias y restricciones.
+Las fuentes incluyen treinta y una migraciones y 166 funciones en `banco`, y conservan las 21 tablas de negocio, 164 columnas de tablas y cinco de vista. 001–030 permanecen inmutables. 014–018 completan cierre, cancelación docente previa, evaluación/autorización, cuentas/perfiles y avisos internos; 019 prepara la conexión y 020 integra acceso/cuentas. [021](migrations/021_publicacion_web.sql) añade nueve gateways de empresa/publicación y siete auxiliares privados, sin columnas nuevas ni cambios de contenido histórico. [022](migrations/022_perfiles_catalogo_web.sql) añade seis gateways de perfiles propios/catálogo y cinco auxiliares privados. [023](migrations/023_participacion_web.sql) añade ocho gateways de participación/ciclo y ocho auxiliares privados. [024](migrations/024_avisos_reportes_web.sql) añade cuatro gateways de avisos/reportes y tres auxiliares privados sobre el mismo esquema, sin tablas nuevas. [025](migrations/025_coincidencia_habilidades_web.sql) añade un gateway de solo lectura con la coincidencia entre las habilidades propias del alumno y las de proyectos publicados (UX-02), sin tablas ni datos nuevos. [026](migrations/026_documentos_pdf_web.sql) añade el esquema `adjunto` con la tabla de metadatos de PDF del perfil (D-11) y cuatro gateways; queda fuera de las 21 entidades de `banco`. `snapshot` y `restore-check` no comparan `adjunto`, y los archivos de `web/storage/app/private/documentos` se respaldan aparte. [027](migrations/027_recomendaciones_web.sql) añade un gateway de solo lectura con los proyectos recomendados para el alumno según sus habilidades (UX-06), sin tablas ni datos nuevos. [028](migrations/028_constancia_participacion_web.sql) añade un gateway de solo lectura con los datos de la constancia de participación (UX-07). [029](migrations/029_imagenes_web.sql) añade `adjunto.imagen` para la foto de perfil y el logo de empresa (UX-08) con cuatro gateways; las imágenes viven en `web/storage/app/private/imagenes` y, como los PDF, se respaldan aparte. [030](migrations/030_panorama_reportes_web.sql) añade un gateway de solo lectura con los conteos del panorama gráfico de Reportes (UX-09). [031](migrations/031_catalogo_habilidades_web.sql) añade el mantenimiento del catálogo de habilidades por la administración (UX-10). El [seguimiento](../docs/06-seguimiento.md) y los recibos distinguen las fuentes preparadas de la instalación verificada. El [diccionario físico](../docs/09-base-de-datos.md) explica sus referencias y restricciones.
 
 | Operación interna | Resultado |
 | --- | --- |

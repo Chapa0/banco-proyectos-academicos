@@ -8,7 +8,7 @@
     <div class="skill-match-bar profile-progress-bar" role="progressbar" aria-labelledby="avance-perfil-texto" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ $avance->porcentaje }}"><span style="width: {{ $avance->porcentaje }}%"></span></div>
     @if($avance->faltantes)
         <p class="field-hint mb-0">Un perfil completo ayuda a las empresas a evaluarte. Agrega:
-            @foreach($avance->faltantes as $f)<a href="{{ $enlazar ? route('perfil.edit').'#'.$f->campo : '#'.$f->campo }}">{{ $f->texto }}</a>{{ $loop->last ? '.' : ($loop->remaining === 1 ? ' y ' : ', ') }}@endforeach
+            @foreach($avance->faltantes as $f)<a href="{{ $enlazar ? \App\Support\Regreso::enlace(route('perfil.edit').'#'.$f->campo) : '#'.$f->campo }}">{{ $f->texto }}</a>{{ $loop->last ? '.' : ($loop->remaining === 1 ? ' y ' : ', ') }}@endforeach
         </p>
     @endif
 </div>

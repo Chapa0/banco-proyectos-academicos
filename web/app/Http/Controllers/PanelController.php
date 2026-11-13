@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CoincidenciaService;
+use App\Services\ImagenService;
 use App\Services\PendienteService;
 use App\Services\PerfilService;
 use Illuminate\Http\Request;
@@ -14,6 +16,8 @@ class PanelController extends Controller
     public function __construct(
         private readonly PerfilService $perfiles,
         private readonly PendienteService $pendientes,
+        private readonly CoincidenciaService $coincidencias,
+        private readonly ImagenService $imagenes,
     ) {}
 
     public function __invoke(Request $request): View
@@ -28,9 +32,14 @@ class PanelController extends Controller
             }
         }
 
+        $recomendados = $request->user()->rol_principal === 'alumno' && Gate::allows('consultar-catalogo')
+            ? $this->coincidencias->recomendaciones($actor, 3) : [];
+
         return view('panel', [
             'usuario' => $request->user(), 'avancePerfil' => $avance,
             'pendientes' => $this->pendientes->delActor($actor, $request->user()->rol_principal),
+            'recomendados' => $recomendados,
+            'logos' => $this->imagenes->mapa($actor, [], [], array_map(fn ($p) => (int) $p->id, $recomendados))->logos_proyecto,
         ]);
     }
 }

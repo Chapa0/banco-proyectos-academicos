@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Perfiles\GuardarPerfilRequest;
 use App\Services\DocumentoService;
+use App\Services\ImagenService;
 use App\Services\PerfilService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class PerfilController extends Controller
     public function __construct(
         private readonly PerfilService $perfiles,
         private readonly DocumentoService $documentos,
+        private readonly ImagenService $imagenes,
     ) {}
 
     public function edit(Request $request): View
@@ -31,6 +33,7 @@ class PerfilController extends Controller
             'version' => $actual->version,
             'avance' => $this->perfiles->completitud($actual),
             'documentos' => $this->documentos->delPerfil($actor, $actor),
+            'foto' => $this->imagenes->mapa($actor, [$actor])->fotos[$actor] ?? null,
         ]);
     }
 

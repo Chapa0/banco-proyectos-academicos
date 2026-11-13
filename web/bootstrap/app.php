@@ -18,6 +18,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        if (env('BANCO_TUNEL_PUBLICO', false)) {
+            // cloudflared llega al servidor de pruebas exclusivamente por loopback.
+            $middleware->trustProxies(
+                at: ['127.0.0.1', '::1'],
+                headers: Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_PROTO | Request::HEADER_X_FORWARDED_PORT,
+            );
+        }
+
         $middleware->alias([
             'cuenta.activa' => CuentaActiva::class,
             'clave.actualizada' => ClaveActualizada::class,

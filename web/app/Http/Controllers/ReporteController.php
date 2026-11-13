@@ -25,6 +25,7 @@ class ReporteController extends Controller
             'resumen' => $datos->resumen, 'opciones' => $datos->opciones, 'filtros' => $filtros,
             'estados' => $estados, 'campos' => array_merge($estados === [] ? [] : ['estado'], ConsultaService::FILTROS_REPORTE[$tipo]),
             'columnas' => ConsultaService::COLUMNAS_REPORTE[$tipo],
+            'panorama' => $this->consultas->panorama((int) $request->user()->getAuthIdentifier()),
         ]);
     }
 

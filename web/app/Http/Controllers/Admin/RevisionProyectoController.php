@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Proyectos\ResolverProyectoRequest;
 use App\Services\PublicacionService;
+use App\Support\LineaTiempo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -39,7 +40,7 @@ class RevisionProyectoController extends Controller
         $actual = $this->publicacion->obtener((int) $request->user()->getAuthIdentifier(), $proyecto);
 
         return view('revision.show', [
-            'proyecto' => $actual, 'estados' => PublicacionService::ESTADOS,
+            'proyecto' => $actual, 'estados' => PublicacionService::ESTADOS, 'lineaTiempo' => LineaTiempo::proyecto($actual->estado, $actual->revisiones ?? []),
             'puedeEditar' => false, 'puedeResolver' => $this->publicacion->puedeResolver($actual),
             'puedeEnviar' => false, 'ultimaRevision' => $this->publicacion->revisionActual($actual),
             'revisionActual' => $this->publicacion->revisionActual($actual),

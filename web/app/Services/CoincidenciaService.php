@@ -45,6 +45,34 @@ class CoincidenciaService
     }
 
     /**
+     * «Recomendados para ti» (UX-06, 027): proyectos con plazas donde el alumno aún no participa,
+     * ordenados por obligatorias cumplidas y proporción de coincidencia. Profesor: lista vacía.
+     *
+     * @return list<object> cada uno con id, titulo, razon_social, descripcion, modalidad, plazas y coincidencia
+     */
+    public function recomendaciones(int $actor, int $limite = 3): array
+    {
+        try {
+            $resultado = DB::selectOne('SELECT banco.web_recomendaciones(?,?) AS resultado', [$actor, $limite])?->resultado;
+            $datos = json_decode($resultado ?? '[]', true, 512, JSON_THROW_ON_ERROR);
+        } catch (QueryException $error) {
+            // Es una ayuda: si falla, la página se muestra sin recomendaciones.
+            Log::warning('No fue posible calcular las recomendaciones.', ['sqlstate' => $error->errorInfo[0] ?? null]);
+
+            return [];
+        }
+
+        return array_map(function (array $item) {
+            $c = $item['coincidencia'];
+            unset($item['coincidencia']);
+            $proyecto = (object) $item;
+            $proyecto->coincidencia = $this->resumen((int) $c['requeridas'], (int) $c['cumplidas'], $c['faltantes'] ?? []);
+
+            return $proyecto;
+        }, is_array($datos) ? array_values($datos) : []);
+    }
+
+    /**
      * Misma regla, en PHP, para quien ya obtuvo ambos conjuntos con permiso (empresa o administrador
      * al revisar una candidatura de su ámbito).
      *

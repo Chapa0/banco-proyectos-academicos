@@ -2,8 +2,9 @@
 @section('title', 'Proyecto · Banco de proyectos')
 @section('content')
 <section class="container workspace-section">
-    <a class="back-link" href="{{ route('proyectos.index') }}">Volver a mis proyectos</a>
+    <x-volver :defecto="route('proyectos.index')" etiqueta="Volver a mis proyectos" />
     <header class="page-header"><div><h1 class="page-title">{{ $proyecto->titulo }}</h1><p class="page-description">{{ $proyecto->empresa->razon_social }}</p></div><x-estado-proyecto :estado="$proyecto->estado" /></header>
+    @if(isset($lineaTiempo))<x-linea-estado :pasos="$lineaTiempo" titulo="Avance del proyecto" />@endif
     <x-errores />
     @if($ultimaRevision?->decision && $ultimaRevision->estado_revision === 'en_correccion')
         <div class="review-note mb-4"><h2 class="h6">Observaciones del administrador</h2><p class="mb-0 preserve-lines">{{ $ultimaRevision->decision->justificacion }}</p></div>

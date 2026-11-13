@@ -6,6 +6,9 @@
     <div class="form-layout">
         <x-errores />
         <x-avance-perfil :avance="$avance" class="surface mb-4" />
+        <x-subir-imagen id="foto" class="mb-4" titulo="Foto de perfil" :imagen="$foto ?? null" :nombre="auth()->user()->nombre"
+            descripcion="Ayuda a que la empresa y tu director te reconozcan. La ven quienes ya pueden consultar tu perfil."
+            :accion-guardar="route('perfil.foto.store')" :accion-quitar="route('perfil.foto.destroy')" confirmar="¿Quitar tu foto de perfil? Se mostrarán tus iniciales." />
         <form class="surface" method="POST" action="{{ route('perfil.update') }}" data-submit-label="Guardando perfil…">
             @csrf @method('PUT')
             <input type="hidden" name="version" value="{{ is_string(old('version', $version)) ? old('version', $version) : '' }}">
@@ -30,7 +33,7 @@
             @if($rol === 'alumno')
                 @include('perfil._habilidades')
             @endif
-            <div class="form-actions"><button class="btn btn-primary" type="submit">Guardar perfil</button><a href="{{ route('panel') }}" class="btn btn-outline-secondary">Volver a mi espacio</a></div>
+            <div class="form-actions"><button class="btn btn-primary" type="submit">Guardar perfil</button><x-volver boton :defecto="route('panel')" etiqueta="Volver a mi espacio" /></div>
         </form>
         @include('perfil._documentos')
     </div>

@@ -2,8 +2,9 @@
 @section('title', 'Revisar proyecto · Banco de proyectos')
 @section('content')
 <section class="container workspace-section">
-    <a class="back-link" href="{{ route('revision.index') }}">Volver a revisión de proyectos</a>
+    <x-volver :defecto="route('revision.index')" etiqueta="Volver a revisión de proyectos" />
     <header class="page-header"><div><h1 class="page-title">{{ $proyecto->titulo }}</h1><p class="page-description">{{ $proyecto->empresa->razon_social }}</p></div><x-estado-proyecto :estado="$proyecto->estado" /></header>
+    @if(isset($lineaTiempo))<x-linea-estado :pasos="$lineaTiempo" titulo="Avance del proyecto" />@endif
     <x-errores />
     @if($puedeResolver)
         <p class="page-description mb-4">Revisa el contenido enviado y confirma el cupo antes de publicar. Si necesita cambios, devuelve el proyecto con observaciones.</p>

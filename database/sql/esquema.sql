@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict yDolijRyOCJhjUhyDPpqufjMgUg92ORVRkg0dmtKoZKVXW9iBWiStpiYNqT54X8
+\restrict heTkHyRDWHAhzEQZkTL4hWkGKXUkeI5OVt7aVprLZ2vccjyB1VOpzv2fcvuU2Si
 
 -- Dumped from database version 18.6
 -- Dumped by pg_dump version 18.6
@@ -1627,6 +1627,19 @@ $$;
 
 
 --
+-- Name: normalizar_habilidad(text); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.normalizar_habilidad(p_nombre text) RETURNS text
+    LANGUAGE sql IMMUTABLE
+    SET search_path TO 'pg_catalog'
+    AS $$
+  SELECT lower(translate(btrim(regexp_replace(coalesce(p_nombre,''),'\s+',' ','g')),
+    'ÁÉÍÓÚÜÑáéíóúüñ','AEIOUUNaeiouun'));
+$$;
+
+
+--
 -- Name: notificar_evento(); Type: FUNCTION; Schema: banco; Owner: -
 --
 
@@ -2642,6 +2655,24 @@ COMMENT ON FUNCTION banco.solicitar_direccion(p_proyecto bigint, p_profesor bigi
 
 
 --
+-- Name: usos_habilidad(bigint); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.usos_habilidad(p_habilidad bigint) RETURNS jsonb
+    LANGUAGE sql STABLE
+    SET search_path TO 'pg_catalog', 'banco', 'adjunto'
+    AS $$
+  SELECT jsonb_build_object(
+    'alumnos',(SELECT count(*) FROM banco.alumno_habilidad WHERE habilidad_id=p_habilidad),
+    'proyectos',(SELECT count(*) FROM banco.proyecto_habilidad WHERE habilidad_id=p_habilidad),
+    'evidencias',(SELECT count(*) FROM adjunto.documento WHERE habilidad_id=p_habilidad),
+    'instantaneas',(SELECT count(*) FROM banco.revision_proyecto r
+      WHERE EXISTS(SELECT 1 FROM jsonb_array_elements(coalesce(r.instantanea_contenido->'habilidades','[]'::jsonb)) h
+        WHERE (h->>'habilidad_id')::bigint=p_habilidad)));
+$$;
+
+
+--
 -- Name: validar_acompanamiento(); Type: FUNCTION; Schema: banco; Owner: -
 --
 
@@ -3167,6 +3198,32 @@ $$;
 --
 
 COMMENT ON FUNCTION banco.web_abrir_documento(p_actor bigint, p_documento bigint) IS 'D-11/D-10: metadatos y ruta privada de un documento vigente, solo para quien puede consultar el perfil del titular.';
+
+
+--
+-- Name: web_abrir_imagen(bigint, bigint); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_abrir_imagen(p_actor bigint, p_imagen bigint) RETURNS jsonb
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'adjunto', 'pg_temp'
+    AS $$
+DECLARE v_img adjunto.imagen%ROWTYPE;
+BEGIN
+  PERFORM banco.web_exigir_avisos(p_actor);
+  SELECT * INTO v_img FROM adjunto.imagen WHERE id=p_imagen;
+  IF NOT FOUND OR v_img.retirado IS NOT NULL OR (v_img.tipo='foto' AND NOT adjunto.puede_ver_foto(p_actor,v_img.usuario_id)) THEN
+    RAISE EXCEPTION 'Imagen no disponible' USING ERRCODE='23503'; END IF;
+  RETURN jsonb_build_object('id',v_img.id,'tipo',v_img.tipo,'ruta',v_img.ruta,'sha256',v_img.sha256,'subido',v_img.subido);
+END;
+$$;
+
+
+--
+-- Name: FUNCTION web_abrir_imagen(p_actor bigint, p_imagen bigint); Type: COMMENT; Schema: banco; Owner: -
+--
+
+COMMENT ON FUNCTION banco.web_abrir_imagen(p_actor bigint, p_imagen bigint) IS 'UX-08: ruta privada de una imagen vigente; foto solo dentro del ámbito de consultar_perfil, logo para cualquier cuenta activa.';
 
 
 --
@@ -3727,6 +3784,63 @@ COMMENT ON FUNCTION banco.web_coincidencia_catalogo(p_actor bigint, p_proyectos 
 
 
 --
+-- Name: web_constancia(bigint, text, bigint); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_constancia(p_actor bigint, p_tipo text, p_id bigint) RETURNS jsonb
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'pg_temp'
+    AS $$
+DECLARE v_s jsonb;v_rol text;v_titular bigint;v_a record;v_p banco.proyecto%ROWTYPE;v_inicio timestamptz;
+BEGIN
+  IF p_tipo IS NULL OR p_tipo NOT IN ('candidatura','direccion') THEN
+    RAISE EXCEPTION 'Tipo de participación inválido' USING ERRCODE='23514'; END IF;
+  -- Misma apertura y permisos de lectura que el detalle de la solicitud.
+  v_s:=banco.web_abrir_participacion(p_actor,p_tipo,p_id,false);
+  SELECT rol_principal INTO v_rol FROM banco.usuario WHERE id=p_actor;
+  v_titular:=CASE p_tipo WHEN 'candidatura' THEN (SELECT alumno_id FROM banco.candidatura WHERE id=p_id)
+    ELSE (SELECT profesor_id FROM banco.solicitud_direccion WHERE id=p_id) END;
+  IF v_rol<>'administrador' AND p_actor<>v_titular THEN
+    RAISE EXCEPTION 'Constancia no disponible' USING ERRCODE='23503'; END IF;
+
+  IF p_tipo='candidatura' THEN
+    SELECT id,proyecto_id,inicio,fin,estado,evento_retiro_id INTO v_a FROM banco.asignacion_alumno WHERE candidatura_id=p_id;
+  ELSE
+    SELECT id,proyecto_id,inicio,fin,estado,evento_retiro_id INTO v_a FROM banco.asignacion_direccion WHERE solicitud_direccion_id=p_id;
+  END IF;
+  IF NOT FOUND OR v_a.estado<>'finalizada' OR v_a.evento_retiro_id IS NOT NULL OR v_a.fin IS NULL THEN
+    RAISE EXCEPTION 'Constancia no disponible' USING ERRCODE='23503'; END IF;
+  SELECT * INTO v_p FROM banco.proyecto WHERE id=v_a.proyecto_id;
+  IF v_p.estado<>'finalizado' THEN RAISE EXCEPTION 'Constancia no disponible' USING ERRCODE='23503'; END IF;
+  SELECT fecha INTO v_inicio FROM banco.evento_auditoria WHERE id=v_p.evento_inicio_id;
+
+  RETURN jsonb_build_object(
+    'folio','BP-'||to_char(v_a.fin AT TIME ZONE 'America/Mexico_City','YYYY')||'-'||CASE p_tipo WHEN 'candidatura' THEN 'A' ELSE 'D' END||lpad(v_a.id::text,5,'0'),
+    'tipo',p_tipo,
+    'participante',CASE p_tipo WHEN 'candidatura' THEN
+        (SELECT jsonb_build_object('nombre',u.nombre,'identificador',a.matricula,'carrera',a.carrera)
+           FROM banco.usuario u JOIN banco.alumno a ON a.usuario_id=u.id WHERE u.id=v_titular)
+      ELSE (SELECT jsonb_build_object('nombre',u.nombre,'identificador',p.numero_empleado,'carrera',NULL)
+           FROM banco.usuario u JOIN banco.profesor p ON p.usuario_id=u.id WHERE u.id=v_titular) END,
+    'proyecto',(SELECT jsonb_build_object('titulo',v_p.titulo,'empresa',e.razon_social,'modalidad',v_p.modalidad,'descripcion',v_p.descripcion)
+      FROM banco.empresa e WHERE e.id=v_p.empresa_id),
+    'periodo',jsonb_build_object('inicio',coalesce(v_inicio,v_a.inicio),'fin',v_a.fin),
+    'directores',(SELECT coalesce(jsonb_agg(u.nombre ORDER BY u.nombre),'[]'::jsonb) FROM banco.asignacion_direccion d
+      JOIN banco.usuario u ON u.id=d.profesor_id WHERE d.proyecto_id=v_p.id AND d.estado='finalizada' AND d.evento_retiro_id IS NULL),
+    'alumnos',(SELECT coalesce(jsonb_agg(u.nombre ORDER BY u.nombre),'[]'::jsonb) FROM banco.asignacion_alumno x
+      JOIN banco.usuario u ON u.id=x.alumno_id WHERE x.proyecto_id=v_p.id AND x.estado='finalizada' AND x.evento_retiro_id IS NULL));
+END;
+$$;
+
+
+--
+-- Name: FUNCTION web_constancia(p_actor bigint, p_tipo text, p_id bigint); Type: COMMENT; Schema: banco; Owner: -
+--
+
+COMMENT ON FUNCTION banco.web_constancia(p_actor bigint, p_tipo text, p_id bigint) IS 'UX-07: datos de la constancia de una participación concluida con el cierre del proyecto (sin retiro). Solo el titular o la administración; otro actor recibe 23503.';
+
+
+--
 -- Name: web_contexto_postulacion(bigint, bigint); Type: FUNCTION; Schema: banco; Owner: -
 --
 
@@ -4078,6 +4192,38 @@ $$;
 
 
 --
+-- Name: web_eliminar_habilidad(bigint, bigint); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_eliminar_habilidad(p_actor bigint, p_id bigint) RETURNS void
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'pg_temp'
+    AS $$
+DECLARE v_h banco.habilidad%ROWTYPE;v_usos jsonb;
+BEGIN
+  PERFORM banco.exigir_aislamiento();
+  PERFORM banco.exigir_rol(p_actor,'administrador',true);
+  PERFORM pg_advisory_xact_lock(hashtextextended('web_habilidad_catalogo',0));
+  SELECT * INTO v_h FROM banco.habilidad WHERE id=p_id FOR UPDATE;
+  IF NOT FOUND THEN RAISE EXCEPTION 'Habilidad inexistente' USING ERRCODE='23503'; END IF;
+  v_usos:=banco.usos_habilidad(p_id);
+  IF (v_usos->>'alumnos')::int+(v_usos->>'proyectos')::int+(v_usos->>'evidencias')::int+(v_usos->>'instantaneas')::int>0 THEN
+    RAISE EXCEPTION 'La habilidad está en uso y se conserva' USING ERRCODE='55000'; END IF;
+  INSERT INTO banco.evento_auditoria(actor_usuario_id,origen,operacion,entidad_afectada,registro_afectado,transicion,resultado)
+    VALUES(p_actor,'usuario','eliminar_habilidad','habilidad',p_id::text,'eliminada',to_jsonb(v_h)::text);
+  DELETE FROM banco.habilidad WHERE id=p_id;
+END;
+$$;
+
+
+--
+-- Name: FUNCTION web_eliminar_habilidad(p_actor bigint, p_id bigint); Type: COMMENT; Schema: banco; Owner: -
+--
+
+COMMENT ON FUNCTION banco.web_eliminar_habilidad(p_actor bigint, p_id bigint) IS 'UX-10: elimina una habilidad solo si no aparece en perfiles, proyectos, evidencias ni instantáneas publicadas. Auditado.';
+
+
+--
 -- Name: web_empresa_del_actor(bigint); Type: FUNCTION; Schema: banco; Owner: -
 --
 
@@ -4232,6 +4378,52 @@ $$;
 
 
 --
+-- Name: web_guardar_habilidad(bigint, bigint, text, text, text); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_guardar_habilidad(p_actor bigint, p_id bigint, p_nombre text, p_tipo text, p_descripcion text) RETURNS bigint
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'pg_temp'
+    AS $$
+DECLARE v_nombre text;v_descripcion text;v_id bigint;v_anterior jsonb;
+BEGIN
+  PERFORM banco.exigir_aislamiento();
+  PERFORM banco.exigir_rol(p_actor,'administrador',true);
+  v_nombre:=btrim(regexp_replace(coalesce(p_nombre,''),'\s+',' ','g'));
+  v_descripcion:=nullif(btrim(coalesce(p_descripcion,'')),'');
+  IF v_nombre='' OR length(v_nombre)>100 OR p_tipo IS NULL OR p_tipo NOT IN ('dura','blanda')
+    OR length(coalesce(v_descripcion,''))>500 THEN
+    RAISE EXCEPTION 'Datos de habilidad inválidos' USING ERRCODE='23514'; END IF;
+  -- Serializa altas y cambios para que dos administradores no creen el mismo nombre a la vez.
+  PERFORM pg_advisory_xact_lock(hashtextextended('web_habilidad_catalogo',0));
+  IF EXISTS(SELECT 1 FROM banco.habilidad WHERE banco.normalizar_habilidad(nombre)=banco.normalizar_habilidad(v_nombre)
+      AND id IS DISTINCT FROM p_id) THEN
+    RAISE EXCEPTION 'Ya existe una habilidad con ese nombre' USING ERRCODE='23505'; END IF;
+  IF p_id IS NULL THEN
+    INSERT INTO banco.habilidad(nombre,tipo,descripcion) VALUES(v_nombre,p_tipo,v_descripcion) RETURNING id INTO v_id;
+  ELSE
+    SELECT to_jsonb(h) INTO v_anterior FROM banco.habilidad h WHERE id=p_id FOR UPDATE;
+    IF NOT FOUND THEN RAISE EXCEPTION 'Habilidad inexistente' USING ERRCODE='23503'; END IF;
+    UPDATE banco.habilidad SET nombre=v_nombre,tipo=p_tipo,descripcion=v_descripcion WHERE id=p_id;
+    v_id:=p_id;
+  END IF;
+  INSERT INTO banco.evento_auditoria(actor_usuario_id,origen,operacion,entidad_afectada,registro_afectado,transicion,resultado)
+    VALUES(p_actor,'usuario',CASE WHEN p_id IS NULL THEN 'crear_habilidad' ELSE 'editar_habilidad' END,'habilidad',v_id::text,
+      CASE WHEN p_id IS NULL THEN 'creada' ELSE 'editada' END,
+      jsonb_build_object('nombre',v_nombre,'tipo',p_tipo,'anterior',v_anterior)::text);
+  RETURN v_id;
+END;
+$$;
+
+
+--
+-- Name: FUNCTION web_guardar_habilidad(p_actor bigint, p_id bigint, p_nombre text, p_tipo text, p_descripcion text); Type: COMMENT; Schema: banco; Owner: -
+--
+
+COMMENT ON FUNCTION banco.web_guardar_habilidad(p_actor bigint, p_id bigint, p_nombre text, p_tipo text, p_descripcion text) IS 'UX-10: alta o edición de una habilidad por la administración; rechaza nombres equivalentes (mayúsculas, acentos, espacios). Auditado.';
+
+
+--
 -- Name: web_guardar_habilidades(bigint, jsonb); Type: FUNCTION; Schema: banco; Owner: -
 --
 
@@ -4303,6 +4495,70 @@ $$;
 --
 
 COMMENT ON FUNCTION banco.web_guardar_perfil_propio(p_actor bigint, p_datos jsonb, p_version text) IS 'WEB-05: titular académico activo crea/actualiza su perfil y habilidades de alumno, con CAS y auditoría; sin modificar identidad o acceso. La evidencia se almacena como texto, no se descarga ni ejecuta.';
+
+
+--
+-- Name: web_habilidades_admin(bigint, text, text, integer, integer); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_habilidades_admin(p_actor bigint, p_buscar text, p_tipo text, p_limite integer, p_desplazamiento integer) RETURNS jsonb
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'adjunto', 'pg_temp'
+    AS $$
+BEGIN
+  PERFORM banco.exigir_rol(p_actor,'administrador',true);
+  IF p_limite IS NULL OR p_limite NOT BETWEEN 1 AND 100 OR p_desplazamiento IS NULL OR p_desplazamiento<0
+    OR length(coalesce(p_buscar,''))>100 OR (nullif(p_tipo,'') IS NOT NULL AND p_tipo NOT IN ('dura','blanda')) THEN
+    RAISE EXCEPTION 'Filtros o paginación inválidos' USING ERRCODE='23514'; END IF;
+  RETURN (WITH filtrados AS MATERIALIZED (
+      SELECT h.id,h.nombre,h.tipo,h.descripcion,banco.normalizar_habilidad(h.nombre) AS clave
+      FROM banco.habilidad h
+      WHERE (nullif(p_tipo,'') IS NULL OR h.tipo=p_tipo)
+        AND (nullif(btrim(p_buscar),'') IS NULL OR strpos(banco.normalizar_habilidad(h.nombre||' '||coalesce(h.descripcion,'')),
+          banco.normalizar_habilidad(p_buscar))>0)
+    ), pagina AS (SELECT * FROM filtrados ORDER BY clave,id LIMIT p_limite OFFSET p_desplazamiento)
+    SELECT jsonb_build_object(
+      'datos',coalesce((SELECT jsonb_agg(jsonb_build_object('id',p.id,'nombre',p.nombre,'tipo',p.tipo,'descripcion',p.descripcion,
+        'usos',banco.usos_habilidad(p.id),
+        'duplicados',(SELECT coalesce(jsonb_agg(jsonb_build_object('id',o.id,'nombre',o.nombre) ORDER BY o.id),'[]'::jsonb)
+          FROM banco.habilidad o WHERE o.id<>p.id AND banco.normalizar_habilidad(o.nombre)=p.clave)) ORDER BY p.clave,p.id) FROM pagina p),'[]'::jsonb),
+      'total',(SELECT count(*) FROM filtrados),
+      'resumen',(SELECT jsonb_build_object('total',count(*),'duras',count(*) FILTER (WHERE tipo='dura'),
+        'blandas',count(*) FILTER (WHERE tipo='blanda')) FROM banco.habilidad)));
+END;
+$$;
+
+
+--
+-- Name: web_imagenes(bigint, bigint[], bigint[], bigint[]); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_imagenes(p_actor bigint, p_usuarios bigint[], p_empresas bigint[], p_proyectos bigint[]) RETURNS jsonb
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'adjunto', 'pg_temp'
+    AS $$
+BEGIN
+  PERFORM banco.web_exigir_avisos(p_actor);
+  IF cardinality(coalesce(p_usuarios,'{}'))>100 OR cardinality(coalesce(p_empresas,'{}'))>100 OR cardinality(coalesce(p_proyectos,'{}'))>100 THEN
+    RAISE EXCEPTION 'Demasiadas imágenes solicitadas' USING ERRCODE='23514'; END IF;
+  RETURN jsonb_build_object(
+    'fotos',coalesce((SELECT jsonb_object_agg(i.usuario_id::text,i.id) FROM adjunto.imagen i
+      WHERE i.tipo='foto' AND i.retirado IS NULL AND i.usuario_id=ANY(coalesce(p_usuarios,'{}'))
+        AND adjunto.puede_ver_foto(p_actor,i.usuario_id)),'{}'::jsonb),
+    'logos',coalesce((SELECT jsonb_object_agg(i.empresa_id::text,i.id) FROM adjunto.imagen i
+      WHERE i.tipo='logo' AND i.retirado IS NULL AND i.empresa_id=ANY(coalesce(p_empresas,'{}'))),'{}'::jsonb),
+    -- El logo es público dentro del sistema; por proyecto evita exponer empresa_id en el catálogo.
+    'logos_proyecto',coalesce((SELECT jsonb_object_agg(p.id::text,i.id) FROM banco.proyecto p JOIN adjunto.imagen i
+      ON i.empresa_id=p.empresa_id AND i.tipo='logo' AND i.retirado IS NULL WHERE p.id=ANY(coalesce(p_proyectos,'{}'))),'{}'::jsonb));
+END;
+$$;
+
+
+--
+-- Name: FUNCTION web_imagenes(p_actor bigint, p_usuarios bigint[], p_empresas bigint[], p_proyectos bigint[]); Type: COMMENT; Schema: banco; Owner: -
+--
+
+COMMENT ON FUNCTION banco.web_imagenes(p_actor bigint, p_usuarios bigint[], p_empresas bigint[], p_proyectos bigint[]) IS 'UX-08: ids de fotos visibles para el actor (D-10) y de logos vigentes por empresa o por proyecto, hasta 100 de cada lista.';
 
 
 --
@@ -4638,6 +4894,41 @@ $_$;
 
 
 --
+-- Name: web_panorama_reportes(bigint); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_panorama_reportes(p_actor bigint) RETURNS jsonb
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'pg_temp'
+    AS $$
+BEGIN
+  PERFORM banco.exigir_rol(p_actor,'administrador',true);
+  RETURN jsonb_build_object(
+    'proyectos',(SELECT jsonb_object_agg(e,(SELECT count(*) FROM banco.proyecto WHERE estado=e)) FROM unnest(ARRAY[
+      'borrador','en_revision','en_correccion','publicado','rechazado','en_curso','pausado','finalizado','cancelado']) e),
+    'candidaturas',(SELECT jsonb_object_agg(e,(SELECT count(*) FROM banco.candidatura WHERE estado=e)) FROM unnest(ARRAY[
+      'pendiente_evaluacion','evaluada','preseleccionada','aprobada','rechazada','cancelada']) e),
+    'direcciones',(SELECT jsonb_object_agg(e,(SELECT count(*) FROM banco.solicitud_direccion WHERE estado=e)) FROM unnest(ARRAY[
+      'pendiente','aprobada','rechazada','cancelada']) e),
+    'carga',coalesce((SELECT jsonb_agg(jsonb_build_object('profesor_id',profesor_id,'nombre',nombre,'vigentes',vigentes,'limite',3)
+      ORDER BY vigentes DESC,nombre) FROM (
+        SELECT pr.usuario_id AS profesor_id,u.nombre,
+          (SELECT count(*) FROM banco.asignacion_direccion d WHERE d.profesor_id=pr.usuario_id AND d.estado='vigente') AS vigentes
+        FROM banco.profesor pr JOIN banco.usuario u ON u.id=pr.usuario_id) c
+      WHERE vigentes>0),'[]'::jsonb),
+    'profesores',(SELECT count(*) FROM banco.profesor));
+END;
+$$;
+
+
+--
+-- Name: FUNCTION web_panorama_reportes(p_actor bigint); Type: COMMENT; Schema: banco; Owner: -
+--
+
+COMMENT ON FUNCTION banco.web_panorama_reportes(p_actor bigint) IS 'UX-09/RF-41: conteos globales por estado de proyectos, candidaturas y direcciones, y carga docente vigente frente al límite de tres. Solo administración.';
+
+
+--
 -- Name: web_participacion_base(text, bigint); Type: FUNCTION; Schema: banco; Owner: -
 --
 
@@ -4686,6 +4977,64 @@ BEGIN
   SELECT jsonb_build_object('datos',coalesce((SELECT jsonb_agg(to_jsonb(pagina) ORDER BY id DESC) FROM pagina),'[]'::jsonb),'total',(SELECT count(*) FROM visibles)));
 END;
 $$;
+
+
+--
+-- Name: web_recomendaciones(bigint, integer); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_recomendaciones(p_actor bigint, p_limite integer) RETURNS jsonb
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'pg_temp'
+    AS $$
+DECLARE v_rol text;
+BEGIN
+  v_rol:=banco.web_exigir_academico(p_actor);
+  IF p_limite IS NULL OR p_limite NOT BETWEEN 1 AND 20 THEN
+    RAISE EXCEPTION 'Límite de recomendaciones inválido' USING ERRCODE='23514'; END IF;
+  -- El profesor no registra habilidades estructuradas; no hay con qué recomendar.
+  IF v_rol<>'alumno' THEN RETURN '[]'::jsonb; END IF;
+  RETURN coalesce((
+    WITH propias AS MATERIALIZED (SELECT habilidad_id FROM banco.alumno_habilidad WHERE alumno_id=p_actor),
+    visibles AS MATERIALIZED (
+      SELECT p.id,p.titulo,p.descripcion,p.modalidad,p.cupo_maximo_alumnos,e.razon_social,r.instantanea_contenido,
+        (banco.web_catalogo_disponibilidad(p)->>'plazas_disponibles')::integer AS plazas_disponibles
+      FROM banco.proyecto p JOIN banco.revision_proyecto r ON r.id=p.revision_publicada_id AND r.proyecto_id=p.id
+        JOIN banco.empresa e ON e.id=p.empresa_id
+      WHERE banco.web_catalogo_publicacion_valida(p,r)
+        AND NOT EXISTS(SELECT 1 FROM banco.candidatura c WHERE c.proyecto_id=p.id AND c.alumno_id=p_actor)
+        AND NOT EXISTS(SELECT 1 FROM banco.asignacion_alumno a WHERE a.proyecto_id=p.id AND a.alumno_id=p_actor)),
+    puntuados AS (
+      SELECT v.id,v.titulo,v.descripcion,v.modalidad,v.razon_social,v.plazas_disponibles,v.cupo_maximo_alumnos,
+        count(*) AS requeridas,
+        count(*) FILTER (WHERE (h->>'habilidad_id')::bigint IN (SELECT habilidad_id FROM propias)) AS cumplidas,
+        count(*) FILTER (WHERE coalesce((h->>'obligatoria')::boolean,false)
+          AND (h->>'habilidad_id')::bigint NOT IN (SELECT habilidad_id FROM propias)) AS faltan_obligatorias,
+        coalesce(jsonb_agg(jsonb_build_object('nombre',h->>'nombre','obligatoria',coalesce((h->>'obligatoria')::boolean,false))
+          ORDER BY NOT coalesce((h->>'obligatoria')::boolean,false),h->>'nombre')
+          FILTER (WHERE (h->>'habilidad_id')::bigint NOT IN (SELECT habilidad_id FROM propias)),'[]'::jsonb) AS faltantes
+      FROM visibles v, LATERAL jsonb_array_elements(v.instantanea_contenido->'habilidades') h
+      WHERE v.plazas_disponibles>0
+      GROUP BY v.id,v.titulo,v.descripcion,v.modalidad,v.razon_social,v.plazas_disponibles,v.cupo_maximo_alumnos),
+    elegidos AS (
+      SELECT * FROM puntuados WHERE cumplidas>0
+      ORDER BY faltan_obligatorias,cumplidas::numeric/requeridas DESC,cumplidas DESC,id DESC
+      LIMIT p_limite)
+    SELECT jsonb_agg(jsonb_build_object('id',id,'titulo',titulo,'descripcion',descripcion,'modalidad',modalidad,
+      'razon_social',razon_social,'plazas_disponibles',plazas_disponibles,'cupo_maximo_alumnos',cupo_maximo_alumnos,
+      'coincidencia',jsonb_build_object('requeridas',requeridas,'cumplidas',cumplidas,'faltantes',faltantes))
+      ORDER BY faltan_obligatorias,cumplidas::numeric/requeridas DESC,cumplidas DESC,id DESC)
+    FROM elegidos
+  ),'[]'::jsonb);
+END;
+$$;
+
+
+--
+-- Name: FUNCTION web_recomendaciones(p_actor bigint, p_limite integer); Type: COMMENT; Schema: banco; Owner: -
+--
+
+COMMENT ON FUNCTION banco.web_recomendaciones(p_actor bigint, p_limite integer) IS 'UX-06: hasta 20 proyectos publicados con plazas, donde el alumno actor no tiene candidatura ni asignación, ordenados por obligatorias cumplidas y proporción de coincidencia. Profesor recibe arreglo vacío.';
 
 
 --
@@ -4803,6 +5152,47 @@ $$;
 --
 
 COMMENT ON FUNCTION banco.web_registrar_documento(p_actor bigint, p_tipo text, p_habilidad bigint, p_nombre text, p_ruta text, p_tamano integer, p_sha256 text) IS 'D-11: registra un PDF propio ya almacenado. Currículum reemplaza al vigente; evidencia exige habilidad del perfil y admite tres vigentes. Auditado.';
+
+
+--
+-- Name: web_registrar_imagen(bigint, text, text, integer, text); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_registrar_imagen(p_actor bigint, p_tipo text, p_ruta text, p_tamano integer, p_sha256 text) RETURNS bigint
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'adjunto', 'pg_temp'
+    AS $$
+DECLARE v_usuario bigint;v_empresa bigint;v_anterior bigint;v_id bigint;
+BEGIN
+  PERFORM banco.exigir_aislamiento();
+  IF p_tipo IS NULL OR p_tipo NOT IN ('foto','logo') THEN
+    RAISE EXCEPTION 'Tipo de imagen inválido' USING ERRCODE='23514'; END IF;
+  IF p_tipo='foto' THEN
+    PERFORM banco.web_exigir_academico(p_actor);
+    v_usuario:=p_actor;
+  ELSE
+    v_empresa:=banco.web_empresa_del_actor(p_actor);
+  END IF;
+  -- Serializa los cambios de la misma foto o logo.
+  PERFORM pg_advisory_xact_lock(hashtextextended('web_imagen:'||p_tipo||':'||coalesce(v_usuario,v_empresa)::text,0));
+  SELECT id INTO v_anterior FROM adjunto.imagen WHERE tipo=p_tipo AND retirado IS NULL
+    AND (usuario_id=v_usuario OR empresa_id=v_empresa) FOR UPDATE;
+  IF FOUND THEN UPDATE adjunto.imagen SET retirado=clock_timestamp() WHERE id=v_anterior; END IF;
+  INSERT INTO adjunto.imagen(tipo,usuario_id,empresa_id,subido_por,ruta,tamano_bytes,sha256)
+    VALUES(p_tipo,v_usuario,v_empresa,p_actor,p_ruta,p_tamano,p_sha256) RETURNING id INTO v_id;
+  INSERT INTO banco.evento_auditoria(actor_usuario_id,origen,operacion,entidad_afectada,registro_afectado,transicion,resultado)
+    VALUES(p_actor,'usuario','registrar_imagen','imagen',v_id::text,'vigente',
+      jsonb_build_object('tipo',p_tipo,'empresa_id',v_empresa,'reemplaza',v_anterior,'tamano_bytes',p_tamano)::text);
+  RETURN v_id;
+END;
+$$;
+
+
+--
+-- Name: FUNCTION web_registrar_imagen(p_actor bigint, p_tipo text, p_ruta text, p_tamano integer, p_sha256 text); Type: COMMENT; Schema: banco; Owner: -
+--
+
+COMMENT ON FUNCTION banco.web_registrar_imagen(p_actor bigint, p_tipo text, p_ruta text, p_tamano integer, p_sha256 text) IS 'UX-08: registra la foto propia (alumno/profesor) o el logo de la empresa representada, reemplazando la vigente. Auditado.';
 
 
 --
@@ -5014,6 +5404,33 @@ BEGIN
   INSERT INTO banco.evento_auditoria(actor_usuario_id,origen,operacion,entidad_afectada,registro_afectado,transicion,resultado)
     VALUES(p_actor,'usuario','retirar_documento','documento',p_documento::text,'vigente->retirado',
       jsonb_build_object('tipo',v_doc.tipo,'habilidad_id',v_doc.habilidad_id)::text);
+END;
+$$;
+
+
+--
+-- Name: web_retirar_imagen(bigint, text); Type: FUNCTION; Schema: banco; Owner: -
+--
+
+CREATE FUNCTION banco.web_retirar_imagen(p_actor bigint, p_tipo text) RETURNS void
+    LANGUAGE plpgsql SECURITY DEFINER
+    SET search_path TO 'pg_catalog', 'banco', 'adjunto', 'pg_temp'
+    AS $$
+DECLARE v_usuario bigint;v_empresa bigint;v_id bigint;
+BEGIN
+  PERFORM banco.exigir_aislamiento();
+  IF p_tipo IS NULL OR p_tipo NOT IN ('foto','logo') THEN
+    RAISE EXCEPTION 'Tipo de imagen inválido' USING ERRCODE='23514'; END IF;
+  IF p_tipo='foto' THEN PERFORM banco.web_exigir_academico(p_actor); v_usuario:=p_actor;
+  ELSE v_empresa:=banco.web_empresa_del_actor(p_actor); END IF;
+  PERFORM pg_advisory_xact_lock(hashtextextended('web_imagen:'||p_tipo||':'||coalesce(v_usuario,v_empresa)::text,0));
+  SELECT id INTO v_id FROM adjunto.imagen WHERE tipo=p_tipo AND retirado IS NULL
+    AND (usuario_id=v_usuario OR empresa_id=v_empresa) FOR UPDATE;
+  IF NOT FOUND THEN RAISE EXCEPTION 'Imagen no disponible' USING ERRCODE='23503'; END IF;
+  UPDATE adjunto.imagen SET retirado=clock_timestamp() WHERE id=v_id;
+  INSERT INTO banco.evento_auditoria(actor_usuario_id,origen,operacion,entidad_afectada,registro_afectado,transicion,resultado)
+    VALUES(p_actor,'usuario','retirar_imagen','imagen',v_id::text,'vigente->retirado',
+      jsonb_build_object('tipo',p_tipo,'empresa_id',v_empresa)::text);
 END;
 $$;
 
@@ -7460,5 +7877,5 @@ ALTER TABLE ONLY banco.solicitud_direccion
 -- PostgreSQL database dump complete
 --
 
-\unrestrict yDolijRyOCJhjUhyDPpqufjMgUg92ORVRkg0dmtKoZKVXW9iBWiStpiYNqT54X8
+\unrestrict heTkHyRDWHAhzEQZkTL4hWkGKXUkeI5OVt7aVprLZ2vccjyB1VOpzv2fcvuU2Si
 

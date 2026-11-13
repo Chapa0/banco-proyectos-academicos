@@ -33,7 +33,8 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // Los archivos privados siempre requieren sesión y autorización por registro.
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],

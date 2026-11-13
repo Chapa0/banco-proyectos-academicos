@@ -4,6 +4,7 @@
 <section class="container workspace-section">
     <header class="page-header"><div><h1 class="page-title">Catálogo de proyectos</h1><p class="page-description">Explora los proyectos publicados por las empresas.</p></div></header>
     <x-errores />
+    <x-recomendados :proyectos="$recomendados ?? []" :logos="$logos ?? []" class="mb-4" />
     <div class="surface p-0 overflow-hidden">
         <form class="table-toolbar" method="GET" action="{{ route('catalogo.index') }}" aria-label="Filtrar catálogo de proyectos">
             <div class="catalog-filter-grid">
@@ -19,8 +20,8 @@
         @forelse($proyectos as $item)
             <article class="catalog-list-item">
                 <div class="catalog-list-content">
-                    <h2 class="mb-2"><a href="{{ route('catalogo.show', $item->id) }}">{{ $item->titulo }}</a></h2>
-                    <p class="mb-2">{{ $item->razon_social }}</p>
+                    <h2 class="mb-2"><a href="{{ \App\Support\Regreso::enlace(route('catalogo.show', $item->id)) }}">{{ $item->titulo }}</a></h2>
+                    <p class="mb-2 company-line"><x-avatar :imagen="$logos[$item->id] ?? null" :nombre="$item->razon_social" tamano="sm" logo />{{ $item->razon_social }}</p>
                     <p class="catalog-description text-body-secondary">{{ \Illuminate\Support\Str::limit($item->descripcion, 240) }}</p>
                     @if(isset($coincidencias[$item->id]))<x-coincidencia :datos="$coincidencias[$item->id]" compacta class="mb-2" />@endif
                     @if($item->modalidad || $item->duracion_estimada)<p class="field-hint mb-0">{{ $item->modalidad }}@if($item->modalidad && $item->duracion_estimada) · @endif{{ $item->duracion_estimada }}</p>@endif

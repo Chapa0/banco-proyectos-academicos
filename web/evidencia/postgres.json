@@ -1,15 +1,15 @@
 {
-  "fecha_utc": "2026-11-12T14:05:42.377027+00:00",
+  "fecha_utc": "2026-11-13T13:45:52.639604+00:00",
   "resultado": "correcto",
   "postgres": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
   "php": "PHP 8.5.12 (cli) (built: Oct 26 2026 09:51:07) (NTS Visual C++ 2022 x64)",
   "suite": "Integration",
   "archivo": "tests/Integration/PostgresConnectionTest.php",
-  "migraciones": 26,
+  "migraciones": 31,
   "base_de_trabajo_usada": false,
   "temporal_eliminada": true,
   "credencial": "Aplicación, miembro del grupo banco_web; no propietaria ni superusuario.",
-  "resumen_phpunit": "{\"tool\":\"phpunit\",\"result\":\"passed\",\"tests\":13,\"passed\":13,\"assertions\":37,\"duration_ms\":10152}",
+  "resumen_phpunit": "{\"tool\":\"phpunit\",\"result\":\"passed\",\"tests\":13,\"passed\":13,\"assertions\":37,\"duration_ms\":10458}",
   "phpunit": {
     "pruebas": 13,
     "aserciones": 37
@@ -24,7 +24,7 @@
     "web\\app\\Services\\ConexionPostgres.php": "aaeeac0afba36b214be9f0dcb12a2c8e77235e6c12283c0f1e5331407bbcc17f",
     "web\\app\\Models\\Usuario.php": "c2be7f3c2244447628d1113e44bb92f004007a5938fe6cdcc8319f325bd7c14d",
     "web\\app\\Console\\Commands\\ComprobarConexion.php": "b8afec9ff40ab445deb8332f69f4edbc6bf4a8307cb9cb5725a0dbfdf74385ce",
-    "web\\composer.lock": "4a7b1682cabf28fe995d52bf01487ddfb3aa22ac2cc447b38f44bc52312995b6",
+    "web\\composer.lock": "07c346a3335e9de5c3bad09d1573bb4e66e514a2c7188296df5f028405902331",
     "database\\manage.py": "29ceccc336cb8e290638e77dadf226a09d05b053240c071c022fc0db149e584f",
     "database\\seed.sql": "4e996c7a6552a092551f4f802fd975f652a8cd2f6397b1d7ab40f803b3789ada",
     "database\\migrations\\001_estructura.sql": "f6423fc7fd0e5baed92e093804b246a37b776837be48ecc4175953660ee464ec",
@@ -52,7 +52,12 @@
     "database\\migrations\\023_participacion_web.sql": "6d36e50dba585811ad571518d30d0c6efc38c09c05b92bbca4bf5c9364da187f",
     "database\\migrations\\024_avisos_reportes_web.sql": "82ca5a402ab35bdd1897d2a1390d0778c26fef68a9fabc091e0aae61947887d3",
     "database\\migrations\\025_coincidencia_habilidades_web.sql": "24245e41d3af9bb99ac63cab9a29ef5c149507d500eb651a7afbf62515f61fc4",
-    "database\\migrations\\026_documentos_pdf_web.sql": "690c13f4fd308fde491968dee943de6ff4c731e2d2a31dff9bf091c8b22d051e"
+    "database\\migrations\\026_documentos_pdf_web.sql": "690c13f4fd308fde491968dee943de6ff4c731e2d2a31dff9bf091c8b22d051e",
+    "database\\migrations\\027_recomendaciones_web.sql": "fa5a63e57d8db1fa81c099385e963bd6da759f8c280bafd22c19c208e257c258",
+    "database\\migrations\\028_constancia_participacion_web.sql": "af1231fc1891a0f0542e80dab25f27a39634b3823cb0ae5b0a9b3948e5b809e4",
+    "database\\migrations\\029_imagenes_web.sql": "e000224dc90630615336aea123fb667fa2cdc03c165486525d274886f4cc029e",
+    "database\\migrations\\030_panorama_reportes_web.sql": "ccb487ec01294202b522e4ec6199f8bb5a6a235e2c1224287564815c16fbfccd",
+    "database\\migrations\\031_catalogo_habilidades_web.sql": "b094b4a5dc01c52e6a6da261d258d5cc2405885ce2933f6dba9c65c0fa5a252e"
   },
-  "segundos": 13.7
+  "segundos": 16.28
 }

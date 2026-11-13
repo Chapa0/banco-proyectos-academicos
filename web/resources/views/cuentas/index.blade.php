@@ -58,7 +58,7 @@
                                 <td>{{ $cuenta->correo_normalizado }}</td>
                                 <td>{{ $roles[$cuenta->rol_principal] ?? $cuenta->rol_principal }}</td>
                                 <td><span class="status-badge {{ $cuenta->estado_cuenta === 'activa' ? 'status-active' : 'status-inactive' }}">{{ $cuenta->estado_cuenta === 'activa' ? 'Activa' : 'Inactiva' }}</span></td>
-                                <td><a class="btn btn-outline-secondary" href="{{ route('cuentas.edit', $cuenta->id) }}" aria-label="Administrar cuenta de {{ $cuenta->nombre }}">Administrar</a></td>
+                                <td><a class="btn btn-outline-secondary" href="{{ \App\Support\Regreso::enlace(route('cuentas.edit', $cuenta->id)) }}" aria-label="Administrar cuenta de {{ $cuenta->nombre }}">Administrar</a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -75,7 +75,7 @@
                                 <p class="small mb-1">{{ $roles[$cuenta->rol_principal] ?? $cuenta->rol_principal }}</p>
                                 <span class="status-badge {{ $cuenta->estado_cuenta === 'activa' ? 'status-active' : 'status-inactive' }}">{{ $cuenta->estado_cuenta === 'activa' ? 'Activa' : 'Inactiva' }}</span>
                             </div>
-                            <a class="btn btn-outline-secondary" href="{{ route('cuentas.edit', $cuenta->id) }}" aria-label="Administrar cuenta de {{ $cuenta->nombre }}">Administrar</a>
+                            <a class="btn btn-outline-secondary" href="{{ \App\Support\Regreso::enlace(route('cuentas.edit', $cuenta->id)) }}" aria-label="Administrar cuenta de {{ $cuenta->nombre }}">Administrar</a>
                         </div>
                     </li>
                 @endforeach

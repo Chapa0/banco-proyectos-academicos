@@ -24,6 +24,9 @@ El contrato visual contempla 390×844 y 1440×900, reflujo a 320 px, contenido l
 | Node.js / npm | 24.14.1 / 10.5.2 |
 | Vite / complemento Laravel | 8.3.7 / 3.2.1 |
 | Bootstrap | 5.3.8 |
+| dompdf (constancias en PDF) | 3.1.6 |
+| Inter y Bootstrap Icons (rediseño RD-01) | `@fontsource-variable/inter` 5.2.8 y `bootstrap-icons` 1.13.1 con npm, sin carga desde internet |
+| GD (imágenes de perfil y logos) | extensión de PHP, activada en el `php.ini` portable |
 | PostgreSQL | 18.6, esquema `banco`, conexiones UTC |
 
 `composer.lock` y `package-lock.json` fijan las dependencias. En este equipo PHP y Composer están en `proyecto/.local/tools/`, sin modificar el PATH global. `dev.ps1` usa esas herramientas si existen; en otro equipo utiliza PHP y Composer disponibles en el sistema.
@@ -53,12 +56,40 @@ El aprovisionamiento requiere la migración SQL 019 aplicada. Crea una credencia
 
 `banco:comprobar-conexion` comprueba PDO, esquema, UTC, aislamiento y permisos mínimos sin mostrar contraseñas. El diagnóstico está en consola; la portada pública no muestra estado de conexión ni información de usuarios.
 
+## Compartir pruebas por internet (PRUEBAS-01)
+
+Desde `web/`, en este equipo con las dependencias ya preparadas:
+
+```powershell
+.\pruebas-publicas.ps1 Iniciar
+.\pruebas-publicas.ps1 Estado
+.\pruebas-publicas.ps1 Detener
+```
+
+`Iniciar` prepara `banco_pruebas_publicas` con las migraciones SQL y los datos de [DEMO-01](../database/README.md#datos-de-demostración-demo-01): 19 cuentas ficticias, cuatro empresas, catorce habilidades, nueve proyectos, once candidaturas y cinco solicitudes de dirección. Conserva los cambios de pruebas en ejecuciones posteriores y no reinicia los datos. Las cuentas y su contraseña común están en esa guía. No usa ni modifica `banco_proyectos` ni `web/.env`.
+
+El servidor de pruebas escucha solo en `127.0.0.1:8088`, con la raíz HTTP en `public/`. [Cloudflare Quick Tunnels](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/) proporciona el enlace HTTPS que muestra el comando; se comparte añadiendo `/login`. Cada reinicio del túnel genera otro enlace. El equipo debe permanecer encendido, sin suspensión y conectado a internet. No se configura arranque automático ni se acredita alojamiento permanente o carga institucional.
+
+El entorno público usa `APP_DEBUG=false`, cookies Secure, una clave de aplicación propia y almacenamiento independiente para sesiones, caché y archivos de prueba. Laravel acepta las cabeceras del proxy únicamente desde loopback cuando está activa `BANCO_TUNEL_PUBLICO`; la configuración local conserva su comportamiento. Los procesos, registros, configuración privada y enlace vigente se guardan en `proyecto/.local/pruebas-publicas/`, fuera de Git. `Estado` consulta los procesos y `Detener` solo para los procesos identificados por ruta, PID y fecha de inicio; no elimina los datos ni detiene la web local del puerto 8000.
+
+El ejecutable oficial de `cloudflared` se instala localmente, sin alterar el PATH:
+
+```powershell
+# Desde proyecto/; requiere acceso a GitHub.
+New-Item -ItemType Directory -Path .local/tools/cloudflared -Force
+Invoke-WebRequest https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe -OutFile .local/tools/cloudflared/cloudflared.exe
+```
+
+`py -3.12 tests/pruebas_publicas.py`, desde `web/` y con el túnel activo, comprueba por HTTPS las 19 cuentas, páginas permitidas por rol, cierre de sesión, rechazo de acceso administrativo, CSRF, cookies y recursos compilados. Guarda el resultado sin contraseñas en [la evidencia pública](evidencia/pruebas-publicas.json). Este recorrido registra accesos en la auditoría; no cambia decisiones ni contraseñas. La [preparación](../database/preparar_demo_publica.py) rechaza publicar una base que contenga cuentas ajenas a `demo.test`.
+
 ## Actualizar y recuperar la aplicación
 
 Antes de actualizar una instalación con datos, detener `serve`, conservar las fuentes y archivos de bloqueo de esa versión y ejecutar `python database/manage.py backup` desde `proyecto/`. Aplicar las migraciones SQL nuevas con `manage.py migrate`, instalar las dependencias con `composer install` y `npm ci` y compilar con `npm run build`. Los comandos se ejecutan mediante `dev.ps1` como en el arranque anterior; no usar `composer update` o `npm update` para reproducir una entrega. Las migraciones SQL ya aplicadas se conservan; Artisan `migrate`, `migrate:*` y `db:wipe` permanecen bloqueados.
 
 El dump SQL contiene los datos académicos, hashes de las cuentas, auditoría e historial técnico; no incluye `web/.env`, `APP_KEY`, credenciales LOGIN de PostgreSQL, dependencias ni sesiones/caché en archivos. Guardar la configuración privada y la clave de aplicación por separado, bajo acceso restringido y fuera de Git. Recuperar una base no recupera las sesiones web. Si se conserva configuración cifrada debe conservarse su clave correspondiente; no generar otra encima de una `APP_KEY` válida. En un entorno nuevo sin configuración, el aprovisionamiento prepara una clave y credencial propias; los usuarios vuelven a iniciar sesión con sus cuentas restauradas.
 **PDF del perfil (D-11).** Los currículums y evidencias se guardan en `web/storage/app/private/documentos/`, fuera de la carpeta pública; la base solo registra sus metadatos en `adjunto.documento`. Respaldar esa carpeta junto con el dump: uno sin el otro deja enlaces sin archivo o archivos sin registro. PHP debe aceptar subidas de 5 MB: en `php.ini` usar al menos `upload_max_filesize=6M` y `post_max_size=8M` (el PHP portable de `.local/tools/php` ya lo tiene). Las pruebas usan un disco falso y no escriben en esa carpeta.
+
+**Foto de perfil y logo (UX-08).** Se aceptan JPG, PNG o WebP de hasta 4 MB y entre 64 y 6000 px por lado. Con la extensión GD cada imagen se recorta (foto) o se encaja (logo) en un cuadrado de 320 px y se guarda como WebP en `web/storage/app/private/imagenes/`, sin metadatos. Respaldar esa carpeta junto con la de documentos. PHP necesita `extension=gd`; en el PHP portable se activó y, por un fallo de OPcache de PHP 8.5.12 con GD en el servidor web local (Laravel no podía leer `.env`), se añadió `opcache.enable=0`. En otro equipo con el mismo PHP hay que aplicar ambos ajustes.
 
 La [recuperación PostgreSQL](../database/README.md#recuperación-local) restaura primero en otra base vacía, con roles técnicos y propietario configurados. No cargar el dump sobre una base ya migrada ni reemplazar automáticamente la base de trabajo. Una vez comprobada la copia, con la web detenida, ajustar de forma privada `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD` para ese destino y una cuenta LOGIN miembro de `banco_web`, nunca el propietario. `provision_web.py` conserva un `.env` previo; no corrige automáticamente su destino.
 
@@ -131,6 +162,8 @@ La empresa consulta las candidaturas de sus proyectos, el perfil académico comp
 
 **Seguimiento de proyectos** (`/seguimiento/proyectos`) presenta contenido, participantes e historial autorizados para cada rol. Para alumno/profesor incluye sus proyectos relacionados y las vacantes permitidas de proyectos pausados. El visitante de una vacante no recibe perfiles de otros participantes. El administrador confirma inicio con al menos un alumno y director autorizados, sin llenar necesariamente el cupo; registra retiros con motivo, pausa al perder el mínimo, repone solo al tipo faltante y confirma la reanudación. Solo él finaliza En curso o cancela un estado abierto con cierre coordinado e historial. No hay reapertura ni incorporaciones generales En curso.
 
+**Constancia de participación (UX-07).** Cuando el proyecto se finaliza, el alumno y el director con participación concluida ven en su solicitud **Descargar constancia (PDF)**; la administración puede descargar cualquiera. El PDF se genera al momento con dompdf, sin recursos externos, con folio `BP-<año>-A|D<número>`. No lleva firma institucional y lo aclara al pie. Quien no es titular ni administración, o una participación no concluida, recibe «no encontrado».
+
 Los formularios conservan una versión opaca junto a los datos enviados. Ante un conflicto, recargar y revisar antes de decidir; no se sobrescriben cambios ni se repite automáticamente la decisión. Los avisos se generan dentro de la operación SQL y se consultan en **Mis avisos**. El [seguimiento](../docs/06-seguimiento.md) registra instalación, pruebas y límites. `python tests/participacion.py`, desde `web/`, prepara una base temporal propia para verificar este recorrido.
 
 ## Avisos y reportes
@@ -149,7 +182,7 @@ Solo el administrador dispone de **Reportes** (`/reportes`). Puede cambiar el ti
 | Carga de profesores | Profesor | Cantidad de profesores, direcciones vigentes y profesores con carga; incluye quienes tienen cero y cuentas inactivas que conservan carga |
 | Participantes asignados | Estado, empresa y proyecto | Asignaciones, alumnos/directores vigentes e historial finalizado/revocado |
 
-Cada reporte muestra 20 filas por página. **Totales del conjunto filtrado** incluye todas sus páginas; una búsqueda sin resultados conserva totales en cero. La carga se determina por asignaciones vigentes, no por la fecha estimada ni el estado de la cuenta. Los filtros no aplicables a un tipo se rechazan. Los reportes son consultas de administración de RF-41, sin acceso para otros roles. **Exportar CSV** descarga el reporte completo con los filtros aplicados (todas las páginas, hasta 5 000 registros) en UTF-8 que Excel abre con acentos; los textos que empiezan con `=`, `+`, `-` o `@` llevan un apóstrofo para que no se interpreten como fórmulas. Los reportes y su exportación no incluyen contraseñas, identificadores académicos reservados, rúbricas o evidencias. La información refleja el momento de la consulta; recargar para obtener cambios posteriores.
+**Panorama general (UX-09):** al abrir Reportes se ven gráficas de proyectos, candidaturas y solicitudes de dirección por estado, y la carga de cada profesor frente al límite de tres; son totales de todo el sistema y cada categoría abre su reporte filtrado. Cada reporte muestra 20 filas por página. **Totales del conjunto filtrado** incluye todas sus páginas; una búsqueda sin resultados conserva totales en cero. La carga se determina por asignaciones vigentes, no por la fecha estimada ni el estado de la cuenta. Los filtros no aplicables a un tipo se rechazan. Los reportes son consultas de administración de RF-41, sin acceso para otros roles. **Exportar CSV** descarga el reporte completo con los filtros aplicados (todas las páginas, hasta 5 000 registros) en UTF-8 que Excel abre con acentos; los textos que empiezan con `=`, `+`, `-` o `@` llevan un apóstrofo para que no se interpreten como fórmulas. Los reportes y su exportación no incluyen contraseñas, identificadores académicos reservados, rúbricas o evidencias. La información refleja el momento de la consulta; recargar para obtener cambios posteriores.
 
 ## Recorrido de uso por rol
 
@@ -189,6 +222,14 @@ La migración [019](../database/migrations/019_conexion_web.sql) da al grupo NOL
 
 Las migraciones SQL de `../database/migrations/` son la única fuente del esquema. Se retiraron las migraciones y semillas predeterminadas de Laravel y la aplicación bloquea Artisan `migrate`, `migrate:*` y `db:wipe`; usar `python database/manage.py migrate` desde `proyecto/`. Las sesiones y la caché usan archivos y la cola es síncrona, sin tablas técnicas nuevas. Estos archivos locales y las dependencias están excluidos de Git.
 
+## Autorización por recurso (SEG-01)
+
+Cada operación identifica al actor desde la sesión. Los Gates limitan el rol y los gateways PostgreSQL comprueban la pertenencia, el estado y los identificadores relacionados antes de leer o modificar datos. La versión de un formulario evita sobrescribir cambios concurrentes; conocer esa versión no otorga permiso sobre el registro. Se conserva la matriz de D-10: el administrador gestiona cuentas y procesos, los avisos son personales incluso para él y los logos son visibles para las cuentas activas.
+
+Los documentos y las fotos viven en almacenamiento privado y se entregan únicamente por sus controladores, que vuelven a comprobar el permiso. `filesystems.disks.local.serve=false` desactiva las rutas auxiliares GET/PUT `/storage/{path}` de Laravel: un enlace firmado no reemplaza la sesión ni la autorización del registro, ni permite sobrescribir un archivo por esa vía. No se generan enlaces temporales directos a ese disco.
+
+`py -3.12 tests/autorizacion.py` prepara una base temporal propia con DEMO-01 y verifica rutas anónimas, permisos por rol, intercambio de IDs al consultar/editar/cancelar/retirar, campos ocultos, verbos simulados y relaciones entre proyecto, revisión y asignación. Comprueba que los recursos rechazados se conservan, revierte cada caso y elimina la temporal. No escribe en la base de trabajo o la pública. [Evidencia por recurso](evidencia/autorizacion-recursos.json) y [cierre de SEG-01](../docs/06-seguimiento.md#auditoría-de-autorización-por-recurso-de-seg-01).
+
 ## Comprobaciones
 
 Desde `web/`:
@@ -205,6 +246,7 @@ python tests/publicacion.py
 python tests/perfiles.py
 python tests/participacion.py
 python tests/comunicacion.py
+py -3.12 tests/autorizacion.py
 .\dev.ps1 npm run build
 ```
 

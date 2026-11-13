@@ -10,7 +10,7 @@
     @forelse($proyectos as $item)
         <article class="project-list-item">
             <div class="project-list-content">
-                <h2 class="h5 mb-2"><a href="{{ route($administracion ? 'revision.show' : 'proyectos.show', $item->id) }}">{{ $item->titulo }}</a></h2>
+                <h2 class="h5 mb-2"><a href="{{ \App\Support\Regreso::enlace(route($administracion ? 'revision.show' : 'proyectos.show', $item->id)) }}">{{ $item->titulo }}</a></h2>
                 @if($administracion)<p class="mb-1">{{ $item->razon_social }}</p>@endif
                 <p class="field-hint mb-0">Cupo propuesto: {{ $item->cupo_maximo_alumnos ?? 'Sin definir' }}
                     @if($item->numero_revision)

@@ -296,6 +296,31 @@ class AvisosReportesTest extends PostgresTestCase
         $this->get('/reportes')->assertForbidden();
     }
 
+    public function test_ux09_panorama_coincide_con_los_reportes_filtrados(): void
+    {
+        $this->entrar('admin');
+        $respuesta = $this->get('/reportes')->assertOk()->assertSee('Panorama general');
+        $panorama = $respuesta->viewData('panorama');
+        $this->assertNotNull($panorama);
+        foreach (['proyectos' => 'proyectos', 'candidaturas' => 'candidaturas', 'direcciones' => 'direcciones'] as $clave => $tipo) {
+            $suma = 0;
+            foreach ((array) $panorama->{$clave} as $estado => $cantidad) {
+                $this->assertSame($this->reporte($tipo, ['estado' => $estado])->filas->total(), (int) $cantidad, $tipo.' '.$estado);
+                $suma += (int) $cantidad;
+            }
+            $this->assertSame($this->reporte($tipo)->filas->total(), $suma, 'Los estados cubren todo '.$tipo);
+        }
+        $this->assertCount(9, (array) $panorama->proyectos);
+        $carga = collect($this->reporte('carga_profesores')->filas->items());
+        $this->assertSame($carga->where('proyectos_vigentes', '>', 0)->count(), count($panorama->carga));
+        foreach ($panorama->carga as $profesor) {
+            $this->assertSame((int) $carga->firstWhere('profesor_id', $profesor->profesor_id)->proyectos_vigentes, (int) $profesor->vigentes);
+            $this->assertSame(3, (int) $profesor->limite);
+        }
+        $respuesta->assertSee('href="'.e(route('reportes.index', ['proyectos', 'estado' => 'publicado'])).'"', false)
+            ->assertSee('Carga de profesores');
+    }
+
     public function test_reporte_proyectos_totaliza_sin_multiplicar_por_solicitudes_o_evaluaciones(): void
     {
         $this->entrar('admin');
@@ -546,6 +571,66 @@ class AvisosReportesTest extends PostgresTestCase
         $this->assertSame("'+1", ReporteController::celdaSegura('+1'));
         $this->assertSame("'@SUM(A1)", ReporteController::celdaSegura('@SUM(A1)'));
         $this->assertSame('Proyecto = 1', ReporteController::celdaSegura('Proyecto = 1'));
+    }
+
+    private function solicitudDe(string $tipo, string $proyecto): object
+    {
+        $lista = $this->get('/participacion/'.$tipo.'?'.http_build_query(['buscar' => $proyecto]))->assertOk()->viewData('solicitudes');
+        $this->assertCount(1, $lista, 'Una sola solicitud de '.$tipo.' en '.$proyecto);
+
+        return $lista->items()[0];
+    }
+
+    public function test_ux07_constancia_pdf_de_alumno_y_director_en_proyecto_finalizado(): void
+    {
+        $this->entrar('admin');
+        foreach (['candidatura' => 'A', 'direccion' => 'D'] as $tipo => $letra) {
+            $solicitud = $this->solicitudDe($tipo, 'Proyecto WEB07 03');
+            $this->get('/participacion/'.$tipo.'/'.$solicitud->id)->assertOk()->assertViewHas('constanciaDisponible', true)
+                ->assertSee('Descargar constancia (PDF)');
+            $respuesta = $this->get('/participacion/'.$tipo.'/'.$solicitud->id.'/constancia')->assertOk();
+            $this->assertSame('application/pdf', $respuesta->headers->get('Content-Type'));
+            $this->assertMatchesRegularExpression('/\Aattachment; filename="constancia-BP-\d{4}-'.$letra.'\d{5}\.pdf"\z/', $respuesta->headers->get('Content-Disposition'));
+            $this->assertStringContainsString('no-store', $respuesta->headers->get('Cache-Control'));
+            $this->assertStringStartsWith('%PDF-', $respuesta->getContent());
+        }
+    }
+
+    public function test_ux07_constancia_solo_para_titular_o_administracion_y_participacion_concluida(): void
+    {
+        $this->entrar('admin');
+        $concluida = $this->solicitudDe('candidatura', 'Proyecto WEB07 03');
+        $direccion = $this->solicitudDe('direccion', 'Proyecto WEB07 03');
+        $enCurso = $this->solicitudDe('direccion', 'Proyecto WEB07 01');
+        // Proyecto en curso: todavía no hay constancia, ni siquiera para la administración.
+        $this->get('/participacion/direccion/'.$enCurso->id)->assertOk()->assertViewHas('constanciaDisponible', false)
+            ->assertDontSee('Descargar constancia');
+        $this->get('/participacion/direccion/'.$enCurso->id.'/constancia')->assertNotFound();
+
+        // La empresa ve la candidatura, pero la constancia es de la persona participante.
+        $this->entrar('empresa');
+        $this->get('/participacion/candidatura/'.$concluida->id)->assertOk()->assertDontSee('Descargar constancia');
+        $this->get('/participacion/candidatura/'.$concluida->id.'/constancia')->assertNotFound();
+        // Otra persona académica no obtiene la constancia ajena.
+        $this->entrar('profesor');
+        $this->get('/participacion/direccion/'.$direccion->id.'/constancia')->assertNotFound();
+        $this->entrar('alumno');
+        $this->get('/participacion/candidatura/'.$concluida->id.'/constancia')->assertNotFound();
+        $this->get('/participacion/otro/'.$concluida->id.'/constancia')->assertNotFound();
+        $this->get('/participacion/candidatura/0/constancia')->assertNotFound();
+    }
+
+    public function test_ux07_cada_titular_descarga_su_propia_constancia(): void
+    {
+        $this->entrar('admin');
+        $candidatura = $this->solicitudDe('candidatura', 'Proyecto WEB07 03');
+        $direccion = $this->solicitudDe('direccion', 'Proyecto WEB07 03');
+        $this->entrar('web06-alumno-3@example.invalid');
+        $this->get('/participacion/candidatura/'.$candidatura->id)->assertOk()->assertSee('Participación concluida.');
+        $this->assertStringStartsWith('%PDF-', $this->get('/participacion/candidatura/'.$candidatura->id.'/constancia')->assertOk()->getContent());
+        $this->entrar('web07-profesor-2@example.invalid');
+        $this->assertStringStartsWith('%PDF-', $this->get('/participacion/direccion/'.$direccion->id.'/constancia')->assertOk()->getContent());
+        $this->get('/participacion/candidatura/'.$candidatura->id.'/constancia')->assertNotFound();
     }
 
     private function solicitud(string $tipo, int $id): object

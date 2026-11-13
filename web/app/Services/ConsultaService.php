@@ -143,6 +143,23 @@ class ConsultaService
         ]);
     }
 
+    /**
+     * Panorama gráfico de Reportes (UX-09): conteos globales por estado y carga docente.
+     * Es una ayuda visual: si falla, la página de reportes se muestra sin gráficas.
+     */
+    public function panorama(int $actor): ?object
+    {
+        try {
+            $resultado = DB::selectOne('SELECT banco.web_panorama_reportes(?) AS resultado', [$actor])?->resultado;
+
+            return $resultado === null ? null : json_decode($resultado, false, 512, JSON_THROW_ON_ERROR);
+        } catch (QueryException $error) {
+            Log::warning('No fue posible calcular el panorama de reportes.', ['sqlstate' => $error->errorInfo[0] ?? null]);
+
+            return null;
+        }
+    }
+
     public function estadosReporte(string $tipo): array
     {
         return match ($tipo) {

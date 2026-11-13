@@ -522,6 +522,176 @@ class PerfilesCatalogoTest extends PostgresTestCase
             $detalle->viewData('coincidencia')->cumplidas, $detalle->viewData('coincidencia')->faltantes]);
     }
 
+    private function cambiarA(string $rol = 'alumno'): void
+    {
+        $this->post('/logout');
+        $this->entrar($rol);
+    }
+
+    public function test_ux08_foto_de_perfil_se_normaliza_reemplaza_y_quita(): void
+    {
+        Storage::fake('local');
+        $this->cambiarA();
+        $this->post('/perfil/foto', ['imagen' => UploadedFile::fake()->image('foto.jpg', 640, 480)])
+            ->assertRedirect('/perfil#foto')->assertSessionHasNoErrors();
+        $primera = $this->get('/perfil')->assertOk()->assertSee('Foto de perfil')->viewData('foto');
+        $this->assertIsInt($primera);
+        $respuesta = $this->get('/imagenes/'.$primera)->assertOk();
+        $this->assertSame('image/webp', $respuesta->headers->get('Content-Type'));
+        $this->assertSame('nosniff', $respuesta->headers->get('X-Content-Type-Options'));
+        $archivos = Storage::disk('local')->files('imagenes');
+        $this->assertCount(1, $archivos);
+        $info = getimagesizefromstring(Storage::disk('local')->get($archivos[0]));
+        $this->assertSame([320, 320, 'image/webp'], [$info[0], $info[1], $info['mime']], 'Recortada en cuadrado y vuelta a codificar');
+        // La foto aparece en el menú de cuenta.
+        $this->get('/panel')->assertOk()->assertSee('src="'.route('imagenes.show', $primera).'"', false);
+
+        $this->post('/perfil/foto', ['imagen' => UploadedFile::fake()->image('otra.png', 200, 200)])->assertRedirect('/perfil#foto');
+        $segunda = $this->get('/perfil')->viewData('foto');
+        $this->assertNotSame($primera, $segunda);
+        $this->get('/imagenes/'.$primera)->assertNotFound();
+        $this->delete('/perfil/foto')->assertRedirect('/perfil#foto');
+        $this->get('/imagenes/'.$segunda)->assertNotFound();
+        $this->assertNull($this->get('/perfil')->viewData('foto'));
+        $this->delete('/perfil/foto')->assertNotFound();
+    }
+
+    public function test_ux08_imagen_rechaza_archivos_que_no_son_imagen(): void
+    {
+        Storage::fake('local');
+        $this->cambiarA();
+        $this->from('/perfil')->post('/perfil/foto', ['imagen' => UploadedFile::fake()->create('foto.jpg', 10, 'application/pdf')])
+            ->assertRedirect('/perfil')->assertSessionHasErrors('imagen');
+        $this->from('/perfil')->post('/perfil/foto', ['imagen' => UploadedFile::fake()->image('chica.png', 20, 20)])
+            ->assertSessionHasErrors('imagen');
+        $this->from('/perfil')->post('/perfil/foto', ['imagen' => UploadedFile::fake()->image('pesada.jpg', 800, 800)->size(5000)])
+            ->assertSessionHasErrors('imagen');
+        $this->assertSame([], Storage::disk('local')->files('imagenes'));
+    }
+
+    public function test_ux08_foto_solo_visible_en_el_ambito_del_perfil(): void
+    {
+        Storage::fake('local');
+        $this->cambiarA();
+        $this->post('/perfil/foto', ['imagen' => UploadedFile::fake()->image('foto.jpg', 300, 300)])->assertRedirect('/perfil#foto');
+        $foto = $this->get('/perfil')->viewData('foto');
+        $this->cambiarA('profesor');
+        $this->get('/imagenes/'.$foto)->assertNotFound();
+        $this->post('/perfil/foto', ['imagen' => UploadedFile::fake()->image('profe.jpg', 300, 300)])->assertRedirect('/perfil#foto');
+        $this->cambiarA('empresa');
+        $this->post('/perfil/foto', ['imagen' => UploadedFile::fake()->image('x.jpg', 300, 300)])->assertForbidden();
+        $this->get('/imagenes/'.$foto)->assertNotFound();
+        $this->cambiarA('admin');
+        $this->get('/imagenes/'.$foto)->assertOk();
+        $this->get('/imagenes/0')->assertNotFound();
+        $this->get('/imagenes/999999')->assertNotFound();
+    }
+
+    public function test_ux08_logo_de_empresa_visible_en_el_catalogo(): void
+    {
+        Storage::fake('local');
+        $this->cambiarA('empresa');
+        $this->post('/empresa/logo', ['imagen' => UploadedFile::fake()->image('logo.png', 600, 200)])
+            ->assertRedirect('/empresa#logo')->assertSessionHasNoErrors();
+        $logo = $this->get('/empresa')->assertOk()->assertSee('Logo de la empresa')->viewData('logo');
+        $this->assertIsInt($logo);
+        $this->cambiarA();
+        $catalogo = $this->get('/catalogo?buscar=Inventario')->assertOk();
+        $this->assertSame($logo, $catalogo->viewData('logos')[-250201] ?? null);
+        $catalogo->assertSee('src="'.route('imagenes.show', $logo).'"', false);
+        $this->assertSame($logo, $this->get('/catalogo/-250201')->assertOk()->viewData('logo'));
+        $this->get('/imagenes/'.$logo)->assertOk();
+        // Un alumno no puede subir un logo.
+        $this->post('/empresa/logo', ['imagen' => UploadedFile::fake()->image('logo.png', 300, 300)])->assertForbidden();
+        $this->cambiarA('empresa');
+        $this->delete('/empresa/logo')->assertRedirect('/empresa#logo');
+        $this->assertNull($this->get('/empresa')->viewData('logo'));
+    }
+
+    public function test_ux10_administracion_mantiene_el_catalogo_sin_duplicados(): void
+    {
+        $this->cambiarA('admin');
+        $inicio = $this->get('/admin/habilidades')->assertOk()->assertSee('Comunicación WEB05');
+        $total = (int) $inicio->viewData('resumen')->total;
+
+        // Equivalente por mayúsculas, acentos y espacios: se rechaza.
+        $this->from('/admin/habilidades')->post('/admin/habilidades', ['nombre' => '  comunicacion   web05 ', 'tipo' => 'blanda'])
+            ->assertRedirect('/admin/habilidades')->assertSessionHasErrors('nombre');
+        $this->post('/admin/habilidades', ['nombre' => 'Kotlin UX10', 'tipo' => 'dura', 'descripcion' => 'Apps Android'])
+            ->assertRedirect()->assertSessionHasNoErrors();
+        $lista = $this->get('/admin/habilidades?buscar=kotlin')->assertOk();
+        $nueva = $lista->viewData('habilidades')->items()[0];
+        $this->assertSame(['Kotlin UX10', 'dura', 0], [$nueva->nombre, $nueva->tipo, (int) $nueva->usos->alumnos]);
+        $this->assertSame($total + 1, (int) $lista->viewData('resumen')->total);
+
+        // Edición y renombre a un nombre ya existente.
+        $this->put('/admin/habilidades/'.$nueva->id, ['nombre' => 'Kotlin para Android UX10', 'tipo' => 'dura', 'habilidad_id' => $nueva->id])
+            ->assertRedirect()->assertSessionHasNoErrors();
+        $this->from('/admin/habilidades')->put('/admin/habilidades/'.$nueva->id, ['nombre' => 'COMUNICACIÓN web05', 'tipo' => 'dura', 'habilidad_id' => $nueva->id])
+            ->assertSessionHasErrors('nombre');
+        $this->put('/admin/habilidades/999999', ['nombre' => 'No existe UX10', 'tipo' => 'dura'])->assertNotFound();
+
+        // La nueva habilidad ya se puede elegir en el perfil del alumno.
+        $this->cambiarA('alumno');
+        $this->get('/perfil')->assertOk()->assertSee('Kotlin para Android UX10');
+        $this->cambiarA('admin');
+
+        // En uso (perfil o instantánea publicada) se conserva; sin uso se elimina.
+        $this->from('/admin/habilidades')->delete('/admin/habilidades/-250102')->assertSessionHasErrors('habilidad');
+        $this->get('/admin/habilidades?buscar=comunicacion')->assertOk()->assertSee('Comunicación WEB05');
+        $this->delete('/admin/habilidades/'.$nueva->id)->assertRedirect()->assertSessionHasNoErrors();
+        $this->assertSame(0, $this->get('/admin/habilidades?buscar=kotlin')->viewData('habilidades')->total());
+        $this->delete('/admin/habilidades/'.$nueva->id)->assertNotFound();
+    }
+
+    public static function rolesSinCatalogo(): array
+    {
+        return ['alumno' => ['alumno'], 'profesor' => ['profesor'], 'empresa' => ['empresa']];
+    }
+
+    #[DataProvider('rolesSinCatalogo')]
+    public function test_ux10_solo_la_administracion_edita_el_catalogo(string $rol): void
+    {
+        $this->cambiarA($rol);
+        $this->get('/admin/habilidades')->assertForbidden();
+        $this->post('/admin/habilidades', ['nombre' => 'Intruso UX10', 'tipo' => 'dura'])->assertForbidden();
+        $this->put('/admin/habilidades/-250102', ['nombre' => 'Intruso UX10', 'tipo' => 'dura'])->assertForbidden();
+        $this->delete('/admin/habilidades/-250102')->assertForbidden();
+    }
+
+    public function test_ux06_recomendados_segun_habilidades_sin_proyectos_donde_ya_participa(): void
+    {
+        $this->entrar();
+        // Sin habilidades coincidentes no se recomienda nada.
+        $this->assertSame([], $this->get('/catalogo')->assertOk()->assertDontSee('Recomendados para ti')->viewData('recomendados'));
+
+        $this->put('/perfil', $this->datosAlumno(['habilidades_seleccionadas' => [-250101]]))->assertRedirect('/perfil');
+        $catalogo = $this->get('/catalogo')->assertOk()->assertSee('Recomendados para ti');
+        $recomendado = collect($catalogo->viewData('recomendados'))->firstWhere('id', -250201);
+        $this->assertNotNull($recomendado);
+        $this->assertSame([1, 1], [$recomendado->coincidencia->requeridas, $recomendado->coincidencia->cumplidas]);
+        $this->assertLessThanOrEqual(3, count($catalogo->viewData('recomendados')));
+        foreach ($catalogo->viewData('recomendados') as $proyecto) {
+            $this->assertGreaterThan(0, $proyecto->coincidencia->cumplidas);
+            $this->assertGreaterThan(0, $proyecto->plazas_disponibles);
+        }
+        // Con filtros el alumno ya busca algo concreto: no se repiten las recomendaciones.
+        $this->assertSame([], $this->get('/catalogo?buscar=Inventario')->assertOk()->viewData('recomendados'));
+        $this->get('/panel')->assertOk()->assertSee('Recomendados para ti');
+
+        // Tras postularse, el proyecto deja de recomendarse.
+        $version = $this->get('/catalogo/-250201/participar')->assertOk()->viewData('contexto')->version;
+        $this->post('/catalogo/-250201/participar', ['version' => $version])->assertRedirect()->assertSessionHasNoErrors();
+        $this->assertNull(collect($this->get('/catalogo')->assertOk()->viewData('recomendados'))->firstWhere('id', -250201));
+    }
+
+    public function test_ux06_profesor_no_recibe_recomendaciones(): void
+    {
+        $this->entrar('profesor');
+        $this->assertSame([], $this->get('/catalogo')->assertOk()->viewData('recomendados'));
+        $this->assertSame([], $this->get('/panel')->assertOk()->viewData('recomendados'));
+    }
+
     public function test_profesor_no_recibe_coincidencia_de_habilidades_de_alumno(): void
     {
         $this->entrar('profesor');

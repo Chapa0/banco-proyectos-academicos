@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\CuentaController;
+use App\Http\Controllers\Admin\HabilidadController;
 use App\Http\Controllers\Admin\RevisionProyectoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvisoController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\ClaveController;
+use App\Http\Controllers\ConstanciaController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\PanelController;
 use App\Http\Controllers\ParticipacionController;
@@ -32,6 +35,7 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function () {
     Route::middleware('clave.actualizada')->group(function () {
         Route::get('/panel', PanelController::class)->name('panel');
         Route::get('/documentos/{documento}', [DocumentoController::class, 'show'])->where('documento', '-?[0-9]+')->middleware('throttle:60,1')->name('documentos.show');
+        Route::get('/imagenes/{imagen}', [ImagenController::class, 'show'])->where('imagen', '-?[0-9]+')->middleware('throttle:300,1')->name('imagenes.show');
         Route::prefix('avisos')->name('avisos.')->middleware('can:consultar-avisos')->group(function () {
             Route::get('/', [AvisoController::class, 'index'])->name('index');
             Route::get('/{aviso}', [AvisoController::class, 'show'])->where('aviso', '-?[0-9]+')->name('show');
@@ -48,6 +52,8 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function () {
         Route::prefix('participacion')->name('participacion.')->middleware('can:consultar-participacion')->group(function () {
             Route::get('/{tipo}', [ParticipacionController::class, 'index'])->where('tipo', 'candidatura|direccion')->name('index');
             Route::get('/{tipo}/{solicitud}', [ParticipacionController::class, 'show'])->where(['tipo' => 'candidatura|direccion', 'solicitud' => '-?[0-9]+'])->name('show');
+            Route::get('/{tipo}/{solicitud}/constancia', [ConstanciaController::class, 'show'])->middleware('throttle:20,1')
+                ->where(['tipo' => 'candidatura|direccion', 'solicitud' => '-?[0-9]+'])->name('constancia');
             Route::post('/{tipo}/{solicitud}/{accion}', [ParticipacionController::class, 'operar'])
                 ->where(['tipo' => 'candidatura|direccion', 'solicitud' => '-?[0-9]+', 'accion' => 'cancelar|evaluar|preseleccionar|aprobar|rechazar'])->name('operar');
         });
@@ -62,6 +68,8 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function () {
             Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
             Route::post('/perfil/documentos', [DocumentoController::class, 'store'])->middleware('throttle:20,1')->name('documentos.store');
             Route::delete('/perfil/documentos/{documento}', [DocumentoController::class, 'destroy'])->where('documento', '-?[0-9]+')->name('documentos.destroy');
+            Route::post('/perfil/foto', [ImagenController::class, 'guardarFoto'])->middleware('throttle:20,1')->name('perfil.foto.store');
+            Route::delete('/perfil/foto', [ImagenController::class, 'quitarFoto'])->name('perfil.foto.destroy');
         });
         Route::middleware('can:consultar-catalogo')->group(function () {
             Route::get('/catalogo', [CatalogoController::class, 'index'])->name('catalogo.index');
@@ -70,6 +78,8 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function () {
         Route::middleware('can:gestionar-proyectos')->group(function () {
             Route::get('/empresa', [EmpresaController::class, 'edit'])->name('empresa.edit');
             Route::put('/empresa', [EmpresaController::class, 'update'])->name('empresa.update');
+            Route::post('/empresa/logo', [ImagenController::class, 'guardarLogo'])->middleware('throttle:20,1')->name('empresa.logo.store');
+            Route::delete('/empresa/logo', [ImagenController::class, 'quitarLogo'])->name('empresa.logo.destroy');
             Route::prefix('empresa/proyectos')->name('proyectos.')->group(function () {
                 Route::get('/', [ProyectoController::class, 'index'])->name('index');
                 Route::get('/crear', [ProyectoController::class, 'create'])->name('create');
@@ -84,6 +94,12 @@ Route::middleware(['auth', 'cuenta.activa'])->group(function () {
             Route::get('/', [RevisionProyectoController::class, 'index'])->name('index');
             Route::get('/{proyecto}', [RevisionProyectoController::class, 'show'])->where('proyecto', '-?[0-9]+')->name('show');
             Route::post('/{proyecto}/resolver', [RevisionProyectoController::class, 'resolver'])->where('proyecto', '-?[0-9]+')->name('resolver');
+        });
+        Route::prefix('admin/habilidades')->name('habilidades.')->middleware('can:administrar-cuentas')->group(function () {
+            Route::get('/', [HabilidadController::class, 'index'])->name('index');
+            Route::post('/', [HabilidadController::class, 'store'])->middleware('throttle:30,1')->name('store');
+            Route::put('/{habilidad}', [HabilidadController::class, 'update'])->where('habilidad', '-?[0-9]+')->name('update');
+            Route::delete('/{habilidad}', [HabilidadController::class, 'destroy'])->where('habilidad', '-?[0-9]+')->name('destroy');
         });
         Route::prefix('admin/cuentas')->name('cuentas.')->middleware('can:administrar-cuentas')->group(function () {
             Route::get('/', [CuentaController::class, 'index'])->name('index');

@@ -1,0 +1,84 @@
+{
+  "fecha_utc": "2026-11-12T23:37:51.422603+00:00",
+  "bloque": "SEG-01",
+  "resultado": "correcto",
+  "rutas_totales": 58,
+  "rutas_protegidas": 54,
+  "hallazgo": {
+    "id": "SEG-01-R1",
+    "archivo": "web/config/filesystems.php",
+    "correccion": "Desactivar el servido directo del disco privado y sus rutas GET/PUT /storage/{path}.",
+    "reproduccion_previa": {
+      "requiere": "Firma válida creada con clave de prueba; archivo ficticio.",
+      "descarga_sin_sesion": 200,
+      "sobrescritura_sin_sesion": 204
+    },
+    "resultado_posterior": {
+      "descarga": 404,
+      "sobrescritura": 404,
+      "archivo_conservado": true
+    },
+    "limite": "No se acreditó explotación por simple adivinación de ID ni enlaces directos generados en la aplicación."
+  },
+  "unit_feature": {
+    "pruebas": 15,
+    "aserciones": 43,
+    "resultado": "correcto"
+  },
+  "autorizacion_recursos": {
+    "pruebas": 21,
+    "aserciones": 500
+  },
+  "regresiones": [
+    {
+      "modulo": "postgres",
+      "pruebas": 13,
+      "aserciones": 37,
+      "resultado": "correcto"
+    },
+    {
+      "modulo": "acceso",
+      "pruebas": 34,
+      "aserciones": 292,
+      "resultado": "correcto"
+    },
+    {
+      "modulo": "publicacion",
+      "pruebas": 37,
+      "aserciones": 641,
+      "resultado": "correcto"
+    },
+    {
+      "modulo": "perfiles",
+      "pruebas": 78,
+      "aserciones": 877,
+      "resultado": "correcto"
+    },
+    {
+      "modulo": "participacion",
+      "pruebas": 67,
+      "aserciones": 1747,
+      "resultado": "correcto"
+    },
+    {
+      "modulo": "comunicacion",
+      "pruebas": 79,
+      "aserciones": 1713,
+      "resultado": "correcto"
+    }
+  ],
+  "total_pruebas": 344,
+  "total_aserciones": 5850,
+  "estilo_pint": "correcto",
+  "composer_validate": "correcto",
+  "composer_audit": "sin avisos de vulnerabilidades",
+  "comprobacion_publica": {
+    "login": 200,
+    "ruta_auxiliar_storage": 404
+  },
+  "escrituras_de_prueba": "Solo bases temporales propias y almacenamiento falso; sin escrituras de prueba en las bases de trabajo o pública.",
+  "migraciones_modificadas": false,
+  "inventario_y_huellas": "autorizacion-recursos.json",
+  "sha256_recibo_recursos": "b41512078f507b7ed952e24965896986294e524c28c89380fe94c1cf1c27a843",
+  "limites": "Escenarios HTTP y PostgreSQL documentados; no prueba de carga ni certificación de ausencia de toda vulnerabilidad."
+}

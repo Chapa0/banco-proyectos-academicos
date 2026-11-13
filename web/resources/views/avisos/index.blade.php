@@ -14,7 +14,7 @@
         </form>
         <p class="field-hint px-4 py-3 mb-0">{{ $avisos->total() }} {{ $avisos->total() === 1 ? 'aviso encontrado' : 'avisos encontrados' }}</p>
         @forelse($avisos as $item)
-            <article class="catalog-list-item"><div class="catalog-list-content"><h2 class="mb-2"><a href="{{ route('avisos.show', $item->id) }}">{{ $item->mensaje }}</a></h2><p class="field-hint mb-0"><x-fecha-local :valor="$item->fecha" /></p></div><div><span class="status-badge {{ $item->fecha_lectura ? '' : 'status-active' }}">{{ $item->fecha_lectura ? 'Leído' : 'No leído' }}</span></div></article>
+            <article class="catalog-list-item"><div class="catalog-list-content"><h2 class="mb-2"><a href="{{ \App\Support\Regreso::enlace(route('avisos.show', $item->id)) }}">{{ $item->mensaje }}</a></h2><p class="field-hint mb-0"><x-fecha-local :valor="$item->fecha" /></p></div><div><span class="status-badge {{ $item->fecha_lectura ? '' : 'status-active' }}">{{ $item->fecha_lectura ? 'Leído' : 'No leído' }}</span></div></article>
         @empty
             @if($avisos->total() > 0)
             <div class="empty-state"><h2 class="h5">No hay avisos en esta página.</h2><p class="text-body-secondary">Hay avisos que coinciden con los filtros. Vuelve a la primera página para consultarlos.</p><a class="btn btn-outline-secondary" href="{{ $avisos->url(1) }}">Primera página</a></div>

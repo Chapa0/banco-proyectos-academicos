@@ -173,3 +173,47 @@ document.querySelectorAll('form[data-confirm]').forEach((form) => {
         if (!window.confirm(form.dataset.confirm)) evento.preventDefault();
     });
 });
+
+// RD-01: modo claro/oscuro. El tema inicial lo fija un script en <head>; aquí solo se alterna y se recuerda.
+const raiz = document.documentElement;
+const reflejarTema = () => {
+    document.querySelectorAll('[data-theme-toggle]').forEach((boton) => {
+        const oscuro = raiz.dataset.theme === 'dark';
+        boton.setAttribute('aria-pressed', String(oscuro));
+        boton.title = oscuro ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+    });
+};
+reflejarTema();
+document.querySelectorAll('[data-theme-toggle]').forEach((boton) => {
+    boton.addEventListener('click', () => {
+        const tema = raiz.dataset.theme === 'dark' ? 'light' : 'dark';
+        raiz.dataset.theme = tema;
+        raiz.dataset.bsTheme = tema;
+        try { localStorage.setItem('banco-tema', tema); } catch (error) { /* Sin almacenamiento: el cambio dura esta página. */ }
+        reflejarTema();
+    });
+});
+
+// RD-01: barra lateral desplegable en pantallas angostas. Escape o el fondo la cierran y devuelven el foco.
+const shell = document.querySelector('[data-app-shell]');
+const botonMenu = document.querySelector('[data-sidebar-toggle]');
+const fondoMenu = document.querySelector('[data-sidebar-close]');
+if (shell && botonMenu) {
+    const cerrarMenu = (devolverFoco) => {
+        shell.classList.remove('is-menu-open');
+        botonMenu.setAttribute('aria-expanded', 'false');
+        if (fondoMenu) fondoMenu.hidden = true;
+        if (devolverFoco) botonMenu.focus();
+    };
+    botonMenu.addEventListener('click', () => {
+        const abrir = !shell.classList.contains('is-menu-open');
+        shell.classList.toggle('is-menu-open', abrir);
+        botonMenu.setAttribute('aria-expanded', String(abrir));
+        if (fondoMenu) fondoMenu.hidden = !abrir;
+        if (abrir) shell.querySelector('.app-sidebar a, .app-sidebar button')?.focus();
+    });
+    fondoMenu?.addEventListener('click', () => cerrarMenu(true));
+    document.addEventListener('keydown', (evento) => {
+        if (evento.key === 'Escape' && shell.classList.contains('is-menu-open')) cerrarMenu(true);
+    });
+}

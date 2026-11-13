@@ -1,0 +1,25 @@
+{
+  "fecha_utc": "2026-11-12T20:16:16.629460+00:00",
+  "url": "https://bacteria-naples-diary-scanned.trycloudflare.com",
+  "base": "banco_pruebas_publicas",
+  "cuentas_verificadas": 19,
+  "roles": {
+    "administrador": 1,
+    "empresa": 4,
+    "profesor": 4,
+    "alumno": 10
+  },
+  "resultado": "correcto",
+  "recursos_https": 2,
+  "comprobaciones": [
+    "inicio y cierre de sesión",
+    "panel y consultas por rol",
+    "cookies Secure",
+    "no-store en páginas privadas",
+    "permisos administrativos",
+    "CSRF",
+    "archivos privados inaccesibles",
+    "CSS y JavaScript por HTTPS"
+  ],
+  "limites": "Pruebas HTTP, sin navegador ni carga concurrente acreditada. El túnel depende de este equipo."
+}

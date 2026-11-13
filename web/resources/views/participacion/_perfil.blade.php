@@ -3,7 +3,7 @@
     $cvPerfil = $docsPerfil->firstWhere('tipo', 'curriculum');
     $evidenciasPerfil = $docsPerfil->where('tipo', 'evidencia')->groupBy('habilidad_id');
 @endphp
-<h2 class="section-heading">{{ $perfil->nombre }}</h2>
+<div class="profile-heading"><x-avatar :imagen="(($imagenes->fotos ?? [])[$perfil->usuario_id ?? 0] ?? null)" :nombre="$perfil->nombre" tamano="lg" /><h2 class="section-heading mb-0">{{ $perfil->nombre }}</h2></div>
 @if($perfil->perfil)
     <dl class="project-details">
         @foreach(['matricula' => 'Matrícula', 'numero_empleado' => 'Número de empleado', 'carrera' => 'Carrera', 'semestre' => 'Semestre', 'datos_academicos' => 'Formación y datos académicos', 'especialidad' => 'Especialidad', 'experiencia' => 'Experiencia', 'contacto_correo' => 'Correo de contacto', 'contacto_telefono' => 'Teléfono de contacto'] as $campo => $etiqueta)

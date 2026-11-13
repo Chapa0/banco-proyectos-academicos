@@ -4,9 +4,9 @@
 @if($campo === 'estado')
     <x-estado-participacion :estado="$valor" />
 @elseif($campo === 'titulo')
-    <a href="{{ route('seguimiento.show', $fila->proyecto_id ?? $fila->id) }}">{{ $valor }}</a>
+    <a href="{{ \App\Support\Regreso::enlace(route('seguimiento.show', $fila->proyecto_id ?? $fila->id)) }}">{{ $valor }}</a>
 @elseif($campo === 'nombre' && $tipo === 'carga_profesores')
-    <a href="{{ route('cuentas.edit', $fila->profesor_id) }}">{{ $valor }}</a>
+    <a href="{{ \App\Support\Regreso::enlace(route('cuentas.edit', $fila->profesor_id)) }}">{{ $valor }}</a>
 @elseif($campo === 'tipo')
     {{ $valor === 'alumno' ? 'Alumno' : 'Dirección' }}
 @elseif(in_array($campo, ['fecha_solicitud','inicio','fin'], true))

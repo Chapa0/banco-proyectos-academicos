@@ -1,12 +1,12 @@
 {
-  "fecha_utc": "2026-11-12T09:26:33.599009+00:00",
+  "fecha_utc": "2026-11-12T18:54:52.751933+00:00",
   "postgres": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
   "resultado": "correcto",
   "tablas_negocio": 21,
   "restricciones": 263,
   "indices": 86,
   "triggers": 75,
-  "funciones": 154,
+  "funciones": 166,
   "secuencias": 15,
   "protecciones_ejecutor": "unittest correcto",
   "integridad": [
@@ -22,7 +22,7 @@
     "WEB-02: acceso, cuentas, versión de sesión, CAS y rollback correctos",
     "WEB-04: publicación, permisos, versiones, historial, auditoría, avisos y rollback correctos",
     "WEB-05: perfiles propios, habilidades, CAS, rollback, catálogo, filtros, disponibilidad y privacidad correctos",
-    "32423abe49583b13afe5842af0de908685e16feead9a039a889fef3600af5e9c",
+    "1b2e4b9a5d77eeb0e83c86f7adbdebfc9790a99afa3a43cd34537c7cc4169d47",
     "WEB-06: participación, evaluación, asignación, pausa/reposición/cierre, privacidad y rollback correctos",
     "WEB-07: avisos propios, lectura idempotente, reportes administrativos, filtros, totales y privacidad correctos"
   ],
@@ -79,29 +79,29 @@
       "solicitud_direccion": 96,
       "usuario": 460
     },
-    "sha256_respaldo": "81e91cabd5c57ee7d36256e6ec2b2de7f1b1390e6fb401bba611af5147aa27d4",
+    "sha256_respaldo": "b972febd3418ae1470bf3a3af9b396b8dffda38b5337f0e3f6b0275b47d57752",
     "sha256_contenido_por_tabla": {
-      "acompanamiento": "4b3d9ed739f837fa9e3112235056ea9271a406b98b5084bf79a73fdee41dce85",
+      "acompanamiento": "7db23e8f1d79eca0bc6ac1ff4d8dd1ed0978cb85401f6574300b3dcbf06e6858",
       "alumno": "499b9a8ee00c923733f0f62aeca7cae4238a5caf6368b2aed8d73ef4ecfb61c6",
       "alumno_habilidad": "5a8027cb0fd2458bef41e96d17ce27f458fc3e9dc168f2d00221904b34055734",
-      "asignacion_alumno": "7cc12a9629b9d2a59e0a7f832d118b87a486c33fff430e5458169e99836faebf",
-      "asignacion_direccion": "463b2d19e1c15d69f39b870a797b04f5968de768ff42782e7520f7b9fcbcc677",
-      "candidatura": "331518e84649a59cd95d389fbe21df44f811a19e528d4a6ddb85bca7d9dd9a73",
+      "asignacion_alumno": "9d98c38c5fb28fb70907f944f00d545c43cfdf3d1b863c016d25495172ad0efe",
+      "asignacion_direccion": "42b0f7b8b7b8b34cd48d411100f54c6e2ba8a89687f7b41c232e061e82c1327e",
+      "candidatura": "8029510e46604fdf827de4ec398c552ff715b0cb2be18bc39a18a5962be64bce",
       "criterio_evaluacion": "82fafc4590582d47007523d2952998309df853eb1c7b5916432ca170b912dbc9",
-      "decision_administrativa": "55eddebb608ee3c933a29084471951d258627b9e32d2c93f04ce2341b909bd73",
+      "decision_administrativa": "fe42e01428f70c02a3d16167dbb196955c384408e4a1d70cbaae0d902c8c1caf",
       "detalle_evaluacion": "b3a0b3bf190ac6d536ab9746e834488a2e9c859c6b91e136258e7da09f06dad5",
       "empresa": "36863cf07a7a91124cedf6f797c66dfe863b04c72cc229f995a18ca25e9275fe",
-      "evaluacion_candidato": "cec223e045ff73a495003e60a349e0edbf13781c116c50242d7c65648bec9cea",
-      "evento_auditoria": "1cc5316a50f3fe3ad9359d38f30fd83c9dbab62a8fe1f56a34db3c4b93186175",
+      "evaluacion_candidato": "9249049942580da2c38e53ec74c2317573a72bda7d35054ea06bca1ed4ca1582",
+      "evento_auditoria": "98b4f3eee74cb5cffd553d9a98a86e51a7181050e71a600ae45619165f6ceb3c",
       "habilidad": "d9a8bfa617b058ac0d12e658e7cc3ae5d33ee5c29749e943ea19bb868e170a27",
-      "notificacion": "3dc2e32736bc65db3cb4e84dd8598ec165b5a8312ad9faa55cfa2ffe45418c1f",
+      "notificacion": "2579bfab67bc79da8faa58d5aef2872589bcda79520642cdd3ff87b07221a544",
       "profesor": "05fe576cfff28a09fde520522edba7707bacb92af3493e4a59038e334be7ae1d",
       "proyecto": "f131981d9e2a43e25b9d25c932d97a295ca056e6d33e001cde96005fae7aaa4e",
       "proyecto_habilidad": "13f49dd1e3fc99ea1312eaad0a84f58d329d7252812bfbd5d190eb60a560eb5c",
-      "representacion_empresa": "53e7c752503720f9f549f7792142f1ce4edfe7c6ac475bbc961e9b1a34795749",
-      "revision_proyecto": "20c2bc8731c88f92361a78511532f1cdde6a472bb00f57847239d372e71e6641",
-      "solicitud_direccion": "4bf2b2a64f196996524bb51e2288cee7d1ef161e96b8efffd9bd3738bc825b28",
-      "usuario": "25d1c61b6e6ab8052750765c3a85993bd8d01209e92f4c236e17d55e7589e413"
+      "representacion_empresa": "2cd17e713bb149ba07afe2216fc2edd46d8ca03cc3e3afaf0618b3627ce49bd8",
+      "revision_proyecto": "f2f81664f5233d293710a0fba2977e5c90e717e1998e267b1c757613316bc2ef",
+      "solicitud_direccion": "c8b76429735e2431122f4a4dbda748cb2ce9336167dfdc4fa1525fb80aa10a1a",
+      "usuario": "ddbd16d0a18616bd5e8fc8bb14de5ee907b2ec0ec28ce97910009dfe73fdfe46"
     },
     "secuencias": {
       "acompanamiento_id_seq": {
@@ -616,6 +616,11 @@
     "migrations\\024_avisos_reportes_web.sql": "82ca5a402ab35bdd1897d2a1390d0778c26fef68a9fabc091e0aae61947887d3",
     "migrations\\025_coincidencia_habilidades_web.sql": "24245e41d3af9bb99ac63cab9a29ef5c149507d500eb651a7afbf62515f61fc4",
     "migrations\\026_documentos_pdf_web.sql": "690c13f4fd308fde491968dee943de6ff4c731e2d2a31dff9bf091c8b22d051e",
+    "migrations\\027_recomendaciones_web.sql": "fa5a63e57d8db1fa81c099385e963bd6da759f8c280bafd22c19c208e257c258",
+    "migrations\\028_constancia_participacion_web.sql": "af1231fc1891a0f0542e80dab25f27a39634b3823cb0ae5b0a9b3948e5b809e4",
+    "migrations\\029_imagenes_web.sql": "e000224dc90630615336aea123fb667fa2cdc03c165486525d274886f4cc029e",
+    "migrations\\030_panorama_reportes_web.sql": "ccb487ec01294202b522e4ec6199f8bb5a6a235e2c1224287564815c16fbfccd",
+    "migrations\\031_catalogo_habilidades_web.sql": "b094b4a5dc01c52e6a6da261d258d5cc2405885ce2933f6dba9c65c0fa5a252e",
     "seed.sql": "4e996c7a6552a092551f4f802fd975f652a8cd2f6397b1d7ab40f803b3789ada",
     "tests\\acceso_concurrencia.py": "6582b04485b0bbc886afb003301a2e10eb19cd36544a61bd24b63adcbed81d07",
     "tests\\acceso_web.sql": "f1ec48e4428412bf7dceaa014a0e92d1502be1ea6b75d1310ef29bb668318eae",
@@ -656,5 +661,5 @@
   ],
   "decisiones_delegadas": "D-07/D-08/D-10/D-11 concretadas para primera versión por delegación del usuario el 10 de noviembre de 2026.",
   "limite": "Base PostgreSQL local con operaciones internas y avisos persistentes; sin APIs, autenticación web, envío externo ni despliegue institucional. No acredita los recorridos web de los 42 RF.",
-  "segundos": 280.22
+  "segundos": 243.16
 }

@@ -18,8 +18,11 @@
                 <x-campo name="contacto_correo" label="Correo de contacto" type="email" :value="$empresa->contacto_correo" maxlength="254" placeholder="contacto@empresa.com" help="Es el contacto de la empresa; no cambia tu correo de acceso." />
                 <x-campo name="contacto_telefono" label="Teléfono de contacto" type="tel" :value="$empresa->contacto_telefono" maxlength="50" placeholder="Ej. 81 1234 5678" />
             </fieldset>
-            <div class="form-actions"><button class="btn btn-primary" type="submit">Guardar datos</button><a class="btn btn-outline-secondary" href="{{ route('panel') }}">Volver a mi espacio</a></div>
+            <div class="form-actions"><button class="btn btn-primary" type="submit">Guardar datos</button><x-volver boton :defecto="route('panel')" etiqueta="Volver a mi espacio" /></div>
         </form>
+        <x-subir-imagen id="logo" titulo="Logo de la empresa" :imagen="$logo ?? null" :nombre="$empresa->razon_social ?? ''" logo
+            descripcion="Aparece junto a tus proyectos en el catálogo. Lo ven todas las cuentas del sistema."
+            :accion-guardar="route('empresa.logo.store')" :accion-quitar="route('empresa.logo.destroy')" confirmar="¿Quitar el logo de la empresa? Se mostrarán sus iniciales." />
     </div>
 </section>
 @endsection

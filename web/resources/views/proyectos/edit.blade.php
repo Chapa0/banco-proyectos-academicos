@@ -2,7 +2,7 @@
 @section('title', 'Editar proyecto · Banco de proyectos')
 @section('content')
 <section class="container workspace-section">
-    <a class="back-link" href="{{ route('proyectos.show', $proyecto->id) }}">Volver al proyecto</a>
+    <a class="back-link" href="{{ route('proyectos.show', $proyecto->id) }}"><i class="bi bi-arrow-left me-2" aria-hidden="true"></i>Volver al proyecto</a>
     <header class="page-header"><div><h1 class="page-title">Editar proyecto</h1><p class="page-description">{{ $proyecto->titulo }}</p></div><x-estado-proyecto :estado="$proyecto->estado" /></header>
     <div class="form-layout"><x-errores />
         @if($ultimaRevision?->decision && $ultimaRevision->estado_revision === 'en_correccion')
