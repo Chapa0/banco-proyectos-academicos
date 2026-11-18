@@ -1,0 +1,11 @@
+{
+  "fecha_utc": "2026-11-13T23:31:17.505025+00:00",
+  "url": "https://due-dress-left-queens.trycloudflare.com/login",
+  "resultado": "correcto",
+  "login": 200,
+  "sesion_alumno": 200,
+  "catalogo": 200,
+  "recursos_comprobados": 2,
+  "datos_conservados": true,
+  "alcance": "Reinicio de procesos y comprobación HTTPS con acceso, catálogo y cierre de sesión; sin cambios funcionales."
+}

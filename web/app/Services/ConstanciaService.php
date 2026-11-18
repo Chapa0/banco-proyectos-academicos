@@ -39,6 +39,9 @@ class ConstanciaService
         $opciones->setIsJavascriptEnabled(false);
         $opciones->setDefaultFont('DejaVu Sans');
         $opciones->setChroot(resource_path('views/constancias'));
+        // `artisan serve` no transmite TEMP/TMP al servidor: sin carpeta propia, dompdf no puede crear
+        // el subconjunto de fuentes y el PDF falla en una instalación nueva.
+        $opciones->setTempDir(storage_path('framework/cache'));
         $dompdf = new Dompdf($opciones);
         $dompdf->loadHtml(view('constancias.pdf', ['c' => $constancia])->render(), 'UTF-8');
         $dompdf->setPaper('letter', 'portrait');

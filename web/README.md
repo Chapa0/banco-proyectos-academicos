@@ -31,17 +31,18 @@ El contrato visual contempla 390×844 y 1440×900, reflujo a 320 px, contenido l
 
 `composer.lock` y `package-lock.json` fijan las dependencias. En este equipo PHP y Composer están en `proyecto/.local/tools/`, sin modificar el PATH global. `dev.ps1` usa esas herramientas si existen; en otro equipo utiliza PHP y Composer disponibles en el sistema.
 
-Para reproducirlo en Windows, instalar [PHP 8.5](https://www.php.net/downloads.php?os=windows), [Composer](https://getcomposer.org/download/) y [Node.js 24 LTS](https://nodejs.org/en/download). Habilitar `pdo_pgsql`, `mbstring`, `openssl`, `fileinfo`, `intl`, `curl` y `zip` en PHP, además de las extensiones requeridas por Composer. Se necesita Python 3.10 o posterior para las herramientas de base y pruebas. La [guía PostgreSQL](../database/README.md#reproducir-en-otro-equipo) explica cómo preparar la instancia y su configuración privada; no se copian las credenciales de otra persona.
+Para reproducirlo en Windows, instalar [PHP 8.5](https://www.php.net/downloads.php?os=windows), [Composer](https://getcomposer.org/download/) y [Node.js 24 LTS](https://nodejs.org/en/download). Habilitar `pdo_pgsql`, `pgsql`, `gd`, `mbstring`, `openssl`, `fileinfo`, `intl`, `curl` y `zip` en PHP, además de las extensiones requeridas por Composer. Para que se acepten fotos y logos de hasta 4 MB, fijar en `php.ini` `upload_max_filesize=6M` y `post_max_size=8M` (los valores de fábrica son 2M y 8M). Si al activar GD el servidor de desarrollo deja de leer `.env`, desactivar OPcache con `opcache.enable=0`, como en el PHP portable de este equipo. Se necesita Python 3.10 o posterior para las herramientas de base y pruebas. La [guía PostgreSQL](../database/README.md#reproducir-en-otro-equipo) explica cómo preparar la instancia y su configuración privada; no se copian las credenciales de otra persona.
 
 ## Preparar y ejecutar
 
-Desde `proyecto/`, con PostgreSQL local configurado:
+Desde `proyecto/`, con la instancia PostgreSQL propia creada según [la guía de la base](../database/README.md#reproducir-en-otro-equipo) (pasos 1 y 2):
 
 ```powershell
 python database/manage.py start
 python database/manage.py migrate
 python database/provision_web.py
 python database/crear_admin_web.py
+python database/cargar_demo.py   # opcional: cuentas y datos de demostración
 cd web
 .\dev.ps1 composer install
 .\dev.ps1 npm ci
@@ -50,7 +51,7 @@ cd web
 .\dev.ps1 serve
 ```
 
-Abrir [http://127.0.0.1:8000](http://127.0.0.1:8000). `serve` permanece en ejecución; Ctrl+C lo detiene. Para modificar CSS o JavaScript con recarga, ejecutar `.\dev.ps1 npm run dev` en otra terminal dentro de `web/`.
+Abrir [http://127.0.0.1:8000](http://127.0.0.1:8000) y entrar con los datos de `proyecto/.local/primer-acceso-web.txt` o, si se cargó la demostración, con una cuenta de [DEMO-01](../database/README.md#datos-de-demostración-demo-01). `serve` permanece en ejecución; Ctrl+C lo detiene. Funciona igual con `php artisan serve`: la aplicación transmite `TEMP` y `TMP` al servidor, necesarios para subir imágenes y generar constancias. Este recorrido completo se comprobó el 18 de noviembre de 2026 desde un clon nuevo de GitHub con una instancia PostgreSQL creada con los comandos de la guía de la base. Para modificar CSS o JavaScript con recarga, ejecutar `.\dev.ps1 npm run dev` en otra terminal dentro de `web/`.
 
 El aprovisionamiento requiere la migración SQL 019 aplicada. Crea una credencial LOGIN local sin privilegios administrativos, miembro de `banco_web`, y genera la clave de aplicación en `.env`. Si ya existe una configuración privada, la conserva. `.env.example` no contiene secretos y `.env` está excluido de Git. No es una cuenta humana del sistema académico: la herramienta local `database/crear_admin_web.py` prepara por separado el primer administrador, con contraseña aleatoria temporal y cambio inicial obligatorio. Sus datos de ingreso quedan únicamente en `proyecto/.local/primer-acceso-web.txt`; abrirlo localmente, no compartirlo ni incluirlo al entregar fuentes. Las semillas siguen sin permitir inicio de sesión. La preparación conserva el registro del administrador ficticio exacto, pero lo deja inactivo para que no cuente como una alternativa al último administrador real.
 

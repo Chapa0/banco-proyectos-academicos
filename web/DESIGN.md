@@ -20,6 +20,16 @@ Guía vigente para las pantallas del banco de proyectos. WEB-03 la aplica al ini
 
 **Verificación.** Auditoría automática de contraste de todos los textos visibles en 29 páginas por rol (administración, empresa, alumna, profesor y públicas), en claro y oscuro: sin fallos tras corregir el distintivo ilustrativo de la portada. Teléfono a 375 px sin desplazamiento horizontal.
 
+## Identidad vigente (MARCA-03)
+
+13 de noviembre de 2026. El usuario eligió la propuesta 1, **Vinculación**, y pidió refinarla, preparar las versiones vectoriales e integrarla. Los dos eslabones representan la relación escuela–empresa mediante proyectos; el nombre continúa siendo **Banco de proyectos académicos**. Este apartado concreta la marca dentro de RD-01.
+
+La [guía de identidad](design/marca-final/GUIA.md) reúne construcción, colores, espacio de protección, tamaños y fuentes editables. [public/brand](public/brand/) contiene las composiciones horizontal, vertical, de navegación y símbolo, cada una en color, color para fondo oscuro, una tinta y blanco. Los SVG son vectores con letras en trazados: no requieren cargar tipografías ni contienen imágenes ráster. La entrega incluye [PDF vectorial](design/marca-final/presentacion.pdf) y [paquete descargable](design/marca-final/banco-proyectos-identidad.zip).
+
+El componente `x-marca` sustituye el ícono genérico del encabezado y de la barra lateral. Usa la composición compacta con el nombre completo; por debajo de 576 px, el encabezado público y la barra superior muestran el símbolo y conservan el nombre accesible. La barra lateral sigue mostrando el nombre completo. El botón real de tema alterna azul/marino en claro y azul claro/blanco en oscuro. Las imágenes internas son decorativas y la composición tiene una única alternativa «Banco de proyectos académicos». Los enlaces mantienen un área mínima de 44 px y foco visible. El encabezado común y las páginas de error declaran favicon SVG, ICO y acceso guardado de 180 px.
+
+La [revisión MARCA-03](evidencia/marca03/marca03.json) conserva las capturas de 1440×900 y 390×844, el reflujo a 320 px, la comprobación de teclado, las respuestas de los recursos y los límites de la verificación. No sustituye pruebas de impresión o una validación externa de reconocimiento.
+
 ## Dirección y estructura
 
 El sistema es una herramienta de trabajo para alumnos, profesores, representantes y administradores. Debe permitir reconocer la cuenta, encontrar la acción y comprender el resultado con pocas distracciones. Usamos una composición sobria: fondo gris claro, superficies blancas, texto azul oscuro y verde discreto para la acción principal. El detalle común es la navegación activa subrayada y el orden estable de títulos, ayudas y controles.

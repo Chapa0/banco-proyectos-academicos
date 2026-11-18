@@ -1,5 +1,5 @@
 {
-  "fecha_utc": "2026-11-13T13:47:12.984398+00:00",
+  "fecha_utc": "2026-11-18T15:52:07.942717+00:00",
   "resultado": "correcto",
   "bloque": "WEB-05",
   "postgres": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
@@ -98,11 +98,11 @@
     "web\\app\\Http\\Requests\\Proyectos\\PublicacionRequest.php": "265e42379d5d1a968ddb02e829f835b935d3902bc38d3eb9cb15d4b017b98ebd",
     "web\\app\\Http\\Requests\\Proyectos\\ResolverProyectoRequest.php": "61fae14a0874810f38a978f465197c6b360109804de473a1cdea3f05a4b0103b",
     "web\\app\\Models\\Usuario.php": "c2be7f3c2244447628d1113e44bb92f004007a5938fe6cdcc8319f325bd7c14d",
-    "web\\app\\Providers\\AppServiceProvider.php": "aa449ee82bdb3d2f59fa8dbee7343e164f6432ed3784ec67b2dae9a70177a9f9",
+    "web\\app\\Providers\\AppServiceProvider.php": "c320251d4b664f9c89bc386634d2af4a8b082ccd705b384f037551ad4586bd6b",
     "web\\app\\Services\\CatalogoService.php": "bd7d00cb21e3df9955491aa0b764fba0817f8766c4b7326ac13ee2849132ffdb",
     "web\\app\\Services\\CoincidenciaService.php": "8012c132c0a9e5c6f0678a38db4f9b606b19c58dca9af13efb0f3a42781e86ba",
     "web\\app\\Services\\ConexionPostgres.php": "aaeeac0afba36b214be9f0dcb12a2c8e77235e6c12283c0f1e5331407bbcc17f",
-    "web\\app\\Services\\ConstanciaService.php": "ec1fcdbe317a1c3f0df6f052bd8373a678aef0c73d5eb27ef1c5100c9cc5ec93",
+    "web\\app\\Services\\ConstanciaService.php": "7d5affb8bb9df829442374f9e43bbad0cf18eac7cb961796dc9facdb8a836e46",
     "web\\app\\Services\\ConsultaService.php": "ce212caae0ec2f19617298e3bd331de4b3732e55586d3d7e7957f042440cc74d",
     "web\\app\\Services\\CuentaService.php": "4016669c0a37907cee5ca88ed4a2376cf75e1926aa755c3c29e54c5a9ea5af3e",
     "web\\app\\Services\\DocumentoService.php": "7a518cf2ae945d90bc2ee54a57f512412e26e72a8ac0270347795e85e7788edb",
@@ -147,9 +147,10 @@
     "web\\resources\\views\\components\\estado-participacion.blade.php": "f1b8e978c4bb187c0d541ddce8d79b5ab358973f1fbb4d87aae9556d4a99c37d",
     "web\\resources\\views\\components\\estado-proyecto.blade.php": "1db40e7fd5fcbdc75ba4e277e801ceb43ea51922ee54e16c82226e3a414282fc",
     "web\\resources\\views\\components\\fecha-local.blade.php": "194daecbeb1cfec8490e0498fcdc360bec9a6159fa4849a4a6c8eb50fcfc8928",
-    "web\\resources\\views\\components\\grafica-barras.blade.php": "7c052e275d17c70cf701c3997800932abfba2ceab97ab9b025b18cd55f7d5639",
+    "web\\resources\\views\\components\\grafica-barras.blade.php": "f5d78d16fad00c35dedbe5dd6aa5039f5c911950309efcb1c1fec62379cd35db",
     "web\\resources\\views\\components\\info.blade.php": "d9f8d8c0e17c639a63cb987790487f4322beb520264650ad33b6314225f9334e",
     "web\\resources\\views\\components\\linea-estado.blade.php": "50ccf5d5f72aa63a2c1d8c7619fe745298b3002fbd40fda39f62d9e376bc8a52",
+    "web\\resources\\views\\components\\marca.blade.php": "e4f09fc3894499ec3a59bd81cac7e947bfe901108fad3e57abe7a7a815b954ee",
     "web\\resources\\views\\components\\medidores-carga.blade.php": "7f07375b30f2872c8e4ab4d189ad3ad39f2d0e01484588227e52de4c8b3214a5",
     "web\\resources\\views\\components\\paginacion.blade.php": "543bbf9506152b0b0bab43779eaf89e2227f906763e2694e0d1468c319561814",
     "web\\resources\\views\\components\\recomendados.blade.php": "5424b3b933c36b6bb01e9c4685141e7f0197012e01eeeea7f192c640da1cdf71",
@@ -169,10 +170,11 @@
     "web\\resources\\views\\errors\\503.blade.php": "e6f2b969f6e92ea65846a1360fb48054519d3447bf1255df00772caa04d2eb5e",
     "web\\resources\\views\\habilidades\\index.blade.php": "b46d583b10f3e9d51c3b9a7b3a4f8b6bb95fcad8a79244b6be3bc1c39c494335",
     "web\\resources\\views\\inicio.blade.php": "a826052d513105dcdb6ba2253cdd0db3d1eb7b977b821414aac420f441a9ca3b",
+    "web\\resources\\views\\layouts\\_iconos-marca.blade.php": "f0dffbfb15f685b9f82d6cf5a071fded3bbfb7ba3c71bf51797c29d28c5037aa",
     "web\\resources\\views\\layouts\\_navegacion.blade.php": "76c5ffb98365d95b81c033cd1f81cc2bfd54e01357d5ac2da6c7952f8531759b",
     "web\\resources\\views\\layouts\\_tema.blade.php": "7a617053aaf99c0c29afc366a1dcdc3857bd528da0ab8506aaeef01a8994df53",
-    "web\\resources\\views\\layouts\\app.blade.php": "0ea96b8b64dcfb0d31f5b3ba05236f1b08896f2a9e40f733fe4d3529701a0d37",
-    "web\\resources\\views\\layouts\\estado.blade.php": "dc4dcb5053fb05033bcc87ba9deb69bf50c48e827f3ef9f0b8bc6271e59d8f47",
+    "web\\resources\\views\\layouts\\app.blade.php": "f24d60d1b4ce5d5d423c22efc298bf321e917005f9d40d4063d832348930b8e2",
+    "web\\resources\\views\\layouts\\estado.blade.php": "fdfdab880d2842c1ca5bf9ff3654feb8a1e49f95882ac2d4857d091d2fa949e9",
     "web\\resources\\views\\panel.blade.php": "a25eacae40efd11191f2a322aaa9ff1aa28c673c4bf6de044f0d27b3b1e9608e",
     "web\\resources\\views\\participacion\\_evaluar.blade.php": "53dec74395d4c36c90e1a9624faa0694e0f87d4aebe6d32dcec9cc97b07aaf76",
     "web\\resources\\views\\participacion\\_perfil.blade.php": "b3b133b3a0a2d95a64bb786fbbeaa66df8648e9441620607901007c8c40c7355",
@@ -207,5 +209,5 @@
     "web\\tests\\PostgresTestCase.php": "3489c3c6fbc7381bd1095a368acf1c3dc64ab6045b6f37cced1577efc7a68831",
     "web\\tests\\publicacion.py": "d2f3970e3a7c91dd63be5fbd6e2079a5f2d4a97f17877b8fd74a9503ec9faa02"
   },
-  "segundos": 33.91
+  "segundos": 41.3
 }

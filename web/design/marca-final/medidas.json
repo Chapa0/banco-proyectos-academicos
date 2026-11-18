@@ -1,0 +1,58 @@
+{
+  "color": {
+    "horizontal": [
+      428.31,
+      80
+    ],
+    "vertical": [
+      272.01,
+      190
+    ],
+    "navegacion": [
+      224.93,
+      48
+    ]
+  },
+  "oscuro": {
+    "horizontal": [
+      428.31,
+      80
+    ],
+    "vertical": [
+      272.01,
+      190
+    ],
+    "navegacion": [
+      224.93,
+      48
+    ]
+  },
+  "monocromo": {
+    "horizontal": [
+      428.31,
+      80
+    ],
+    "vertical": [
+      272.01,
+      190
+    ],
+    "navegacion": [
+      224.93,
+      48
+    ]
+  },
+  "blanco": {
+    "horizontal": [
+      428.31,
+      80
+    ],
+    "vertical": [
+      272.01,
+      190
+    ],
+    "navegacion": [
+      224.93,
+      48
+    ]
+  }
+}

@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use App\Services\ConsultaService;
 use App\Services\ImagenService;
 use Illuminate\Console\Events\CommandStarting;
+use Illuminate\Foundation\Console\ServeCommand;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
@@ -22,7 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // `artisan serve` solo transmite al servidor algunas variables de entorno. Sin TEMP/TMP,
+        // PHP en Windows no tiene carpeta temporal: fallan la subida de imágenes y el PDF.
+        array_push(ServeCommand::$passthroughVariables, 'TEMP', 'TMP', 'TMPDIR');
     }
 
     /**

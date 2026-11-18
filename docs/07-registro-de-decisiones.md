@@ -191,6 +191,8 @@ Las páginas citadas corresponden a [Proyecto.pdf](../Proyecto.pdf). El [alcance
 - **Fuente funcional:** PDF p. 8; RNF-07, RNF-08 y RNF-09; fases del plan de validación.
 - **Pruebas públicas, 12 de noviembre de 2026:** el usuario solicita levantar la aplicación, compartir un enlace de internet, entregar las cuentas ficticias con sus contraseñas y dejar datos cargados. Se autoriza esta publicación de pruebas. PRUEBAS-01 usa HTTPS mediante Cloudflare Quick Tunnels y una base independiente con DEMO-01, sin sustituir el alojamiento institucional pendiente. El enlace dura mientras el equipo y el túnel permanezcan activos y cambia al reiniciarlo. La [guía web](../web/README.md#compartir-pruebas-por-internet-pruebas-01) y el [seguimiento](06-seguimiento.md#pruebas-públicas-de-pruebas-01) conservan operación, evidencia y límites.
 
+- **Alojamiento independiente, 13 de noviembre de 2026:** el usuario solicita un enlace fijo que funcione con su computadora apagada y confirma que debe ser completamente gratuito. Se registra presupuesto de alojamiento de **US$0**, sin autorización para recursos de pago. La evaluación identifica Northflank Sandbox como candidato por sus servicios sin suspensión, PostgreSQL 18 y dominios HTTPS generados. Su cuota y la persistencia de archivos deben confirmarse en la cuenta antes de crear recursos. No hay aún publicación independiente ni se acredita un SLA; resultado y siguiente paso en [el seguimiento](06-seguimiento.md#evaluación-de-alojamiento-gratuito-independiente).
+
 ## D-13
 
 - **Decisión:** usar PostgreSQL como motor del proyecto. **Estado:** confirmada por el usuario el 21 de octubre de 2026.

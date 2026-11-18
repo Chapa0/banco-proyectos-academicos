@@ -84,10 +84,26 @@ Para pruebas compartidas por internet, [la guía web](../web/README.md#compartir
 
 ## Reproducir en otro equipo
 
-1. Obtener PostgreSQL 18 para el equipo desde [la distribución oficial de Windows](https://www.postgresql.org/download/windows/). Se necesitan `postgres`, `initdb`, `pg_ctl`, `psql`, `pg_dump` y `pg_restore` de la misma rama.
-2. Preparar una instancia local independiente, un usuario administrador de desarrollo y un archivo privado [pgpass](https://www.postgresql.org/docs/18/libpq-pgpass.html). Las migraciones iniciales requieren crear la base y los grupos `NOLOGIN`; no se usa una cuenta de producción.
-3. Copiar [connection.example.json](connection.example.json) a `.local/connection.json` y completar las rutas absolutas, puerto y usuario. `database` debe ser `banco_proyectos`, nunca `postgres` ni una URI. El servidor debe estar en loopback. Para usar `start/stop`, el clúster propio debe estar en `.local/data`, con puerto y escucha configurados allí.
-4. Con la instancia iniciada, ejecutar `migrate`, `seed` y `test`. La evidencia incluye la versión real utilizada. No copiar el clúster ni las credenciales de otra persona.
+1. Obtener PostgreSQL 18 para el equipo desde [la distribución oficial de Windows](https://www.postgresql.org/download/windows/). Se necesitan `postgres`, `initdb`, `pg_ctl`, `psql`, `pg_dump` y `pg_restore` de la misma rama. El servicio que instala el asistente no se usa: el proyecto trabaja con su propia instancia.
+2. Crear la instancia propia del proyecto, su usuario administrador de desarrollo, el archivo privado [pgpass](https://www.postgresql.org/docs/18/libpq-pgpass.html) y `database/.local/connection.json`. Desde `proyecto/` en PowerShell, ajustando `$bin` a la carpeta `bin` de PostgreSQL 18 y eligiendo una contraseña propia:
+
+   ```powershell
+   $bin = 'C:\Program Files\PostgreSQL\18\bin'
+   $local = 'database\.local'
+   $clave = Read-Host 'Contraseña de desarrollo para proweb_admin'
+   New-Item -ItemType Directory -Force "$local\secrets" | Out-Null
+   Set-Content "$local\secrets\clave.txt" $clave -NoNewline -Encoding ascii
+   & "$bin\initdb.exe" -D "$local\data" -U proweb_admin --pwfile="$local\secrets\clave.txt" -E UTF8 --locale=C -A scram-sha-256
+   Remove-Item "$local\secrets\clave.txt"
+   Add-Content "$local\data\postgresql.conf" "`nport = 55432`nlisten_addresses = '127.0.0.1'`ntimezone = 'UTC'"
+   Set-Content "$local\secrets\pgpass.conf" "127.0.0.1:55432:*:proweb_admin:$clave" -Encoding ascii
+   @{ pg_bin = $bin.Replace('\', '/'); host = '127.0.0.1'; port = 55432; user = 'proweb_admin'; database = 'banco_proyectos'
+      passfile = (Resolve-Path "$local\secrets\pgpass.conf").Path.Replace('\', '/') } | ConvertTo-Json | Set-Content "$local\connection.json" -Encoding utf8
+   ```
+
+   El resultado sigue [connection.example.json](connection.example.json): `database` debe ser `banco_proyectos`, nunca `postgres` ni una URI, y el servidor queda en loopback. `start/stop` usan el clúster de `database/.local/data`. Si el puerto 55432 está ocupado, usar otro en los tres lugares. Todo `database/.local/` queda fuera de Git.
+3. Iniciar y crear la base: `py -3.12 database/manage.py start` y después `py -3.12 database/manage.py migrate` (con otra versión de Python 3.10 o posterior, usar `python`). Las migraciones crean la base y los grupos `NOLOGIN`; no se usa una cuenta de producción.
+4. Opcional: `seed` y `test` para los ejemplos y las pruebas de la base. La evidencia incluye la versión real utilizada. No copiar el clúster ni las credenciales de otra persona.
 
 Para una instalación nueva de la aplicación, continuar con la [preparación web](../web/README.md#preparar-y-ejecutar): aprovisionar una conexión LOGIN propia miembro de `banco_web`, preparar el primer administrador una sola vez, instalar con `composer.lock`/`package-lock.json`, compilar y comprobar la conexión antes de abrir el servidor. Las semillas son ejemplos ficticios sin contraseñas válidas; no sustituyen el alta del primer administrador. La web no ejecuta migraciones Laravel.
 

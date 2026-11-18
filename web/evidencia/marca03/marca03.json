@@ -1,0 +1,814 @@
+{
+  "bloque": "MARCA-03",
+  "fecha": "2026-11-13",
+  "alcance": "Refinamiento vectorial de la propuesta 1 e integración de la identidad; verificación local delimitada a la marca.",
+  "contract": "MARCA-03: identificar el banco de proyectos y volver a Inicio/Mi espacio mediante la propuesta 1 refinada; marca completa en escritorio y barra lateral, símbolo en encabezados móviles, un nombre accesible, enlaces >=44 px y variantes para ambos temas. Fuentes: MARCA-01/MARCA-02 y RD-01.",
+  "contractDetails": {
+    "surface": "Encabezado público, barra lateral, barra móvil, favicon y archivos de identidad",
+    "job": "Reconocer el sistema y volver a Inicio o Mi espacio",
+    "primaryAction": "Enlace de la marca",
+    "hierarchy": "Símbolo y nombre completo; símbolo en encabezados estrechos; una sola alternativa accesible",
+    "reference": "Propuesta 1 elegida expresamente por el usuario; MARCA-01, MARCA-02 y paleta RD-01",
+    "constraints": [
+      "Laravel/Blade/Bootstrap existentes",
+      "SVG sin fuentes o imágenes externas",
+      "Temas claro/oscuro",
+      "Área del enlace >=44 px"
+    ]
+  },
+  "targetViewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Árbol accesible: un enlace y una imagen llamados Banco de proyectos académicos por marca; imágenes internas decorativas. Enlaces visibles >=44 px. Tab alcanza la marca a 320 px y el foco es sólido. Escape cierra el menú y devuelve el foco al botón. Verificación técnica dirigida, sin lector de pantalla real."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Portada a 1440x900 y 390x844 en ambos temas, más reflujo a 320x812; sin desplazamiento horizontal. Composición de navegación a 224/208 px en escritorio; símbolo a 40 px y enlace de 44 px en móvil. Menú lateral conserva el nombre completo."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "not-applicable",
+      "reason": "La marca no tiene proceso asíncrono de aplicación ni indicador de carga; se verificó la carga completa de sus archivos estáticos."
+    },
+    "empty": {
+      "status": "not-applicable",
+      "reason": "Identidad fija, independiente de registros o listas vacías."
+    },
+    "partial": {
+      "status": "not-applicable",
+      "reason": "La marca no presenta datos parciales u opcionales; todas sus variantes estáticas respondieron 200."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "GET de ruta inexistente devuelve 404 y conserva el enlace al favicon nuevo en el layout de error; recursos del icono verificados 200."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "GET /panel desde el contexto anónimo termina en /login. La marca pública y la autenticada mantienen sus destinos y el acceso por sesión."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "La propuesta elegida aparece en portada y panel de demostración; el botón real de tema alterna la variante y el encabezado móvil muestra el símbolo."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "1440x900",
+      "artifact": "portada-oscuro-1440.webp",
+      "observation": "Portada dark: logo-navegacion-oscuro.svg cargado, nombre accesible conservado y sin desborde."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "portada-claro-1440.webp",
+      "observation": "Portada light: logo-navegacion-color.svg cargado, nombre accesible conservado y sin desborde."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "portada-claro-390.webp",
+      "observation": "Portada light: simbolo-color.svg cargado, nombre accesible conservado y sin desborde."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "portada-oscuro-390.webp",
+      "observation": "Portada dark: simbolo-oscuro.svg cargado, nombre accesible conservado y sin desborde."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "panel-oscuro-1440.webp",
+      "observation": "Barra lateral con identidad completa sobre el fondo oscuro, cuenta ficticia DEMO-01."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "panel-claro-1440.webp",
+      "observation": "Barra lateral con la variante de color y nombre legible sobre fondo claro."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "menu-oscuro-390.webp",
+      "observation": "Menú móvil abierto: composición completa en la barra lateral y símbolo en la barra superior."
+    }
+  ],
+  "comprobaciones": {
+    "composer": "validate --strict: correcto",
+    "pint": "--test: correcto",
+    "unitFeature": {
+      "pruebas": 21,
+      "aserciones": 62,
+      "resultado": "correcto"
+    },
+    "build": "Vite correcto tras el ajuste final del área de interacción",
+    "svg": {
+      "archivos": 17,
+      "elementosRasterTextoScriptsORecursosExternos": 0,
+      "maxBytes": 20756
+    },
+    "pdf": {
+      "presentacion": "pdfimages y pdffonts sin imágenes ni fuentes: letras y símbolo en trazados",
+      "renderizadosInspeccionados": [
+        "pdf-presentacion.png",
+        "pdf-logo-horizontal-color.png",
+        "pdf-logo-horizontal-monocromo.png"
+      ]
+    },
+    "iconos": {
+      "ico": [
+        [
+          16,
+          16
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          48,
+          48
+        ],
+        [
+          64,
+          64
+        ]
+      ],
+      "apple": [
+        180,
+        180
+      ],
+      "vista": "PNG de 16 y 32 px renderizados con Inkscape e inspeccionados"
+    },
+    "navegacion": {
+      "error404": true,
+      "panelAnonimoTerminaEn": "/login",
+      "escape": {
+        "menuAbierto": false,
+        "foco": "barra-lateral",
+        "outline": "solid",
+        "marcaVisible": [
+          "logo-navegacion-oscuro.svg",
+          "simbolo-oscuro.svg"
+        ]
+      },
+      "teclado": {
+        "url": "/",
+        "viewport": "320x812",
+        "tema": "dark",
+        "desborde": false,
+        "marcas": [
+          {
+            "nombre": "Banco de proyectos académicos",
+            "rol": "img",
+            "imagenes": [
+              {
+                "archivo": "simbolo-oscuro.svg",
+                "cargada": true,
+                "ancho": 40,
+                "alto": 40
+              }
+            ],
+            "enlace": {
+              "ancho": 44,
+              "alto": 44
+            },
+            "dentro": true
+          }
+        ],
+        "recursos": [
+          {
+            "archivo": "logo-navegacion-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "logo-navegacion-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.ico",
+            "estado": 200,
+            "tipo": "image/vnd.microsoft.icon"
+          },
+          {
+            "archivo": "apple-touch-icon.png",
+            "estado": 200,
+            "tipo": "image/png"
+          }
+        ],
+        "foco": {
+          "tag": "A",
+          "clase": "app-brand",
+          "outline": "solid",
+          "ancho": "2.4px"
+        }
+      }
+    },
+    "auditas": {
+      "publico": [
+        {
+          "url": "/",
+          "viewport": "1440x900",
+          "tema": "dark",
+          "desborde": false,
+          "marcas": [
+            {
+              "nombre": "Banco de proyectos académicos",
+              "rol": "img",
+              "imagenes": [
+                {
+                  "archivo": "logo-navegacion-oscuro.svg",
+                  "cargada": true,
+                  "ancho": 224,
+                  "alto": 47.8
+                }
+              ],
+              "enlace": {
+                "ancho": 224,
+                "alto": 47.8
+              },
+              "dentro": true
+            }
+          ],
+          "recursos": [
+            {
+              "archivo": "logo-navegacion-color.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "logo-navegacion-oscuro.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "simbolo-color.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "simbolo-oscuro.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "favicon.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "favicon.ico",
+              "estado": 200,
+              "tipo": "image/vnd.microsoft.icon"
+            },
+            {
+              "archivo": "apple-touch-icon.png",
+              "estado": 200,
+              "tipo": "image/png"
+            }
+          ],
+          "foco": {
+            "tag": "BODY",
+            "clase": "public-page",
+            "outline": "none",
+            "ancho": "2.4px"
+          },
+          "captura": {
+            "archivo": "portada-oscuro-1440.webp",
+            "formato": "webp",
+            "calidad": 65
+          }
+        },
+        {
+          "url": "/",
+          "viewport": "1440x900",
+          "tema": "light",
+          "desborde": false,
+          "marcas": [
+            {
+              "nombre": "Banco de proyectos académicos",
+              "rol": "img",
+              "imagenes": [
+                {
+                  "archivo": "logo-navegacion-color.svg",
+                  "cargada": true,
+                  "ancho": 224,
+                  "alto": 47.8
+                }
+              ],
+              "enlace": {
+                "ancho": 224,
+                "alto": 47.8
+              },
+              "dentro": true
+            }
+          ],
+          "recursos": [
+            {
+              "archivo": "logo-navegacion-color.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "logo-navegacion-oscuro.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "simbolo-color.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "simbolo-oscuro.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "favicon.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "favicon.ico",
+              "estado": 200,
+              "tipo": "image/vnd.microsoft.icon"
+            },
+            {
+              "archivo": "apple-touch-icon.png",
+              "estado": 200,
+              "tipo": "image/png"
+            }
+          ],
+          "foco": {
+            "tag": "BUTTON",
+            "clase": "icon-button theme-toggle",
+            "outline": "none",
+            "ancho": "0px"
+          },
+          "captura": {
+            "archivo": "portada-claro-1440.webp",
+            "formato": "webp",
+            "calidad": 65
+          }
+        },
+        {
+          "url": "/",
+          "viewport": "390x844",
+          "tema": "light",
+          "desborde": false,
+          "marcas": [
+            {
+              "nombre": "Banco de proyectos académicos",
+              "rol": "img",
+              "imagenes": [
+                {
+                  "archivo": "simbolo-color.svg",
+                  "cargada": true,
+                  "ancho": 40,
+                  "alto": 40
+                }
+              ],
+              "enlace": {
+                "ancho": 44,
+                "alto": 44
+              },
+              "dentro": true
+            }
+          ],
+          "recursos": [
+            {
+              "archivo": "logo-navegacion-color.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "logo-navegacion-oscuro.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "simbolo-color.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "simbolo-oscuro.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "favicon.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "favicon.ico",
+              "estado": 200,
+              "tipo": "image/vnd.microsoft.icon"
+            },
+            {
+              "archivo": "apple-touch-icon.png",
+              "estado": 200,
+              "tipo": "image/png"
+            }
+          ],
+          "foco": {
+            "tag": "BODY",
+            "clase": "public-page",
+            "outline": "none",
+            "ancho": "2.4px"
+          },
+          "captura": {
+            "archivo": "portada-claro-390.webp",
+            "formato": "webp",
+            "calidad": 65
+          }
+        },
+        {
+          "url": "/",
+          "viewport": "390x844",
+          "tema": "dark",
+          "desborde": false,
+          "marcas": [
+            {
+              "nombre": "Banco de proyectos académicos",
+              "rol": "img",
+              "imagenes": [
+                {
+                  "archivo": "simbolo-oscuro.svg",
+                  "cargada": true,
+                  "ancho": 40,
+                  "alto": 40
+                }
+              ],
+              "enlace": {
+                "ancho": 44,
+                "alto": 44
+              },
+              "dentro": true
+            }
+          ],
+          "recursos": [
+            {
+              "archivo": "logo-navegacion-color.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "logo-navegacion-oscuro.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "simbolo-color.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "simbolo-oscuro.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "favicon.svg",
+              "estado": 200,
+              "tipo": "image/svg+xml"
+            },
+            {
+              "archivo": "favicon.ico",
+              "estado": 200,
+              "tipo": "image/vnd.microsoft.icon"
+            },
+            {
+              "archivo": "apple-touch-icon.png",
+              "estado": 200,
+              "tipo": "image/png"
+            }
+          ],
+          "foco": {
+            "tag": "BUTTON",
+            "clase": "icon-button theme-toggle",
+            "outline": "none",
+            "ancho": "0px"
+          },
+          "captura": {
+            "archivo": "portada-oscuro-390.webp",
+            "formato": "webp",
+            "calidad": 65
+          }
+        }
+      ],
+      "reflujo320": {
+        "url": "/",
+        "viewport": "320x812",
+        "tema": "dark",
+        "desborde": false,
+        "marcas": [
+          {
+            "nombre": "Banco de proyectos académicos",
+            "rol": "img",
+            "imagenes": [
+              {
+                "archivo": "simbolo-oscuro.svg",
+                "cargada": true,
+                "ancho": 40,
+                "alto": 40
+              }
+            ],
+            "enlace": {
+              "ancho": 44,
+              "alto": 44
+            },
+            "dentro": true
+          }
+        ],
+        "recursos": [
+          {
+            "archivo": "logo-navegacion-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "logo-navegacion-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.ico",
+            "estado": 200,
+            "tipo": "image/vnd.microsoft.icon"
+          },
+          {
+            "archivo": "apple-touch-icon.png",
+            "estado": 200,
+            "tipo": "image/png"
+          }
+        ],
+        "foco": {
+          "tag": "BODY",
+          "clase": "public-page",
+          "outline": "none",
+          "ancho": "2.4px"
+        }
+      },
+      "panelClaro": {
+        "url": "/panel",
+        "viewport": "1440x900",
+        "tema": "light",
+        "desborde": false,
+        "marcas": [
+          {
+            "nombre": "Banco de proyectos académicos",
+            "rol": "img",
+            "imagenes": [
+              {
+                "archivo": "logo-navegacion-color.svg",
+                "cargada": true,
+                "ancho": 208,
+                "alto": 44.38
+              }
+            ],
+            "enlace": {
+              "ancho": 235.2,
+              "alto": 44.38
+            },
+            "dentro": true
+          }
+        ],
+        "recursos": [
+          {
+            "archivo": "logo-navegacion-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "logo-navegacion-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.ico",
+            "estado": 200,
+            "tipo": "image/vnd.microsoft.icon"
+          },
+          {
+            "archivo": "apple-touch-icon.png",
+            "estado": 200,
+            "tipo": "image/png"
+          }
+        ],
+        "foco": {
+          "tag": "BUTTON",
+          "clase": "icon-button theme-toggle",
+          "outline": "none",
+          "ancho": "0px"
+        }
+      },
+      "panelOscuro": {
+        "url": "/panel",
+        "viewport": "1440x900",
+        "tema": "dark",
+        "desborde": false,
+        "marcas": [
+          {
+            "nombre": "Banco de proyectos académicos",
+            "rol": "img",
+            "imagenes": [
+              {
+                "archivo": "logo-navegacion-oscuro.svg",
+                "cargada": true,
+                "ancho": 208,
+                "alto": 44.38
+              }
+            ],
+            "enlace": {
+              "ancho": 235.2,
+              "alto": 44.38
+            },
+            "dentro": true
+          }
+        ],
+        "recursos": [
+          {
+            "archivo": "logo-navegacion-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "logo-navegacion-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.ico",
+            "estado": 200,
+            "tipo": "image/vnd.microsoft.icon"
+          },
+          {
+            "archivo": "apple-touch-icon.png",
+            "estado": 200,
+            "tipo": "image/png"
+          }
+        ],
+        "foco": {
+          "tag": "BODY",
+          "clase": "workspace-page",
+          "outline": "none",
+          "ancho": "2.4px"
+        }
+      },
+      "menuMovil": {
+        "url": "/panel",
+        "viewport": "390x844",
+        "tema": "dark",
+        "desborde": false,
+        "marcas": [
+          {
+            "nombre": "Banco de proyectos académicos",
+            "rol": "img",
+            "imagenes": [
+              {
+                "archivo": "logo-navegacion-oscuro.svg",
+                "cargada": true,
+                "ancho": 208,
+                "alto": 44.38
+              }
+            ],
+            "enlace": {
+              "ancho": 259.2,
+              "alto": 44.38
+            },
+            "dentro": true
+          },
+          {
+            "nombre": "Banco de proyectos académicos",
+            "rol": "img",
+            "imagenes": [
+              {
+                "archivo": "simbolo-oscuro.svg",
+                "cargada": true,
+                "ancho": 40,
+                "alto": 40
+              }
+            ],
+            "enlace": {
+              "ancho": 44,
+              "alto": 44
+            },
+            "dentro": true
+          }
+        ],
+        "recursos": [
+          {
+            "archivo": "logo-navegacion-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "logo-navegacion-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-color.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "simbolo-oscuro.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.svg",
+            "estado": 200,
+            "tipo": "image/svg+xml"
+          },
+          {
+            "archivo": "favicon.ico",
+            "estado": 200,
+            "tipo": "image/vnd.microsoft.icon"
+          },
+          {
+            "archivo": "apple-touch-icon.png",
+            "estado": 200,
+            "tipo": "image/png"
+          }
+        ],
+        "foco": {
+          "tag": "BUTTON",
+          "clase": "icon-button app-menu-button",
+          "outline": "none",
+          "ancho": "0px"
+        }
+      }
+    },
+    "sesiones": "Se cerró la sesión ficticia utilizada para revisar el panel."
+  },
+  "limites": [
+    "No se hizo prueba física de impresión ni prueba con lector de pantalla real.",
+    "No se repitieron suites PostgreSQL porque este bloque no cambia acceso, datos ni reglas de negocio.",
+    "La revisión visual de estos archivos no acredita validación externa de reconocimiento de marca."
+  ]
+}

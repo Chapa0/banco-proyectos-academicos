@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Proyectos de empresas que vinculan a alumnos y profesores con necesidades tecnológicas reales.">
     <title>@yield('title', 'Banco de proyectos académicos')</title>
+    @include('layouts._iconos-marca')
     {{-- RD-01: el tema se aplica antes de pintar para evitar un destello claro. Preferencia guardada o la del sistema. --}}
     <script>
         (function () {
@@ -27,7 +28,7 @@
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <div class="app-shell" data-app-shell>
         <aside class="app-sidebar" id="barra-lateral" aria-label="Menú de la cuenta">
-            <a class="app-brand" href="{{ route($claveTemporal ? 'clave.edit' : 'panel') }}"><span class="brand-mark" aria-hidden="true"><i class="bi bi-bezier2"></i></span>Banco de proyectos</a>
+            <a class="app-brand" href="{{ route($claveTemporal ? 'clave.edit' : 'panel') }}"><x-marca /></a>
             @unless($claveTemporal)
                 @include('layouts._navegacion')
             @endunless
@@ -46,7 +47,7 @@
         <div class="app-main">
             <header class="app-topbar">
                 <button class="icon-button app-menu-button" type="button" aria-controls="barra-lateral" aria-expanded="false" data-sidebar-toggle><i class="bi bi-list" aria-hidden="true"></i><span class="visually-hidden">Abrir menú</span></button>
-                <a class="app-topbar-brand" href="{{ route($claveTemporal ? 'clave.edit' : 'panel') }}">Banco de proyectos</a>
+                <a class="app-topbar-brand" href="{{ route($claveTemporal ? 'clave.edit' : 'panel') }}"><x-marca /></a>
                 <div class="app-topbar-actions">
                     @include('layouts._tema')
                     @if(! $claveTemporal && ($avisosSinLeer ?? null) !== null)
@@ -73,7 +74,7 @@
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <header class="public-header">
         <div class="container public-header-inner">
-            <a class="app-brand" href="{{ route('inicio') }}"><span class="brand-mark" aria-hidden="true"><i class="bi bi-bezier2"></i></span>Banco de proyectos</a>
+            <a class="app-brand" href="{{ route('inicio') }}"><x-marca /></a>
             <nav class="public-nav" aria-label="Navegación pública">
                 <a class="public-nav-link" href="{{ route('inicio') }}#como-funciona">Cómo funciona</a>
                 @include('layouts._tema')
